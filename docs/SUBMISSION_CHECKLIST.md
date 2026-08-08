@@ -28,8 +28,11 @@ This is a lean human checklist, not a release verifier.
   evidence are present.
 - [ ] Record one continuous normal-speed English demo no longer than four
   minutes using [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md).
-- [ ] Upload the video publicly or unlisted and watch the uploaded copy once.
+- [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
+  and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
+- [ ] Put the final `VERIFIED` incident ID into the read-only hosted link in the
+  README and [`DEVPOST.md`](DEVPOST.md); confirm it opens without signing in.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
 

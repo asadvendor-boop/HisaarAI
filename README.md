@@ -11,6 +11,7 @@ and completes the sandbox payment exactly once.
 **Hackathon:** All Things Agentic 2026  
 **Track:** Fortified Enterprise Fleet  
 **Hosted app:** <https://hisaarai-2wkruw66na-uc.a.run.app/>  
+**Read-only live proof:** [semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-semantic-001) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-injection-001)
 **Built from scratch:** all implementation in this repository was created for
 this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
 
@@ -110,6 +111,16 @@ The web client holds the Google Identity credential only in memory. Every
 commander mutation is JSON-only and same-origin; the backend validates Google's
 signature, issuer, expiry, exact OAuth audience and the allowlisted stable
 subject.
+
+## Judge access
+
+The hosted command room and the two read-only proof links above are public and
+need no account. They load genuine persisted incidents from the deployed
+Firestore authority. Launch, reject and approval remain restricted to the
+allowlisted Incident Commander because that identity boundary is part of the
+product, not a judging inconvenience. The public video shows the complete live
+mutation path; judges can inspect its resulting incident through the same
+read-only interface.
 
 ## The only product check
 

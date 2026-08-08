@@ -114,13 +114,19 @@ function shortHash(value?: string | null, length = 16) {
   return value ? `${value.slice(0, length)}…` : "—";
 }
 
+const sharedIncidentId = new URLSearchParams(window.location.search).get("incident") ?? "";
+
 function App() {
   const [token, setToken] = useState("");
-  const [incidentId, setIncidentId] = useState("");
+  const [incidentId, setIncidentId] = useState(sharedIncidentId);
   const [data, setData] = useState<IncidentResponse | null>(null);
   const [continuity, setContinuity] = useState<Record<string, unknown>>({});
   const [busy, setBusy] = useState("");
-  const [notice, setNotice] = useState("Sign in as Incident Commander to begin.");
+  const [notice, setNotice] = useState(
+    sharedIncidentId
+      ? "Read-only hosted evidence loaded. Commander sign-in is required only for new actions."
+      : "Sign in as Incident Commander to begin.",
+  );
   const signInRef = useRef<HTMLDivElement>(null);
 
   const api = useCallback(

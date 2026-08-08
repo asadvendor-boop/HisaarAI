@@ -74,6 +74,15 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
+- Public read-only semantic recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-semantic-001>
+- Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-injection-001>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Demo video: `PENDING`
 - Optional public article: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md>
+
+## Testing instructions
+
+Open either read-only proof link to inspect a genuine hosted incident without an
+account. New launches and the exact-warrant approval are intentionally limited
+to the allowlisted Incident Commander; the public continuous demo video shows
+that authenticated path from launch through one receipt and `VERIFIED`.
