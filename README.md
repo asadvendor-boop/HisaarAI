@@ -28,7 +28,7 @@ this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
    raw invoice text and uses the latest genuine immutable Memory Bank revision.
 4. **One human decision:** the commander approves the exact ten-minute warrant.
    The clean AP standby receives only trusted vendor and warrant fields.
-5. **Exactly one outcome:** the sandbox receipt is keyed by the invoice business
+5. **Exactly one outcome:** the sandbox receipt is keyed by the stable launch
    key, a replay returns the same receipt, Shaahid narrates the comparison, and
    only Hisaar Gate can persist `VERIFIED`.
 
@@ -86,6 +86,8 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 Future entries are never backfilled or shown as complete early. Recovery reads
 the latest real revision and persists its exact resource name in the warrant.
 Day-0 evidence is in [`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).
+The latest same-revision hosted injection and semantic-path readbacks are in
+[`docs/evidence/hosted-judge-path.json`](docs/evidence/hosted-judge-path.json).
 
 ## Run locally
 
@@ -128,8 +130,9 @@ statistical claim.
   are outside this demo's screening claim.
 - The multi-week chain is shown only for checkpoints that genuinely exist at
   submission time.
-- `exactly once` means one application-level sandbox receipt per stable business
-  key, not a claim that Pub/Sub itself provides exactly-once external effects.
+- `exactly once` means one application-level sandbox receipt per stable
+  launch-scoped business key, not a claim that Pub/Sub itself provides
+  exactly-once external effects.
 
 ## Repository map
 
@@ -140,4 +143,3 @@ statistical claim.
 - `web/` — one-screen React command room
 - `fixtures/invoices/` — the three transparent sandbox fixtures
 - `docs/superpowers/` — approved design and lean implementation plan
-

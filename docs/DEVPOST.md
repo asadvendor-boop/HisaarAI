@@ -34,10 +34,10 @@ authenticated asynchronous delivery, Model Armor screens the PDF text and exact
 model input, Firestore holds the transactional authority and idempotent sandbox
 receipt, and Cloud Trace correlates the journey.
 
-Memory Bank stores a genuine Day-0/7/14/21 continuity chain under the final
-Recovery Runtime. The recovery fleet materially reads the latest immutable
-revision to select trusted-vendor reconstruction; missing future dates are shown
-as pending, never fabricated.
+Memory Bank stores a genuine Day-0 revision under the final Recovery Runtime,
+with Day-7/14/21 checkpoints scheduled against the same endpoint. The recovery
+fleet materially reads the latest immutable revision to select trusted-vendor
+reconstruction; missing future dates are shown as pending, never fabricated.
 
 ## What makes it different
 
@@ -51,8 +51,8 @@ makes the trust boundary visible to a non-technical judge in seconds.
 The most difficult boundary was preserving useful multi-agent reasoning without
 making model output authoritative. We solved this with short typed role outputs,
 clean-session execution input, a ten-minute Gate-owned warrant, Firestore state
-and version transactions, and one receipt keyed by the stable invoice business
-key. We also calibrated Model Armor honestly: the committed injection is blocked
+and version transactions, and one receipt keyed by the stable launch-scoped
+business key. We also calibrated Model Armor honestly: the committed injection is blocked
 on exact extracted text, while the semantic tamper clears screening and is caught
 by the trusted-source Gate.
 
@@ -77,4 +77,3 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 - Public repository: `PENDING`
 - Demo video: `PENDING`
 - Optional public article: `PENDING`
-
