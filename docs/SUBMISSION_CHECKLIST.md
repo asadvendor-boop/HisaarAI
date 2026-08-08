@@ -35,9 +35,9 @@ This is a lean human checklist, not a release verifier.
 
 ## Optional only after the core submission is complete
 
-- [ ] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly, not unlisted.
-- [ ] Verify the article keeps the explicit hackathon-entry purpose statement.
-- [ ] Add its public URL to [`DEVPOST.md`](DEVPOST.md).
+- [x] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly, not unlisted.
+- [x] Verify the article keeps the explicit hackathon-entry purpose statement.
+- [x] Add its public URL to [`DEVPOST.md`](DEVPOST.md).
 
 ## Four things to show on camera
 

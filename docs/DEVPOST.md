@@ -76,4 +76,4 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Demo video: `PENDING`
-- Optional public article: `PENDING`
+- Optional public article: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md>
