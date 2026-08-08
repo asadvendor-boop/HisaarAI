@@ -7,7 +7,15 @@ dependencies = [
   "cloudpickle==3.1.2",
   "google-adk==2.6.3",
   "google-cloud-aiplatform[adk,agent-engines]==1.163.0",
+  "google-cloud-firestore>=2.21,<3",
+  "google-cloud-modelarmor>=0.7,<1",
+  "google-cloud-pubsub>=2.31,<3",
+  "opentelemetry-exporter-gcp-trace>=1.14,<2",
+  "opentelemetry-sdk>=1.42,<2",
   "pydantic==2.13.4",
+  "pypdf>=6.0,<7",
+  "pytest>=8.4,<9",
+  "pytest-asyncio>=1.1,<2",
 ]
 
 [tool.uv]

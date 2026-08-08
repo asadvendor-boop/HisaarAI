@@ -5,3 +5,8 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .worktrees/
+tmp/
+output/
+.playwright-cli/
+web/node_modules/
+web/dist/
