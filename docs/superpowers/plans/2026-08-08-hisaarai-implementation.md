@@ -11,10 +11,10 @@
 ## Global Constraints
 
 - Build only newly created HisaarAI work in this repository; do not copy code, prompts, fixtures, UI assets or deployment files from CreditLock, MuhafizSRE or CrossPatch.
-- Runtime model routing is immutable for this plan: AP primary and standby `gemini-3.6-flash` medium; Raasid `gemini-3.5-flash-lite`; Kashif `gemini-3.1-pro-preview`; Muslih `gemini-3.6-flash` high; Shaahid `gemini-3.5-flash-lite`; Hisaar Gate uses no model.
-- Keep Kashif as the only Pro stage. Do not add a model alias, suffix substitution or cross-model fallback.
-- Obtain written organizer clarification that the additional required-path 3.1 model is compatible with the mandatory use of Gemini 3.5 or newer. Until received, the build may continue but must not be called eligibility-clear or winner-ready.
-- Use `us-central1` for regional infrastructure and Model Armor. Configure every ADK Runtime explicitly for the `global` Gemini location so the three-model route shares one preflighted endpoint; 3.6 Flash and 3.5 Flash-Lite also support `us`/`eu`, while the locked 3.1 Pro Preview route currently supports only `global`. Validate startup environment and record every actual endpoint.
+- This plan supersedes every Gemini 3.1, model-routing and organizer-clarification reference in the design: the submitted runtime may use only `gemini-3.6-flash` and `gemini-3.5-flash-lite`.
+- Runtime model routing is immutable for this plan: AP primary and standby use `gemini-3.6-flash` with medium thinking; Raasid uses `gemini-3.5-flash-lite`; Kashif uses `gemini-3.6-flash` with high thinking; Muslih uses `gemini-3.6-flash` with high thinking; Shaahid uses `gemini-3.5-flash-lite`; Hisaar Gate uses no model.
+- The exact model-ID allowlist has two members. Do not add Gemini 3.1, another model ID, an alias, a suffix substitution or cross-model fallback.
+- Use `us-central1` for regional infrastructure and Model Armor. Configure every ADK Runtime explicitly for the `global` Gemini location so both approved model IDs and all thinking routes share one preflighted endpoint. Validate startup environment and record every requested model, actual model, thinking level and endpoint.
 - Hisaar Gate is the only transition, approval, execution and release authority. Agent confidence and prose never authorize action.
 - All authoritative state changes use Firestore transactions. Transaction callbacks contain Firestore reads and writes only; model, network and tool effects occur after commit.
 - Pub/Sub is treated as at least once. Use producer-stable event identifiers, leases with fencing tokens and destination idempotency; never claim end-to-end exactly-once delivery.
@@ -31,7 +31,7 @@
 
 | Date | Exit condition |
 | --- | --- |
-| Aug 8–9 | Repository skeleton, organizer question sent, exact-model/platform spike green, and real Day-0 `AP-CONTINUITY-001` checkpoint created |
+| Aug 8–9 | Repository skeleton, two-model compliance record complete, exact-model/platform spike green, and real Day-0 `AP-CONTINUITY-001` checkpoint created |
 | Aug 10–13 | Typed contracts, state machine, transactional store, quarantine, policy and approval invariants green locally and in Firestore emulator |
 | Aug 14–16 | Model Armor/extractor pipeline, AP primary/standby and four recovery agents deployed; real Day-7 resumption recorded |
 | Aug 17–20 | Hosted end-to-end recovery, IAP approval, idempotent ERP, observability and evidence export green |
@@ -83,7 +83,7 @@ docs/submission/               architecture, provenance, Devpost and video mater
 - Create: `Makefile`
 - Create: `src/hisaarai/__init__.py`
 - Create: `tests/smoke/test_package.py`
-- Create: `docs/compliance/organizer-model-question.md`
+- Create: `docs/compliance/model-routing.md`
 - Create: `docs/submission/PROVENANCE.md`
 
 **Interfaces:**
@@ -154,18 +154,15 @@ dev = [
 
 Run `uv lock` and commit `uv.lock`; never hand-edit the lockfile. Configure `make test`, `make lint`, `make typecheck` and `make verify` to call `uv run pytest`, `uv run ruff check`, `uv run ruff format --check` and `uv run mypy src tests`.
 
-- [ ] **Step 5: Record and send the eligibility clarification**
+- [ ] **Step 5: Record the final two-model compliance boundary**
 
-Put this exact question in `docs/compliance/organizer-model-question.md`:
-
-> HisaarAI substantially uses Gemini 3.6 Flash and Gemini 3.5 Flash-Lite and additionally uses Gemini 3.1 Pro Preview only for its bounded investigator stage. Does the rule requiring “Gemini 3.5 or newer” permit that additional 3.1 investigator while the mandatory stack is implemented with 3.5+ models?
-
-Send it through the organizer's official channel. Record the UTC send time, channel and organizer response URL or screenshot digest in the file. Do not paraphrase a non-response as permission.
-
-Set 2026-08-10 12:00 UTC as the response checkpoint. If written clarification
-has not arrived, record the user's explicit choice to continue with unresolved
-eligibility risk; do not invent a compliant fallback or call the result
-winner-ready while the locked routing remains unchanged.
+Create `docs/compliance/model-routing.md` with the exact two-member allowlist,
+the six role routes, thinking levels and the rule that every invocation records
+requested model, actual model, thinking level, endpoint and fallback status.
+State explicitly that Gemini 3.1 and all other model IDs are prohibited and that
+both approved identifiers satisfy the hackathon's Gemini 3.5-or-newer floor.
+Record the official model-documentation URLs and UTC verification time; a failed
+endpoint/quota probe remains a release blocker and never authorizes substitution.
 
 - [ ] **Step 6: Seed truthful provenance**
 
@@ -211,11 +208,20 @@ def test_locked_model_routes(settings: Settings) -> None:
     assert settings.model_ap_primary == "gemini-3.6-flash"
     assert settings.model_ap_standby == "gemini-3.6-flash"
     assert settings.model_raasid == "gemini-3.5-flash-lite"
-    assert settings.model_kashif == "gemini-3.1-pro-preview"
+    assert settings.model_kashif == "gemini-3.6-flash"
     assert settings.model_muslih == "gemini-3.6-flash"
     assert settings.model_shaahid == "gemini-3.5-flash-lite"
     assert settings.thinking_ap == "MEDIUM"
+    assert settings.thinking_kashif == "HIGH"
     assert settings.thinking_muslih == "HIGH"
+    assert {
+        settings.model_ap_primary,
+        settings.model_ap_standby,
+        settings.model_raasid,
+        settings.model_kashif,
+        settings.model_muslih,
+        settings.model_shaahid,
+    } == {"gemini-3.6-flash", "gemini-3.5-flash-lite"}
 
 
 def test_warrant_digest_is_order_independent(warrant: RecoveryWarrant) -> None:
@@ -244,10 +250,11 @@ class Settings(BaseSettings):
     model_ap_primary: Literal["gemini-3.6-flash"] = "gemini-3.6-flash"
     model_ap_standby: Literal["gemini-3.6-flash"] = "gemini-3.6-flash"
     model_raasid: Literal["gemini-3.5-flash-lite"] = "gemini-3.5-flash-lite"
-    model_kashif: Literal["gemini-3.1-pro-preview"] = "gemini-3.1-pro-preview"
+    model_kashif: Literal["gemini-3.6-flash"] = "gemini-3.6-flash"
     model_muslih: Literal["gemini-3.6-flash"] = "gemini-3.6-flash"
     model_shaahid: Literal["gemini-3.5-flash-lite"] = "gemini-3.5-flash-lite"
     thinking_ap: Literal["MEDIUM"] = "MEDIUM"
+    thinking_kashif: Literal["HIGH"] = "HIGH"
     thinking_muslih: Literal["HIGH"] = "HIGH"
     warrant_ttl_seconds: Literal[600] = 600
     execution_lease_seconds: Literal[60] = 60
@@ -305,9 +312,21 @@ git commit -m "feat: define locked models and typed authority contracts"
 ```python
 def test_platform_manifest_requires_real_resource_names(manifest: dict) -> None:
     assert manifest["project_id"]
-    assert manifest["model_probes"]["gemini-3.6-flash"]["actual_model"] == "gemini-3.6-flash"
-    assert manifest["model_probes"]["gemini-3.5-flash-lite"]["actual_model"] == "gemini-3.5-flash-lite"
-    assert manifest["model_probes"]["gemini-3.1-pro-preview"]["actual_model"] == "gemini-3.1-pro-preview"
+    probes = manifest["model_probes"]
+    expected_routes = {
+        "ap_primary_medium": ("gemini-3.6-flash", "MEDIUM"),
+        "ap_standby_medium": ("gemini-3.6-flash", "MEDIUM"),
+        "raasid_lite": ("gemini-3.5-flash-lite", "DEFAULT"),
+        "kashif_high": ("gemini-3.6-flash", "HIGH"),
+        "muslih_high": ("gemini-3.6-flash", "HIGH"),
+        "shaahid_lite": ("gemini-3.5-flash-lite", "DEFAULT"),
+    }
+    assert set(probes) == set(expected_routes)
+    for route, (expected_model, expected_thinking) in expected_routes.items():
+        assert probes[route]["requested_model"] == expected_model
+        assert probes[route]["actual_model"] == expected_model
+        assert probes[route]["thinking_level"] == expected_thinking
+        assert probes[route]["fallback_status"] == "NONE"
     assert len({r["effective_principal"] for r in manifest["runtimes"]}) == 3
     assert manifest["continuity"]["lineage_id"] == "AP-CONTINUITY-001"
     assert manifest["continuity"]["memory_id"].startswith("projects/")
@@ -402,22 +421,25 @@ binding into Terraform; the removed discovery binding is evidence, not imported
 state. Its Runtime deployment script converges the exact
 resource-level Runtime IAM policies; neither path may create duplicates.
 
-- [ ] **Step 3: Probe the three exact models**
+- [ ] **Step 3: Probe the two exact model IDs and all six role routes**
 
 For the local/deployer probe, use the documented explicit Python constructor
 `genai.Client(enterprise=True, project=project_id, location="global",
 http_options=HttpOptions(api_version="v1"))`. Fail the spike if that exact
 enterprise configuration, API version or endpoint is unavailable rather than
 silently switching APIs.
-For each locked model, request a fixed `ProbeResult(status: Literal["READY"],
-role: str)` JSON response, record requested/actual model, real thinking request,
-usage, endpoint, latency and UTC timestamp. This step is the local/deployer
-probe; Step 4 repeats it inside each remotely deployed Runtime. AP primary and
-standby must send
+For each of the six locked role routes, request a fixed
+`ProbeResult(status: Literal["READY"], role: str)` JSON response and record the
+requested model, actual model, effective thinking setting, usage, endpoint,
+latency and UTC timestamp. This step is the local/deployer probe; Step 4 repeats
+it inside each remotely deployed Runtime. AP primary and standby must send
 `GenerateContentConfig(thinking_config=ThinkingConfig(thinking_level="MEDIUM"))`;
-Muslih must send the same typed configuration with `HIGH`. Record the resolved
-request JSON to prove the thinking level reached the API. One same-model retry is
-permitted; any substitution fails the spike.
+Kashif and Muslih must send the same typed configuration with `HIGH`. Raasid and
+Shaahid omit `ThinkingConfig`, use the supported default/minimal Flash-Lite
+behavior and record the manifest sentinel `DEFAULT` rather than a fabricated API
+thinking value. Record resolved request JSON for every route and
+assert the set of actual model IDs equals exactly the two-member allowlist. One
+same-model retry is permitted; any substitution fails the spike.
 
 - [ ] **Step 4: Deploy three minimal ADK Runtime resources**
 
@@ -1076,15 +1098,16 @@ def test_recovery_role_models(recovery_agents, settings) -> None:
     assert recovery_agents.kashif.model == settings.model_kashif
     assert recovery_agents.muslih.model == settings.model_muslih
     assert recovery_agents.shaahid.model == settings.model_shaahid
+    assert recovery_agents.kashif.generate_content_config.thinking_config.thinking_level == settings.thinking_kashif
     assert recovery_agents.muslih.generate_content_config.thinking_config.thinking_level == settings.thinking_muslih
 ```
 
 Assert every recovery model uses ADK `Gemini` under the validated explicit
-enterprise project/`global` location, Raasid,
-Kashif and Shaahid use their approved default/minimal supported thinking settings,
-Muslih sends typed `ThinkingConfig(thinking_level="HIGH")`, no agent object or
-prompt contains a fallback model, and all outputs use strict schemas. Do not send
-an unsupported thinking level merely to create a uniform config.
+enterprise project/`global` location. Raasid and Shaahid use their approved
+default/minimal Flash-Lite settings; Kashif and Muslih send typed
+`ThinkingConfig(thinking_level="HIGH")`. No agent object or prompt contains a
+third model ID or fallback, and all outputs use strict schemas. Do not send an
+unsupported thinking level merely to create a uniform config.
 
 - [ ] **Step 2: Write role-tool isolation failures**
 
@@ -2411,12 +2434,12 @@ files must not exist.
 - Test: `tests/unit/evaluation/test_recording_restoration.py`
 
 **Interfaces:**
-- Consumes: verified hosted build, real evidence, organizer clarification, frozen fixtures/prompts/code and real continuity timestamps
+- Consumes: verified hosted build, real evidence, frozen two-model routing record, frozen fixtures/prompts/code and real continuity timestamps
 - Produces: reproducible repository, complete Stage-One fields, four-minute public English video and one truthful final submission package
 
 - [ ] **Step 1: Complete architecture and trust-boundary documentation**
 
-Show three Runtime resources, five Cloud Run services, Firestore, Pub/Sub, Model Armor, Memory Bank/Registry/Trace, IAP and exact identity/tool boundaries. Label 3.1 Pro Preview/global, optional omitted services, Gate execution quarantine, sandbox-only mutation and application-level role separation precisely.
+Show three Runtime resources, five Cloud Run services, Firestore, Pub/Sub, Model Armor, Memory Bank/Registry/Trace, IAP and exact identity/tool boundaries. Label the two approved model IDs, AP medium thinking, Kashif/Muslih high thinking, Flash-Lite observer/witness routes, optional omitted services, Gate execution quarantine, sandbox-only mutation and application-level role separation precisely.
 
 - [ ] **Step 2: Audit provenance before publishing the statement**
 
@@ -2532,4 +2555,4 @@ git add README.md docs/submission evaluation/releases/2026-08-final
 git commit -m "docs: finalize truthful HisaarAI submission"
 ```
 
-Do not call the project winner-ready unless the organizer model clarification, mandatory fields, release gates and reproducible continuous demo are all complete.
+Do not call the project winner-ready unless the exact two-model routing evidence, mandatory fields, release gates and reproducible continuous demo are all complete.
