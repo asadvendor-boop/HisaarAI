@@ -11,9 +11,9 @@
 ## Global Constraints
 
 - Build only newly created HisaarAI work in this repository; do not copy code, prompts, fixtures, UI assets or deployment files from CreditLock, MuhafizSRE or CrossPatch.
-- This plan supersedes every Gemini 3.1, model-routing and organizer-clarification reference in the design: the submitted runtime may use only `gemini-3.6-flash` and `gemini-3.5-flash-lite`.
+- The design and this plan share one final model boundary: the submitted runtime may use only `gemini-3.6-flash` and `gemini-3.5-flash-lite`.
 - Runtime model routing is immutable for this plan: AP primary and standby use `gemini-3.6-flash` with medium thinking; Raasid uses `gemini-3.5-flash-lite`; Kashif uses `gemini-3.6-flash` with high thinking; Muslih uses `gemini-3.6-flash` with high thinking; Shaahid uses `gemini-3.5-flash-lite`; Hisaar Gate uses no model.
-- The exact model-ID allowlist has two members. Do not add Gemini 3.1, another model ID, an alias, a suffix substitution or cross-model fallback.
+- The exact model-ID allowlist has two members. Do not add any model outside that allowlist, an alias, a suffix substitution or cross-model fallback.
 - Use `us-central1` for regional infrastructure and Model Armor. Configure every ADK Runtime explicitly for the `global` Gemini location so both approved model IDs and all thinking routes share one preflighted endpoint. Validate startup environment and record every requested model, actual model, thinking level and endpoint.
 - Hisaar Gate is the only transition, approval, execution and release authority. Agent confidence and prose never authorize action.
 - All authoritative state changes use Firestore transactions. Transaction callbacks contain Firestore reads and writes only; model, network and tool effects occur after commit.
@@ -31,15 +31,16 @@
 
 | Date | Exit condition |
 | --- | --- |
-| Aug 8–9 | Repository skeleton, two-model compliance record complete, exact-model/platform spike green, and real Day-0 `AP-CONTINUITY-001` checkpoint created |
+| Aug 8–9 | Repository skeleton and two-model record complete; project ancestry/policy visibility passes before bootstrap; custodian outreach is complete with a viable independent candidate and eligible source class identified; exact-model/platform spike is green; real Day-0 `AP-CONTINUITY-001` checkpoint created |
 | Aug 10–13 | Typed contracts, state machine, transactional store, quarantine, policy and approval invariants green locally and in Firestore emulator |
 | Aug 14–16 | Model Armor/extractor pipeline, AP primary/standby and four recovery agents deployed; real Day-7 resumption recorded |
-| Aug 17–20 | Hosted end-to-end recovery, IAP approval, idempotent ERP, observability and evidence export green |
+| Aug 17–20 | Hosted end-to-end recovery, IAP approval, idempotent ERP, observability and evidence export green; custodian's eligible five-fixture encrypted-archive commitment recorded by Aug 20 |
 | Aug 21–23 | Command room connected only to live backend; Day-14 resumption recorded; Playwright proof green |
 | Aug 24–26 | Frozen evaluation suite, concurrency/failure runs, permission negatives and architecture/submission docs complete |
 | Aug 27 | Code and prompts frozen; release manifest hash committed |
-| Aug 28–29 | One complete real-service release run preserved; Day-21 resumption recorded; three sub-four-minute rehearsals pass |
-| Aug 30 | Final continuous video, public article, social proof and Devpost fields complete |
+| Aug 28 | One complete frozen real-service release run preserved and `--phase release-run` passes; three sub-four-minute rehearsals pass |
+| Aug 29 after 12:00 UTC | Scheduler-produced Day-21 resumption verified and committed; no final verdict is attempted before this evidence exists |
+| Aug 30 | Final continuous video, public article, social proof and Devpost fields complete; only then may `--phase final` run |
 | Aug 31 | Submission buffer only; no unmeasured feature work |
 
 ## Planned file map
@@ -85,6 +86,7 @@ docs/submission/               architecture, provenance, Devpost and video mater
 - Create: `tests/smoke/test_package.py`
 - Create: `docs/compliance/model-routing.md`
 - Create: `docs/submission/PROVENANCE.md`
+- Create: `evaluation/fixtures/HELDOUT_CUSTODY.md`
 
 **Interfaces:**
 - Consumes: approved design at `docs/superpowers/specs/2026-08-08-hisaarai-design.md`
@@ -159,23 +161,36 @@ Run `uv lock` and commit `uv.lock`; never hand-edit the lockfile. Configure `mak
 Create `docs/compliance/model-routing.md` with the exact two-member allowlist,
 the six role routes, thinking levels and the rule that every invocation records
 requested model, actual model, thinking level, endpoint and fallback status.
-State explicitly that Gemini 3.1 and all other model IDs are prohibited and that
-both approved identifiers satisfy the hackathon's Gemini 3.5-or-newer floor.
+State explicitly that every identifier outside the two-member allowlist is
+prohibited and that both approved identifiers satisfy the hackathon's Gemini
+3.5-or-newer floor.
 Record the official model-documentation URLs and UTC verification time; a failed
 endpoint/quota probe remains a release blocker and never authorizes substitution.
 
-- [ ] **Step 6: Seed truthful provenance**
+- [ ] **Step 6: Secure the independent held-out custodian now**
+
+By 2026-08-12, record a named person who is not implementing HisaarAI, their
+written acceptance timestamp, independence statement, confirmed eligible source
+class, archive-commitment deadline and post-freeze handoff procedure in
+`evaluation/fixtures/HELDOUT_CUSTODY.md`. Store a privacy-safe public identifier
+or digest of the acceptance record, not private correspondence. The preferred
+exit is written acceptance during Aug 8–9; if it is absent on Aug 12, this
+winner-readiness gate is `FAILED` even though unrelated engineering may continue.
+Independent custody is an internal evaluation-strengthening control, not a claim
+that the hackathon rules require it.
+
+- [ ] **Step 7: Seed truthful provenance**
 
 Create `docs/submission/PROVENANCE.md` with the audited statement from design Section 15, the root commit date, an empty-but-explicit “Pre-existing work incorporated: none” table, dependency-license section and AI-assistant disclosure.
 
-- [ ] **Step 7: Verify and commit**
+- [ ] **Step 8: Verify and commit**
 
 Run: `uv sync --all-groups && make verify`
 
 Expected: smoke test PASS; Ruff and mypy exit 0.
 
 ```bash
-git add .python-version .gitignore pyproject.toml uv.lock Makefile src tests/smoke docs/compliance docs/submission/PROVENANCE.md
+git add .python-version .gitignore pyproject.toml uv.lock Makefile src tests/smoke docs/compliance docs/submission/PROVENANCE.md evaluation/fixtures/HELDOUT_CUSTODY.md
 git commit -m "chore: scaffold greenfield HisaarAI project"
 ```
 
@@ -284,6 +299,7 @@ git commit -m "feat: define locked models and typed authority contracts"
 
 **Files:**
 - Create: `spikes/agent_apps/probe/agent.py`
+- Create: `scripts/preflight_project_hierarchy.py`
 - Create: `scripts/platform_spike.py`
 - Create: `scripts/build_runtime_role.py`
 - Create: `scripts/create_continuity_checkpoint.py`
@@ -299,15 +315,27 @@ git commit -m "feat: define locked models and typed authority contracts"
 - Generate: `infra/bootstrap/runtime-role-discovery.json`
 - Generate: `infra/bootstrap/runtime-role-final.json`
 - Create: `docs/evidence/platform-spike/manifest.schema.json`
+- Generate: `docs/evidence/platform-spike/project-hierarchy.json`
 - Generate: `docs/evidence/platform-spike/manifest.json`
 - Generate: `docs/evidence/continuity/day-00.json`
 - Test: `tests/unit/test_platform_evidence_manifest.py`
+- Test: `tests/unit/test_project_hierarchy_preflight.py`
 
 **Interfaces:**
-- Consumes: `Settings`, project-owner Google ADC, `HISAAR_PROJECT_ID` and `HISAAR_BILLING_ACCOUNT_ID`
-- Produces: minimally bootstrapped staging/Artifact Registry/Firestore/IAM/Registry/Scheduler resources plus a secret-free manifest containing exact remote-Runtime model responses, Runtime/Registry references, principals, Memory Revision, Trace ID, Model Armor response evidence and real Day-0 lineage `AP-CONTINUITY-001`
+- Consumes: `Settings`, authorized Google ADC, `HISAAR_PROJECT_ID`, `HISAAR_BILLING_ACCOUNT_ID` and an IAM-evidence principal with visibility appropriate to the project's actual ancestry
+- Produces: a Day-1 ancestry/policy-visibility decision, then minimally bootstrapped staging/Artifact Registry/Firestore/IAM/Registry/Scheduler resources plus a secret-free manifest containing exact remote-Runtime model responses, Runtime/Registry references, principals, Memory Revision, Trace ID, Model Armor response evidence and real Day-0 lineage `AP-CONTINUITY-001`
 
-- [ ] **Step 1: Write manifest validation first**
+- [ ] **Step 1: Write hierarchy and manifest validation first**
+
+```python
+def test_project_hierarchy_preflight_is_terminal(preflight: dict) -> None:
+    assert preflight["status"] == "PASS"
+    assert preflight["topology"] in {"TOP_LEVEL_PROJECT", "ORGANIZATION_BACKED"}
+    assert preflight["ancestors_complete"] is True
+    assert set(preflight["policy_class_coverage"]) == {"allow", "deny", "principal_set"}
+    assert set(preflight["policy_class_coverage"].values()) <= {"VISIBLE", "ABSENT"}
+    assert preflight["unknown_results"] == []
+```
 
 ```python
 def test_platform_manifest_requires_real_resource_names(manifest: dict) -> None:
@@ -350,7 +378,46 @@ def test_platform_manifest_requires_real_resource_names(manifest: dict) -> None:
 
 Reject values containing `mock`, `demo`, `example-resource` or an empty evidence URL.
 
-- [ ] **Step 2: Enable only the required APIs**
+- [ ] **Step 2: Prove project ancestry and evidence visibility before bootstrap**
+
+Before bulk product API enablement, linking product resources or running the
+bootstrap, execute:
+
+```bash
+uv run python scripts/preflight_project_hierarchy.py \
+  --project "$HISAAR_PROJECT_ID" \
+  --output docs/evidence/platform-spike/project-hierarchy.json
+```
+
+If a required inspection API is disabled, the only permitted preflight mutation
+is enabling the Resource Manager/IAM/Cloud Asset/Policy Troubleshooter inspection
+surface and recording that fact; do not create a product resource. Step 3 may
+idempotently include those APIs again.
+
+The script records `gcloud projects get-ancestors` output, project number,
+effective evidence principal and the applicable policy hierarchy. If ancestry
+contains an organization, require an already authorized reviewer with the
+official Security Reviewer and Deny Reviewer visibility on that organization,
+Browser visibility when principal-set bindings may apply, project-scoped Cloud
+Asset visibility and a terminal Policy Troubleshooter probe. Project Owner alone
+does not satisfy this branch. If any applicable allow, deny or principal-set
+policy cannot be inspected, or any probe is unknown/conditional-unknown, write a
+secret-free `FAILED` record and stop before bootstrap.
+
+If ancestry proves the project is top-level, inventory its project allow policy,
+project-attached deny policies, project custom roles and project-scoped Cloud
+Asset results, and require terminal Policy Troubleshooter results. Prefer a new
+dedicated top-level project only when **No organization** is actually available
+to the authorized account. Managed Workspace/Cloud Identity users may be forced
+into an organization; in that case obtain the visibility above or choose another
+authorized project/account before work begins. Never plan to move a populated
+project later to repair missing evidence access.
+
+Run `uv run pytest tests/unit/test_project_hierarchy_preflight.py -q`. Task 3 may
+continue only when `project-hierarchy.json` is `PASS` and its digest is included
+in the platform manifest.
+
+- [ ] **Step 3: Enable only the required APIs**
 
 `infra/bootstrap/enable_apis.sh` must enable:
 
@@ -362,6 +429,7 @@ gcloud services enable \
   billingbudgets.googleapis.com \
   cloudbuild.googleapis.com \
   cloudasset.googleapis.com \
+  cloudresourcemanager.googleapis.com \
   cloudscheduler.googleapis.com \
   cloudtrace.googleapis.com \
   compute.googleapis.com \
@@ -385,7 +453,7 @@ bucket, regional `hisaar-containers` Docker Artifact Registry repository, named
 `hisaar-authority` Firestore database, three custom Runtime service accounts,
 `hisaar-gate`, `hisaar-pubsub-push` and `hisaar-builder` accounts, Pub/Sub
 continuity topic and Agent Registry setup. The push subscription is deliberately
-deferred until Step 7 has deployed `event-intake` and read its canonical service
+deferred until Step 8 has deployed `event-intake` and read its canonical service
 URL. The dedicated builder has
 repository-scoped `roles/artifactregistry.writer`, exact-bucket
 `roles/storage.objectUser`/`roles/storage.bucketViewer` and only the logging role
@@ -399,7 +467,7 @@ the live `roles/aiplatform.user` definition, removes every permission matching
 and creates temporary `hisaarRuntimeDiscoveryNoMemory`. Persist its source etag,
 included, Memory-excluded and unsupported permission lists plus digests in
 `infra/bootstrap/runtime-role-discovery.json`. Bind it—not the predefined role—
-to the three Runtime identities only for Steps 4–5. This discovery role is broad,
+to the three Runtime identities only for Steps 5–6. This discovery role is broad,
 is not called least privilege and may not be used for Memory, Day-0 or release
 evidence.
 
@@ -407,7 +475,7 @@ Grant Recovery Runtime
 `roles/aiplatform.memoryUser` under a positive `memoryScope` equality condition
 that permits only `lineage=AP-CONTINUITY-001`; grant primary and standby no Memory
 role. Do not exercise that Memory grant until the discovery binding has been
-removed in Step 5. Grant the deployer `roles/iam.serviceAccountUser` on exactly
+removed in Step 6. Grant the deployer `roles/iam.serviceAccountUser` on exactly
 the accounts it deploys. Before any trace export, grant Recovery Runtime
 `roles/telemetry.tracesWriter`; add logging or metrics writer roles only if the
 probe directly emits those signal types, and record the exercised writer grants
@@ -421,7 +489,7 @@ binding into Terraform; the removed discovery binding is evidence, not imported
 state. Its Runtime deployment script converges the exact
 resource-level Runtime IAM policies; neither path may create duplicates.
 
-- [ ] **Step 3: Probe the two exact model IDs and all six role routes**
+- [ ] **Step 4: Probe the two exact model IDs and all six role routes**
 
 For the local/deployer probe, use the documented explicit Python constructor
 `genai.Client(enterprise=True, project=project_id, location="global",
@@ -431,7 +499,7 @@ silently switching APIs.
 For each of the six locked role routes, request a fixed
 `ProbeResult(status: Literal["READY"], role: str)` JSON response and record the
 requested model, actual model, effective thinking setting, usage, endpoint,
-latency and UTC timestamp. This step is the local/deployer probe; Step 4 repeats
+latency and UTC timestamp. This step is the local/deployer probe; Step 5 repeats
 it inside each remotely deployed Runtime. AP primary and standby must send
 `GenerateContentConfig(thinking_config=ThinkingConfig(thinking_level="MEDIUM"))`;
 Kashif and Muslih must send the same typed configuration with `HIGH`. Raasid and
@@ -441,7 +509,7 @@ thinking value. Record resolved request JSON for every route and
 assert the set of actual model IDs equals exactly the two-member allowlist. One
 same-model retry is permitted; any substitution fails the spike.
 
-- [ ] **Step 4: Deploy three minimal ADK Runtime resources**
+- [ ] **Step 5: Deploy three minimal ADK Runtime resources**
 
 Export one probe ADK `root_agent`, wrap it as an Agent Engine ADK application and
 deploy `hisaar-ap-primary`, `hisaar-ap-standby` and `hisaar-recovery` through the
@@ -466,7 +534,7 @@ the exact successful API call graph, Cloud Audit evidence where available and
 application-level permission observations needed to construct the final role.
 This run is permission discovery, not release evidence.
 
-- [ ] **Step 5: Contract to the final reviewed Runtime data-plane role**
+- [ ] **Step 6: Contract to the final reviewed Runtime data-plane role**
 
 Create `runtime-permission-allowlist.yaml` as a no-wildcard list of only the
 permissions justified by the exact remote model/session call graph. Every entry
@@ -503,11 +571,15 @@ the entire contraction. No Memory or Day-0 call may proceed while a discovery
 binding remains.
 
 The configured `HISAAR_IAM_EVIDENCE_PRINCIPAL` is a human/release operator, not a
-Runtime identity. Verify the current official prerequisites that apply to the
-live hierarchy: `roles/iam.securityReviewer` and `roles/iam.denyReviewer` on the
-containing organization; `roles/browser` when service-account principal-set
-bindings may apply; `roles/serviceusage.serviceUsageConsumer` on the quota project
-for gcloud; and Cloud Asset policy visibility.
+Runtime identity. Revalidate the Day-1 hierarchy record before using it. For an
+organization-backed project, verify the current official prerequisites that
+apply: `roles/iam.securityReviewer` and `roles/iam.denyReviewer` on the containing
+organization; `roles/browser` when service-account principal-set bindings may
+apply; `roles/serviceusage.serviceUsageConsumer` on the quota project for gcloud;
+and Cloud Asset policy visibility. For a verified top-level project, record the
+organization/folder classes as `ABSENT` and instead prove complete project allow,
+project-attached deny, project custom-role and project-scoped Cloud Asset
+visibility; never fabricate an organization grant.
 Use an already authorized reviewer or an equivalent reviewed visibility-only
 custom role where possible; do not auto-grant an Organization Admin role merely
 to make a hackathon check pass. Record each allow, deny and principal-set policy
@@ -518,7 +590,7 @@ cannot create a forbidden allow, so PAB/v3beta evaluation is optional
 informational evidence and never a mandatory core dependency. Do not grant
 inspection roles to a product service account.
 
-- [ ] **Step 6: Prove Memory Bank, Trace and Model Armor under the intended identities**
+- [ ] **Step 7: Prove Memory Bank, Trace and Model Armor under the intended identities**
 
 Invoke a typed Recovery Runtime continuity method so the Recovery Runtime
 principal—not the deployer or Gate—creates one real session, Memory resource and
@@ -527,7 +599,7 @@ enabled and an explicit request-level `revision_ttl="31536000s"` (365 days).
 Re-fetch the revision and record its returned `expire_time`; do not infer
 retention from the request alone. Use the stable phase idempotency key
 `AP-CONTINUITY-001/day-00`; this exact session, Memory and Revision are the Day-0
-candidate that Step 7 must adopt, not a disposable probe. Emit one correlated
+candidate that Step 8 must adopt, not a disposable probe. Emit one correlated
 tool span through the Recovery Runtime's OTLP/Telemetry exporter, and retrieve
 all by API. Create one
 committed Model Armor template at regional
@@ -536,7 +608,7 @@ direct-PDF sample plus a clean text control. Persist template name, response
 digest, correlation ID and timestamp; Model Armor does not provide a durable
 verdict resource.
 
-- [ ] **Step 7: Create Day-0 continuity evidence immediately**
+- [ ] **Step 8: Create Day-0 continuity evidence immediately**
 
 Build `spikes/event_intake_bootstrap` with the dedicated builder, capture the
 Artifact Registry image digest, and deploy it now as the final-named
@@ -558,7 +630,7 @@ push account `roles/run.invoker` only on `event-intake`. Verify a signed push
 reaches the route and a wrong audience is rejected before publishing Day 0.
 
 The Day-0 call uses the same `AP-CONTINUITY-001/day-00` idempotency key as Step
-6. Recovery must return the exact existing session, Memory and Revision; it must
+7. Recovery must return the exact existing session, Memory and Revision; it must
 not create a second Day-0 revision. `event-intake` then transactionally adopts
 those identifiers and digests into the authority checkpoint. A different result
 for the same phase key fails the spike.
@@ -578,7 +650,7 @@ checkpoint and trace resource IDs plus server timestamps; no caller-supplied
 historical date exists. The evidence records Recovery Runtime as the Memory
 caller and `hisaar-gate` as the checkpoint writer.
 
-- [ ] **Step 8: Schedule the remaining genuine resumptions now**
+- [ ] **Step 9: Schedule the remaining genuine resumptions now**
 
 With the bootstrap `event-intake` route proven,
 `infra/bootstrap/schedule_continuity.sh` creates one-phase jobs for
@@ -594,7 +666,7 @@ recurring job immediately after verified phase export. Task 13 adopts this exact
 service, identity, subscription endpoint and OIDC audience, then updates its
 image in place without changing the continuity route.
 
-- [ ] **Step 9: Validate the initial access proofs truthfully**
+- [ ] **Step 10: Validate the initial access proofs truthfully**
 
 Run: `uv run python scripts/platform_spike.py --verify && uv run pytest tests/unit/test_platform_evidence_manifest.py -q`
 
@@ -605,7 +677,7 @@ Armor and Trace. The manifest labels later implementation proofs `NOT_RUN`; it
 must never mark a design note or planned harness as passing evidence. Missing
 access is recorded as `FAILED` and never patched with a custom imitation.
 
-- [ ] **Step 10: Commit secret-free evidence pointers**
+- [ ] **Step 11: Commit secret-free evidence pointers**
 
 ```bash
 git add spikes scripts/platform_spike.py scripts/build_runtime_role.py scripts/create_continuity_checkpoint.py scripts/record_continuity_resume.py infra/bootstrap src/hisaarai/integrations/memory_bank.py src/hisaarai/continuity.py docs/evidence tests/unit/test_platform_evidence_manifest.py
@@ -712,7 +784,7 @@ git commit -m "feat: enforce deterministic recovery state machine"
 
 **Interfaces:**
 - Consumes: `InvoiceReceived`, `IncidentEvent`, `TransitionDecision`, UTC `Clock`
-- Produces: `AuthorityStore.reserve_event()`, `transition()`, `claim_expired_lease()`, `get_incident()`, `append_event()` and `finalize_event()`
+- Produces: `AuthorityStore.reserve_event()`, `transition()`, `create_successor_attempt()`, `claim_expired_lease()`, `get_incident()`, `append_event()` and `finalize_event()`
 
 - [ ] **Step 1: Write reservation and fencing failures**
 
@@ -738,6 +810,11 @@ Assert one transaction checks `state_version`, writes the new incident state, cr
 Force one Firestore callback retry and prove that the service-generated
 `event_time` and resulting event digest remain identical while the separately
 stored server-resolved `committed_at` is not part of the digest payload.
+Also test fifty concurrent successor commands against one expired
+`AWAITING_APPROVAL` attempt: exactly one transaction marks the old attempt
+`BLOCKED`, invalidates its challenges and creates one new `QUARANTINED` attempt;
+every caller receives the same successor ID. The successor preserves the incident
+ID, execution-quarantine reference and business idempotency key.
 
 - [ ] **Step 3: Run tests against memory store and emulator**
 
@@ -753,6 +830,7 @@ Expected: failure because store implementations do not exist.
 class AuthorityStore(Protocol):
     async def reserve_event(self, event: InvoiceReceived, worker_id: str) -> EventClaim: ...
     async def transition(self, command: TransitionCommand) -> IncidentSnapshot: ...
+    async def create_successor_attempt(self, command: SuccessorAttemptCommand) -> IncidentSnapshot: ...
     async def take_over_expired_claim(self, event_id: str, worker_id: str) -> EventClaim: ...
     async def finalize_event(self, event_id: str, fencing_token: int, result: dict[str, JsonValue]) -> None: ...
 ```
@@ -1169,6 +1247,7 @@ git commit -m "feat: add bounded four-agent recovery workflow"
 - Create: `src/hisaarai/security/csrf.py`
 - Create: `src/hisaarai/gate/warrants.py`
 - Create: `src/hisaarai/gate/approval.py`
+- Create: `src/hisaarai/gate/recovery_attempts.py`
 - Create: `src/hisaarai/services/command_room_bff/main.py`
 - Create: `src/hisaarai/services/command_room_bff/auth_routes.py`
 - Create: `src/hisaarai/services/command_room_bff/approval_routes.py`
@@ -1182,7 +1261,7 @@ git commit -m "feat: add bounded four-agent recovery workflow"
 
 **Interfaces:**
 - Consumes: `RecoveryWarrantDraft`, authoritative source revisions, BFF service OIDC, original signed IAP assertion, origin, CSRF doublet, stored warrant ID, opaque challenge ID and one-time challenge nonce
-- Produces: Gate-owned nonce-free `RecoveryWarrant`, subject-bound `WarrantChallenge`, `WarrantApproval`, `REJECTED` event or 60-second `ExecutionLease`; only event-intake/Gate writes authority state
+- Produces: Gate-owned nonce-free `RecoveryWarrant`, subject-bound `WarrantChallenge`, `WarrantApproval`, `REJECTED` event, 60-second `ExecutionLease` or an authenticated successor recovery attempt after warrant expiry; only event-intake/Gate writes authority state
 
 - [ ] **Step 1: Write authentication negative tests**
 
@@ -1208,7 +1287,10 @@ of a second live challenge for the same subject/warrant. Test wrong nonce,
 different subject, modified source revision, modified expected mutation, expired
 600-second warrant, expired challenge, human rejection rationale, concurrent
 approval replay and a production-TTL test using an injected clock. Use a
-two-second TTL only in the test settings object.
+two-second TTL only in the test settings object. An expired approval submission
+must return `410 WARRANT_EXPIRED`, create no approval or execution lease and leave
+every authority count unchanged. Separately test that challenge expiry permits a
+new challenge only while the underlying warrant remains unexpired.
 
 - [ ] **Step 3: Run tests to observe failure**
 
@@ -1260,7 +1342,7 @@ and a short challenge expiry, stores only the hash and returns challenge ID plus
 raw nonce once through the BFF. The browser keeps both in component memory only.
 A second live challenge for the same warrant/subject/session returns
 `409 CHALLENGE_ALREADY_ISSUED`; after expiry Gate may create a new challenge but
-never replays the prior raw value.
+never replays the prior raw value, and only if the warrant itself remains valid.
 
 - [ ] **Step 7: Consume approval atomically**
 
@@ -1275,14 +1357,31 @@ consumed; and transitions to `APPROVED`. A replay returns HTTP
 transitions to `REJECTED`, stores subject and non-empty rationale, invalidates any
 challenge and creates no lease.
 
-- [ ] **Step 8: Verify and commit**
+- [ ] **Step 8: Implement an explicit successor attempt after warrant expiry**
+
+Do not refresh or reissue a warrant inside the expired attempt. The expired
+approval POST remains write-free. A separate commander-authenticated, IAP/OIDC,
+origin and CSRF protected replan route re-reads the stored warrant and accepts
+only `AWAITING_APPROVAL` plus a genuinely expired TTL. One Firestore transaction
+invalidates outstanding challenges, transitions the old attempt to terminal
+`BLOCKED` with reason `WARRANT_EXPIRED`, and creates a new attempt in
+`QUARANTINED` referencing the same incident, persisted execution quarantine and
+original business idempotency key. After commit, the recovery orchestrator moves
+the successor through `INVESTIGATING -> PLAN_READY -> AWAITING_APPROVAL`, re-reads
+current authoritative sources, obtains a new Gate-owned warrant and requires a
+new challenge and approval. Tests prove the attempt ID and warrant digest change
+while the incident ID, quarantine reference and business key do not.
+
+- [ ] **Step 9: Verify and commit**
 
 Run: `uv run pytest tests/unit/security tests/integration/gate/test_approval.py tests/integration/services/test_commander_proxy.py -q && make verify`
 
-Expected: every auth/replay negative writes nothing; one valid commander request creates one approval and one lease.
+Expected: every auth/replay/expired-approval negative writes nothing; one valid
+commander request creates one approval and one lease; only the separate
+authenticated replan route closes an expired attempt and creates its successor.
 
 ```bash
-git add src/hisaarai/security src/hisaarai/gate/warrants.py src/hisaarai/gate/approval.py src/hisaarai/services/command_room_bff src/hisaarai/services/event_intake/commander_routes.py deploy/cloud-run/command-room.Dockerfile tests/unit/security tests/integration/gate/test_approval.py tests/integration/services/test_commander_proxy.py
+git add src/hisaarai/security src/hisaarai/gate/warrants.py src/hisaarai/gate/approval.py src/hisaarai/gate/recovery_attempts.py src/hisaarai/services/command_room_bff src/hisaarai/services/event_intake/commander_routes.py deploy/cloud-run/command-room.Dockerfile tests/unit/security tests/integration/gate/test_approval.py tests/integration/services/test_commander_proxy.py
 git commit -m "feat: secure commander approval with IAP and nonce"
 ```
 
@@ -1772,7 +1871,7 @@ git commit -m "feat: add correlated replayable recovery evidence"
 - Create: `evaluation/fixtures/clean/clean-01.pdf` through `clean-20.pdf`
 - Generate only after code/prompt freeze: `evaluation/fixtures/security-heldout/heldout-01.pdf` through `heldout-05.pdf`
 - Create: `evaluation/fixtures/calibration-history.json`
-- Create: `evaluation/fixtures/HELDOUT_CUSTODY.md`
+- Modify: `evaluation/fixtures/HELDOUT_CUSTODY.md`
 - Generate: `evaluation/state-sequences.jsonl`
 - Create: `evaluation/fixtures/declarations.json`
 - Create: `src/hisaarai/evaluation/manifest.py`
@@ -1781,9 +1880,12 @@ git commit -m "feat: add correlated replayable recovery evidence"
 - Create: `src/hisaarai/evaluation/faults.py`
 - Create: `src/hisaarai/services/event_intake/test_control_routes.py`
 - Create: `scripts/run_evaluation.py`
+- Create: `scripts/calibrate_resource_caps.py`
+- Create: `scripts/verify_resource_caps.py`
 - Create: `scripts/freeze_release_manifest.py`
 - Create: `scripts/run_backend_platform_gates.py`
 - Generate: `docs/evidence/platform-gates.json`
+- Generate immediately before code/prompt freeze: `evaluation/resource-cap-calibration.json`
 - Test: `tests/unit/evaluation/test_manifest.py`
 - Test: `tests/unit/evaluation/test_metrics.py`
 - Test: `tests/unit/evaluation/test_fault_contracts.py`
@@ -1811,6 +1913,11 @@ def test_frozen_manifest_has_fixed_denominators(manifest) -> None:
     assert len(manifest.execution_concurrency_runs) == 50
     assert len(manifest.state_sequence_runs) == 1_000
     assert len(manifest.fault_runs) == 45
+    assert manifest.resource_caps.logical_role_invocations == 6
+    assert manifest.resource_caps.calibration_run_count >= 10
+    assert manifest.resource_caps.raw_model_request_ceiling > 0
+    assert manifest.resource_caps.total_model_token_ceiling > 0
+    assert manifest.resource_caps.calibration_digest
     assert Counter(r.subtype for r in manifest.fault_runs) == {
         "agent_timeout": 5,
         "invalid_schema": 5,
@@ -1868,9 +1975,10 @@ template change and outcome in append-only `calibration-history.json`; never hid
 a failed candidate.
 
 Do not inspect, run or tune against the five held-out security variants during
-this task. By 2026-08-12, the project owner must name an independent fixture
-custodian who is not implementing HisaarAI; by 2026-08-20 that custodian must
-record the source and provenance, hold five distinct benign variants drawn only
+this task. Task 1 must already have recorded the independent non-implementing
+custodian's written acceptance; 2026-08-12 remains the hard stop for that
+appointment. By 2026-08-20 that custodian must record the source and provenance,
+hold five distinct benign variants drawn only
 from organizer-provided material or official Google Model Armor testing material,
 and publish a SHA-256 commitment to an encrypted archive without revealing its
 contents. `HELDOUT_CUSTODY.md` records the custodian, source URLs or organizer
@@ -1977,10 +2085,28 @@ machine work for both fixtures ≤150s, computed exactly as `(security
 BLOCKED_AT_INGRESS - security admission commit) + (flagship QUARANTINED -
 flagship admission commit) + (flagship PLAN_READY - flagship QUARANTINED) +
 (flagship VERIFIED - flagship APPROVED)`. Human wait and UI narration are excluded
-and no interval overlaps. Enforce at most six Gemini calls, two Model
-Armor calls and 30,000 combined model tokens on a successful flagship before
-same-model retry. Label cost as a usage-based estimate unless an attributable
-billing export proves billed cost.
+and no interval overlaps.
+
+Define resource units precisely. A successful no-retry flagship has exactly six
+top-level LLM role invocations—AP primary, Raasid, Kashif, Muslih, AP standby and
+Shaahid—but this is not a six-request Gemini API cap. Record logical role
+invocations, ADK tool rounds, raw `generateContent` requests and retries as
+separate counters. Count the two Model Armor calls separately.
+
+Immediately before code/prompt freeze, run at least ten consecutive successful
+hosted warm calibration flagships using the exact candidate code, prompts, tools
+and model routes. `calibrate_resource_caps.py` stores all run IDs, code/prompt/tool
+digests, route-level tool rounds, every raw request, retry count and the sum of
+provider `usage_metadata.total_token_count` from every response, including thought
+and tool-use tokens. Missing usage invalidates calibration. Freeze the smallest
+route-specific tool-round ceilings that completed all ten runs, and set the
+global raw-request and total-token ceilings to
+`ceil(1.25 * max_observed_value)`. The 30,000-token figure is an initial
+engineering target only; the measured frozen ceiling is the release truth.
+Permitted retries count toward the frozen ceilings. A missing calibration digest,
+digest mismatch or cap overrun fails strict release rather than silently raising a
+limit. Label cost as a usage-based estimate unless an attributable billing export
+proves billed cost.
 
 - [ ] **Step 7: Verify runner locally and commit before release freeze**
 
@@ -2004,7 +2130,7 @@ verdict; `platform-gates.json` contains current resource IDs, trace/evidence
 references and timestamps for all thirteen PASS results before UI begins.
 
 ```bash
-git add evaluation/fixtures/declarations.json evaluation/fixtures/security-control.pdf evaluation/fixtures/semantic-tamper.pdf evaluation/fixtures/clean evaluation/fixtures/calibration-history.json evaluation/fixtures/HELDOUT_CUSTODY.md evaluation/state-sequences.jsonl src/hisaarai/evaluation src/hisaarai/services/event_intake/test_control_routes.py scripts/run_evaluation.py scripts/freeze_release_manifest.py scripts/run_backend_platform_gates.py docs/evidence/platform-gates.json tests/unit/evaluation tests/integration/evaluation
+git add evaluation/fixtures/declarations.json evaluation/fixtures/security-control.pdf evaluation/fixtures/semantic-tamper.pdf evaluation/fixtures/clean evaluation/fixtures/calibration-history.json evaluation/fixtures/HELDOUT_CUSTODY.md evaluation/state-sequences.jsonl src/hisaarai/evaluation src/hisaarai/services/event_intake/test_control_routes.py scripts/run_evaluation.py scripts/calibrate_resource_caps.py scripts/verify_resource_caps.py scripts/freeze_release_manifest.py scripts/run_backend_platform_gates.py docs/evidence/platform-gates.json tests/unit/evaluation tests/integration/evaluation
 git commit -m "feat: add frozen measurable recovery evaluation"
 ```
 
@@ -2128,9 +2254,13 @@ digest/source revisions/standby/expiry, require explicit confirmation, then call
 the subject-bound challenge route. Hold the returned challenge ID and raw nonce
 in component memory only and POST stored warrant ID, challenge ID and nonce to
 approve. Handle `401`,
-`403`, `409 CHALLENGE_ALREADY_ISSUED`, `409 ALREADY_CONSUMED`, `410 EXPIRED` and
-`422 REVISION_MISMATCH` distinctly. Never place a nonce or IAP assertion in local
-or session storage.
+`403`, `409 CHALLENGE_ALREADY_ISSUED`, `409 ALREADY_CONSUMED`,
+`410 WARRANT_EXPIRED` and `422 REVISION_MISMATCH` distinctly. For
+`WARRANT_EXPIRED`, display that the old attempt cannot be refreshed and offer a
+separate explicit **Start successor recovery attempt** action wired to the
+authenticated replan route; show the new attempt ID and preserve the prior
+terminal evidence. Never place a nonce or IAP assertion in local or session
+storage.
 
 - [ ] **Step 7: Replace the backend-only BFF image and re-prove IAP**
 
@@ -2310,9 +2440,14 @@ isolation, trace, transaction dedupe/fencing, approval negatives, IAM negatives,
 role-tool isolation, IAP/CSRF/challenge negatives and Gate execution quarantine.
 It also fails if evaluation mode remains enabled, command-room still serves the
 backend-only placeholder, a declared hosted result is missing, or warm-capacity
-configuration differs from the captured baseline. `--phase final` later adds the
-complete frozen-manifest/result equality, every denominator/fault subtype,
-latency/resource gates, Day-0/7/14/21 chain and submission artifacts.
+configuration differs from the captured baseline. `--phase release-run` later
+adds complete frozen-manifest/result equality, every denominator/fault subtype,
+latency/resource-cap gates, evaluation-mode shutdown and exact baseline
+restoration, but deliberately reports `DAY_21_PENDING` rather than final
+readiness. `--phase final` adds the verified and committed Day-0/7/14/21 chain,
+final recording and submission artifacts. Unit tests must prove `--phase final`
+exits nonzero before a Day-21 artifact with a server timestamp at or after
+`2026-08-29T12:00:00Z` exists.
 
 - [ ] **Step 2: Implement safe prewarming**
 
@@ -2445,9 +2580,21 @@ Show three Runtime resources, five Cloud Run services, Firestore, Pub/Sub, Model
 
 Use repository history and file hashes to verify every sentence in `PROVENANCE.md`. List dependencies/licenses, starter material and AI coding assistants. If any prior artifact was incorporated, disclose it exactly instead of keeping the no-copy statement.
 
-- [ ] **Step 3: Fill every binding Devpost field**
+- [ ] **Step 3: Prepare every binding Devpost field and optional bonus artifact**
 
 `DEVPOST.md` must include selected category **The Fortified Enterprise Fleet**, concise product story, complete features, Google/non-Google technology list, other data sources, findings, learnings, setup/test instructions, repository URL, hosted URL/access procedure and visible Google Cloud backend proof. It must also address the older Multi-Agent Nexus wording through task complexity, role separation and failure-tolerant routing.
+
+`BUILD_ARTICLE.md` is the publication source for the optional article bonus.
+Draft it now; it must cover how HisaarAI was built and visibly include the
+sentence: “I created
+this article for the purpose of entering the All Things Agentic Hackathon.” The
+project owner publishes it only after the final recording and before Step 8, on a
+public, not-unlisted page, and records the final
+URL in `BUILD_ARTICLE.md`, `DEVPOST.md` and `RELEASE_CHECKLIST.md`. Before claiming
+the bonus, verify the URL is reachable without authentication and that the
+rendered public page contains the purpose sentence. This is an optional maximum
+0.2-point contribution, not a Stage-One eligibility claim. Apply the existing
+hashtag requirement to the separate public social post and record that URL too.
 
 - [ ] **Step 4: Freeze code/prompts before revealing held-out fixtures**
 
@@ -2455,10 +2602,25 @@ Run all local and hosted checks, confirm evaluation mode is off and warm capacit
 is restored, and first run
 `uv run pytest tests/unit/evaluation/test_release_runner.py -q`. Its failure-path
 test must prove partial results are preserved and `finally` disables evaluation
-mode and restores every prior minimum. Then freeze code and prompts:
+mode and restores every prior minimum. With the exact candidate tree now stable,
+run the hosted resource calibration before freezing:
 
 ```bash
-git add src agent_apps web infra deploy scripts evaluation/fixtures/declarations.json evaluation/fixtures/security-control.pdf evaluation/fixtures/semantic-tamper.pdf evaluation/fixtures/clean evaluation/fixtures/calibration-history.json evaluation/state-sequences.jsonl tests docs/contracts pyproject.toml uv.lock Makefile README.md
+uv run python scripts/calibrate_resource_caps.py \
+  --runs 10 \
+  --output evaluation/resource-cap-calibration.json
+uv run python scripts/verify_resource_caps.py \
+  --calibration evaluation/resource-cap-calibration.json \
+  --strict
+```
+
+All ten runs must succeed; the record must bind the exact code, prompt, tool and
+model-routing digests and freeze route tool-round, raw-request and token ceilings
+using the Task-15 formula. Any later candidate change invalidates it. Then freeze
+code and prompts:
+
+```bash
+git add src agent_apps web infra deploy scripts evaluation/fixtures/declarations.json evaluation/fixtures/security-control.pdf evaluation/fixtures/semantic-tamper.pdf evaluation/fixtures/clean evaluation/fixtures/calibration-history.json evaluation/resource-cap-calibration.json evaluation/state-sequences.jsonl tests docs/contracts pyproject.toml uv.lock Makefile README.md
 git commit -m "release: freeze HisaarAI code and prompts"
 git tag -a hisaarai-code-freeze -m "HisaarAI code and prompt freeze"
 ```
@@ -2472,10 +2634,11 @@ generate the complete manifest with every declared run ID, seed, subtype,
 expectation and denominator:
 
 ```bash
-git diff --exit-code hisaarai-code-freeze -- src agent_apps web infra deploy scripts tests
+git diff --exit-code hisaarai-code-freeze -- src agent_apps web infra deploy scripts tests evaluation/resource-cap-calibration.json
 uv run python scripts/freeze_release_manifest.py \
   --declarations evaluation/fixtures/declarations.json \
   --heldout-dir evaluation/fixtures/security-heldout \
+  --resource-calibration evaluation/resource-cap-calibration.json \
   --output evaluation/releases/2026-08-final/manifest.json
 uv run pytest tests/unit/evaluation/test_manifest.py -q
 git add evaluation/fixtures/security-heldout evaluation/releases/2026-08-final/manifest.json
@@ -2495,7 +2658,7 @@ uv run python scripts/run_release.py \
   --manifest evaluation/releases/2026-08-final/manifest.json \
   --results evaluation/releases/2026-08-final/results.json \
   --evidence evaluation/releases/2026-08-final/evidence-bundle.json
-uv run python scripts/verify_release.py --strict --phase final
+uv run python scripts/verify_release.py --strict --phase release-run
 ```
 
 `run_release.py` captures prior Cloud Run minimums, enables warm capacity and the
@@ -2505,11 +2668,12 @@ configuration in `finally`. It preserves partial results and returns failure onl
 after restoration. Before any hosted call it exchanges the declared release
 operator's ADC for short-lived `hisaar-evaluator` credentials and records the
 effective principal; only evaluator may sign the exact test-commander JWT. The
-strict verifier runs afterward and requires: exact result
-set equality, all denominator/subtype/resource/latency gates, all held-out results,
-Day-0/7/14/21 continuity, evaluation mode off and restored capacity. Preserve and
-publish every declared result, including failures. Do not rerun selectively to
-replace an unfavorable case.
+release-run verifier runs afterward and requires exact result-set equality, all
+denominator/subtype/resource/latency gates, all held-out results, evaluation mode
+off and restored capacity. It does not require or imply Day-21/final-artifact
+completion and must expose `DAY_21_PENDING`. Preserve and publish every declared
+result, including failures. Do not rerun selectively to replace an unfavorable
+case.
 
 - [ ] **Step 6: Rehearse the exact four-minute script**
 
@@ -2533,6 +2697,13 @@ fabricated state. A take is unusable unless the wrapper reports successful
 baseline restoration afterward.
 
 - [ ] **Step 8: Run the final strict release check**
+
+Do not run this step until the scheduler-produced Day-21 artifact has been
+retrieved, verified against the immediately prior checkpoint, shown a genuine
+server timestamp at or after `2026-08-29T12:00:00Z`, and committed separately.
+The inspected final recording, public article/social URLs and completed Devpost
+submission artifacts must also exist. Before those prerequisites, final status is
+`DAY_21_PENDING`, never PASS.
 
 ```bash
 make verify

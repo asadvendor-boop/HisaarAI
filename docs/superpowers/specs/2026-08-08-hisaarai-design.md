@@ -105,21 +105,29 @@ category and the binding rules' older **Multi-Agent Nexus** language.
 - Decorative traces, metrics, Registry entries or Model Armor verdicts.
 - Custom substitutes presented as Google Agent Gateway, Agent Identity or Agent
   Registry.
-- Preview-only Google platform services as dependencies of the core recovery
-  path. The user-approved `gemini-3.1-pro-preview` investigator is the one explicit
-  model exception and must pass deployment preflight.
+- Preview-only Google platform services or model identifiers as dependencies of
+  the core recovery path. The required path uses only the two GA model
+  identifiers locked in Section 5.
 - CreditLock code, assets or workflows.
 
 ## 4. Deployment topology
 
 Use one Google Cloud project with regional infrastructure in `us-central1`.
 Every locked Gemini request uses explicitly validated ADK/Gen AI `global`
-configuration so the three-model route has one tested model endpoint;
-`gemini-3.6-flash` and
-`gemini-3.5-flash-lite` also support the `us` and `eu` multi-regions, while
-`gemini-3.1-pro-preview` currently supports only `global`. Runtime, Memory, Model
-Armor, Firestore, Pub/Sub and Cloud Run location metadata remain explicit in
-provenance.
+configuration so both approved identifiers and all six role routes use one
+tested model endpoint. `gemini-3.6-flash` and `gemini-3.5-flash-lite` are GA and
+also support the `us` and `eu` multi-regions. Runtime, Memory, Model Armor,
+Firestore, Pub/Sub and Cloud Run location metadata remain explicit in provenance.
+
+Before bulk product API enablement or resource bootstrap, record the selected
+project's complete ancestry and prove that the IAM-evidence operator can inspect
+every applicable allow, deny and principal-set policy class. Prefer a dedicated
+top-level project only when Google Cloud actually offers **No organization** to
+the authorized account. A managed Workspace or Cloud Identity account may be
+forced into an organization; in that case the spike requires an already
+authorized organization-level reviewer and fails before mutation if any policy
+class is invisible or any Policy Troubleshooter result is unknown. Project
+movement is not a late recovery strategy.
 
 ### Managed agent runtimes
 
@@ -226,13 +234,12 @@ configuration, tests, documentation and claims:
 
 - `gemini-3.6-flash`
 - `gemini-3.5-flash-lite`
-- `gemini-3.1-pro-preview`
 
 | Component | Model | Configuration | Authority boundary |
 | --- | --- | --- | --- |
 | Protected AP Agent | `gemini-3.6-flash` | Medium thinking | Proposes tool actions; cannot mutate the ledger directly |
 | Raasid — Observer | `gemini-3.5-flash-lite` | Default/minimal | Creates structured incident observations only |
-| Kashif — Investigator | `gemini-3.1-pro-preview` | Default | Only Pro stage; produces a read-only blast-radius report |
+| Kashif — Investigator | `gemini-3.6-flash` | High thinking | Produces a bounded, read-only blast-radius report |
 | Muslih — Recovery Planner | `gemini-3.6-flash` | High thinking | Drafts a recovery warrant; cannot approve or execute it |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default/minimal | Reports deterministic verification-tool results |
 | Hisaar Gate | None | Deterministic code | Sole transition, execution and release authority |
@@ -250,10 +257,11 @@ code or test literals:
 - `MODEL_AP_PRIMARY=gemini-3.6-flash`
 - `MODEL_AP_STANDBY=gemini-3.6-flash`
 - `MODEL_RAASID=gemini-3.5-flash-lite`
-- `MODEL_KASHIF=gemini-3.1-pro-preview`
+- `MODEL_KASHIF=gemini-3.6-flash`
 - `MODEL_MUSLIH=gemini-3.6-flash`
 - `MODEL_SHAAHID=gemini-3.5-flash-lite`
 - `THINKING_AP=MEDIUM`
+- `THINKING_KASHIF=HIGH`
 - `THINKING_MUSLIH=HIGH`
 
 Startup validation rejects missing values, unapproved identifiers or a role
@@ -268,13 +276,10 @@ same model once using the same idempotency and correlation identifiers. A second
 failure leaves the workflow blocked. Every invocation records requested model,
 actual model, thinking level, attempt number and `fallback=false`.
 
-The mandatory stack rule requires Gemini 3.5 or newer; HisaarAI substantially
-uses 3.5 Flash-Lite and 3.6 Flash and therefore implements that required stack.
-The rules do not expressly prohibit an additional older model, but using 3.1 Pro
-Preview in a required stage creates interpretation risk. Written organizer
-clarification is a pre-freeze compliance gate. Until then, Kashif remains on the
-user-locked model and the risk is reported rather than hidden or silently routed
-away.
+Both approved identifiers satisfy the mandatory Gemini 3.5-or-newer floor.
+HisaarAI uses no third model, alias, suffix substitution or cross-model fallback;
+endpoint and quota preflight must prove the exact two identifiers and all six
+routes before release.
 
 ## 6. Agent contracts
 
@@ -390,6 +395,17 @@ A later attempt uses a new recovery-attempt identifier but preserves the inciden
 identifier and the original business idempotency key. It may never mint a new
 business key to bypass an existing mutation.
 
+An approval submitted after the ten-minute warrant TTL returns
+`410 WARRANT_EXPIRED`, creates no approval or execution lease and performs no
+authority write. Recovery requires a separate commander-authenticated successor
+action: one transaction revalidates the expired warrant, invalidates outstanding
+challenges, moves the old attempt from `AWAITING_APPROVAL` to terminal `BLOCKED`
+with reason `WARRANT_EXPIRED`, and creates a new attempt at `QUARANTINED` over the
+existing persisted quarantine. The new attempt then follows
+`QUARANTINED -> INVESTIGATING -> PLAN_READY -> AWAITING_APPROVAL`, re-reads current
+authoritative sources, materializes a new Gate-owned warrant and requires a new
+challenge and approval. There is no same-attempt warrant refresh or reissue.
+
 Hisaar Gate enforces:
 
 - No investigation before quarantine is persisted.
@@ -453,6 +469,10 @@ One transaction verifies the ten-minute warrant TTL, consumes the nonce exactly
 once, writes the authenticated subject into the approval, moves the attempt to
 `APPROVED` and creates a single-use sixty-second execution lease. Only the nonce
 digest and consumption result remain as audit evidence.
+
+Challenge expiry and warrant expiry are distinct. A new challenge may be issued
+only while the underlying warrant remains current and unexpired; an expired
+warrant must use the successor-attempt path above.
 
 The standby submits an exact mutation proposal during that execution lease.
 Hisaar Gate validates it against the warrant and authoritative source revisions;
@@ -666,8 +686,14 @@ or offers role simulators that fabricate HTTP or security responses.
   no execution lease exists.
 - **Unauthenticated, wrong-role, expired-IAP or cross-site approval:** reject
   before warrant lookup and write no authority record.
-- **Stale approval or nonce replay:** reject and require a newly validated warrant;
-  a consumed nonce never becomes usable again.
+- **Expired challenge:** permit a fresh challenge only while the current warrant
+  remains valid; never replay the prior raw nonce.
+- **Expired warrant:** the approval submission is write-free and returns
+  `WARRANT_EXPIRED`; only the authenticated successor-attempt action may close the
+  old attempt and replan from the persisted quarantine.
+- **Stale approval or nonce replay:** reject and require a newly validated
+  challenge or successor attempt as applicable; a consumed nonce never becomes
+  usable again.
 - **Standby unavailable or not identity-distinct:** fail before reassignment.
 - **Gateway unavailable:** use the already proven direct Model Armor path and do
   not claim Gateway enforcement.
@@ -706,10 +732,13 @@ not hardcode metrics or generate expected results from the implementation.
   selection/calibration history is published.
 - Five benign held-out security variants from organizer-provided or official
   Google Model Armor testing material are held by a named independent custodian,
-  with source provenance and an encrypted-archive digest committed before code
-  freeze. They are released and individually hash-committed only after code and
-  prompt freeze, then run once each without fixture tuning; all five must reach
+  with written acceptance due by 2026-08-12 and source provenance plus an
+  encrypted-archive digest due by 2026-08-20, before code freeze. They are
+  released and individually hash-committed only after code and prompt freeze,
+  then run once each without fixture tuning; all five must reach
   `BLOCKED_AT_INGRESS`, and every result remains published if this gate fails.
+  Independent custody is an internal evaluation-strengthening control, not a
+  hackathon-rule claim.
 - The exact flagship PDF bytes and exact normalized extracted text produce
   explicit clear results in 10 of 10 preflight runs. The fixed set of 20 clean
   controls allows at least 19 of 20; no skipped result counts as clear.
@@ -803,13 +832,28 @@ distribution. Never label human-excluded time as total recovery time.
   (flagship PLAN_READY - flagship QUARANTINED) + (flagship VERIFIED - flagship
   APPROVED)`; human wait and UI narration are excluded and no interval overlaps.
 - Total wall-clock time from admission to terminal state is always displayed.
-- A successful flagship run uses at most six Gemini calls and two Model Armor
-  calls before retries, targets at most 30,000 combined model tokens, and records
-  actual API calls, tokens and Cloud usage. Cost is labelled a usage-based estimate
-  unless an attributable billing export proves billed cost.
-- Strict release verification fails on a missing declared result, latency or
-  resource-cap violation, incomplete Day-0/7/14/21 chain or un-restored warm
-  capacity, and while evaluation fault controls remain enabled.
+- A successful no-retry flagship performs exactly six top-level LLM role
+  invocations: AP primary, Raasid, Kashif, Muslih, AP standby and Shaahid. This is
+  not a six-request Gemini API cap. Logical role invocations, ADK tool rounds, raw
+  `generateContent` requests and retries are recorded separately; the two Model
+  Armor calls remain separately counted.
+- Before code and prompt freeze, at least ten consecutive successful hosted warm
+  calibration flagships using the exact candidate prompts and tools must measure
+  every raw model request and sum provider-reported `total_token_count` over every
+  response, including thought and tool-use tokens. The release manifest freezes
+  the smallest route-specific tool-round limits that complete calibration plus
+  raw-request and total-token ceilings equal to the observed maxima with 25%
+  headroom, rounded up. The initial 30,000-token value is an engineering target,
+  not a release claim. Missing usage, an unfrozen ceiling or any release result
+  above a frozen ceiling fails strict verification; permitted retries count
+  toward the ceilings rather than receiving an exemption.
+- Actual Cloud usage is recorded. Cost is labelled a usage-based estimate unless
+  an attributable billing export proves billed cost.
+- Strict `release-run` verification fails on a missing declared result, latency
+  or resource-cap violation, un-restored warm capacity or enabled evaluation
+  fault controls, but reports `DAY_21_PENDING` rather than final readiness.
+  Strict `final` verification additionally fails on an incomplete Day-0/7/14/21
+  chain or missing recording/submission artifact.
 
 After implementation stabilizes, code and prompts are frozen before the complete
 fixture-and-run manifest is hashed and committed. That manifest is executed once
@@ -855,10 +899,17 @@ normal-speed rehearsals finish below four minutes with every proof readable.
 
 ## 14. Platform proof gates before UI expansion
 
+Before the technical spike creates product resources, a Day-1 ancestry and policy-
+visibility preflight must record either a verified top-level project or the full
+organization/folder chain, prove complete inspection of every applicable policy
+class and fail on unknown evidence. A standalone project is preferred only when
+the account is genuinely offered that topology; it is not assumed for managed
+accounts.
+
 The following facts must be proven in a narrow spike before significant UI work:
 
-1. The exact three locked model identifiers respond with required structured
-   output/tool behavior in the configured endpoints and quota.
+1. The exact two locked model identifiers respond across all six role routes with
+   required structured output/tool behavior in the configured endpoint and quota.
 2. Primary AP, standby AP and HisaarAI ADK runtimes deploy successfully; primary
    and standby have different effective principals.
 3. All three real Registry entries are visible and retrievable.
@@ -884,9 +935,8 @@ The following facts must be proven in a narrow spike before significant UI work:
 13. A protected tool call from a Gate-quarantined principal/instance/session is
     denied by the persisted fencing rule while the standby principal succeeds.
 
-Written organizer clarification for the required-path 3.1 Pro Preview role is a
-separate compliance proof gate. Agent Gateway is attempted only after these
-thirteen technical facts pass.
+The exact two-model routing manifest is a separate compliance proof gate. Agent
+Gateway is attempted only after these thirteen technical facts pass.
 
 For recording, Cloud Run services are health-checked five minutes beforehand and
 may temporarily use service-level minimum instances of one. A non-mutating model
@@ -914,12 +964,16 @@ scale-to-zero claim. Budget monitoring governs deployment duration.
 - Model-routing and provenance documentation
 - Four-minute public English demonstration video with visible proof that the
   backend is deployed on Google Cloud
-- Public build article created for the hackathon
+- Optional-bonus public, not-unlisted build article covering how HisaarAI was
+  built and visibly
+  stating: “I created this article for the purpose of entering the All Things
+  Agentic Hackathon.” Its public URL and content check are stored before claiming
+  the optional article bonus.
 - Qualifying social post using `#AllThingsAgenticHackathon`
 
 No additional Google AI model is added merely for bonus points. Gemma, Veo, Lyria
 or another model requires separate user approval and a genuine bounded product
-role. HisaarAI's submitted runtime remains restricted to the three approved Gemini
+role. HisaarAI's submitted runtime remains restricted to the two approved Gemini
 model identifiers.
 
 ### New-project provenance
@@ -970,11 +1024,9 @@ HisaarAI is winner-ready only when:
 - The unedited core demo can be reproduced from a clean environment.
 - Google Cloud, model, identity, Registry, Model Armor and trace claims match the
   deployed implementation exactly.
-- The explicit 3.1 Pro Preview dependency has passed endpoint/quota preflight and
-  written organizer clarification confirms that its additional use is compatible
-  with the mandatory 3.5-or-newer requirement. Without that clarification, the
-  project may proceed only with explicit user risk acceptance and is not called
-  eligibility-clear or winner-ready; no other preview capability is critical.
+- Every requested and actual model invocation matches the exact two-ID routing
+  matrix, including Kashif and Muslih at high thinking, with `fallback=false` and
+  a successful endpoint/quota preflight; no preview capability is critical.
 - The repository, video, architecture and metrics tell the same failure-first
   story without contradictions.
 
@@ -988,6 +1040,14 @@ Checked against official sources on 2026-08-08:
 - [Hackathon rules](https://allthingsagentichackathon.devpost.com/rules): Gemini
   3.5 or newer, an approved Google agent framework and a Google Cloud service are
   mandatory; newly created work and pre-existing-work disclosure are required.
+  The optional public build-content bonus also requires the content itself to say
+  it was created for entering the hackathon.
+- [Google Cloud resource hierarchy](https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy)
+  and [project creation](https://docs.cloud.google.com/resource-manager/docs/creating-managing-projects):
+  managed Workspace/Cloud Identity users may be required to create inside their
+  organization, while a top-level project can be selected only when **No
+  organization** is actually available. Project ancestry and inherited-policy
+  visibility must therefore be proven, not assumed.
 - [Firestore transactions](https://firebase.google.com/docs/firestore/manage-data/transactions):
   writes are atomic and transaction callbacks may rerun after concurrent edits.
 - [Firestore per-database access](https://docs.cloud.google.com/firestore/native/docs/manage-databases#configure_per-database_access_permissions):
@@ -1002,17 +1062,20 @@ Checked against official sources on 2026-08-08:
   4 MB and embedded document images are outside the document-screening claim;
   verdict fields are read from the nested `sanitization_result` and typed filter
   results rather than assumed at the response top level.
-- [Gemini 3.6 Flash](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash),
-  [Gemini 3.5 Flash-Lite](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite)
-  and [Gemini 3.1 Pro](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro):
-  the first two are GA and support global plus `us` and `eu`; 3.1 Pro is Public
-  Preview and currently supports only global. HisaarAI deliberately validates all
-  three through one explicit global model configuration.
+- [Gemini 3.6 Flash](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-6-flash)
+  and [Gemini 3.5 Flash-Lite](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-5-flash-lite):
+  both are GA and support global plus `us` and `eu`. HisaarAI deliberately
+  validates both identifiers and all six role routes through one explicit global
+  model configuration.
 - [Google Gen AI SDK overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/sdks/overview)
   and [Python SDK reference](https://googleapis.github.io/python-genai/): local
   enterprise setup supports an explicit project/global-location client with
   `HttpOptions(api_version="v1")`; deployed Runtime code uses that explicit client
   rather than overriding Runtime-reserved project/location environment variables.
+- [Vertex AI function calling](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/function-calling):
+  an application sends tool definitions, executes a requested tool and feeds the
+  tool result back to the model. One logical agent invocation can therefore use
+  multiple raw model requests; HisaarAI measures both units separately.
 - [Agent Runtime identity](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity):
   core Runtime deployments use separately scoped custom service accounts; Agent
   Identity token semantics are reserved for a separately proven Gateway path.
