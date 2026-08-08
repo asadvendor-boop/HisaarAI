@@ -118,9 +118,9 @@ The hosted command room and the two read-only proof links above are public and
 need no account. They load genuine persisted incidents from the deployed
 Firestore authority. Launch, reject and approval remain restricted to the
 allowlisted Incident Commander because that identity boundary is part of the
-product, not a judging inconvenience. The public video shows the complete live
-mutation path; judges can inspect its resulting incident through the same
-read-only interface.
+product, not a judging inconvenience. The final public video will show the
+complete live mutation path; judges can inspect its resulting incident through
+the same read-only interface.
 
 ## The only product check
 
