@@ -1,5 +1,11 @@
 # HisaarAI Implementation Plan
 
+> **SUPERSEDED — DO NOT EXECUTE.** This verification-first plan was retired on
+> 2026-08-09 after the product strategy changed to the judge-first lean design in
+> `docs/superpowers/specs/2026-08-08-hisaarai-design.md`. A replacement vertical-
+> slice implementation plan will be written only after the user reviews that
+> specification.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build and prove HisaarAI as a real Google Cloud agent-fleet recovery command room that blocks unsafe Accounts Payable actions, isolates influenced execution context, obtains one governed approval, and completes one idempotent sandbox ledger mutation through a clean standby.
