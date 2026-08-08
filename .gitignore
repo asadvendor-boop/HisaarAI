@@ -10,3 +10,4 @@ output/
 .playwright-cli/
 web/node_modules/
 web/dist/
+*.tsbuildinfo

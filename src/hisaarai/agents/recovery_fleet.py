@@ -40,7 +40,7 @@ raasid = Agent(
         "Observe only the bounded incident JSON supplied by HisaarAI. State what "
         "was proposed, what trusted source disagreed, and which genuine continuity "
         "revision governs recovery. Never approve or execute. Cite only evidence "
-        "identifiers present in the input."
+        "identifiers present in the input. Keep the summary under 500 characters."
     ),
     output_schema=RecoveryAgentOutput,
     output_key="raasid_output",
@@ -57,7 +57,8 @@ kashif = Agent(
         "bounded blast radius and explain why the quarantined invoice-derived "
         "destination must not flow into execution. There is no evidence of any "
         "payment unless a receipt identifier is supplied. Cite only supplied "
-        "evidence identifiers.\nRaasid: {raasid_output}"
+        "evidence identifiers. Keep the summary under 500 characters.\nRaasid: "
+        "{raasid_output}"
     ),
     output_schema=RecoveryAgentOutput,
     output_key="kashif_output",
@@ -73,7 +74,8 @@ muslih = Agent(
         "Draft the smallest recovery action from the trusted vendor master. The "
         "only allowed action is RECONSTRUCT_FROM_TRUSTED_VENDOR_MASTER. Do not "
         "approve, execute, or invent evidence. Cite only identifiers supplied in "
-        "the input or prior findings.\nRaasid: {raasid_output}\nKashif: "
+        "the input or prior findings. Keep the summary under 500 characters.\n"
+        "Raasid: {raasid_output}\nKashif: "
         "{kashif_output}"
     ),
     output_schema=RecoveryPlanOutput,

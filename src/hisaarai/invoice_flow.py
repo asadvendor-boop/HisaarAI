@@ -75,7 +75,10 @@ class InvoiceFlow:
         incident = self.gate.open_incident(
             invoice_id=invoice_id,
             correlation_id=correlation_id,
-            business_idempotency_key=f"pay:{invoice_id}",
+            # The Pub/Sub event ID is stable across redelivery, while each explicit
+            # sandbox launch gets a fresh event. This keeps retries idempotent and
+            # makes independent judge/rehearsal runs repeatable.
+            business_idempotency_key=f"pay:{invoice_id}:{safe_event_id}",
             incident_id=incident_id,
             attempt_id=f"att-{safe_event_id}",
         )

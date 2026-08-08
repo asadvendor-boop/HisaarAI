@@ -147,6 +147,8 @@ def create_app(
         try:
             incident = store.get_incident(incident_id)
             receipt = store.get_receipt(incident.business_idempotency_key)
+            if receipt is not None and receipt.incident_id != incident.incident_id:
+                receipt = None
         except NotFoundError as exc:
             raise HTTPException(status_code=404, detail="Incident not found") from exc
         return {

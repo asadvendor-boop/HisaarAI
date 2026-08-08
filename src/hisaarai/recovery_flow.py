@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
+import logging
 from collections.abc import Callable
 from typing import Any
 import uuid
@@ -22,6 +23,9 @@ from hisaarai.gate import HisaarGate
 from hisaarai.observability import stage_span
 from hisaarai.recovery_runtime import RecoveryRuntimeClient
 from hisaarai.store import AuthorityStore
+
+
+logger = logging.getLogger(__name__)
 
 
 def _warrant_digest(payload: dict[str, Any]) -> str:
@@ -156,6 +160,10 @@ class RecoveryFlow:
             if len(findings) != 3:
                 raise ValueError("All three planning findings are required")
         except Exception:
+            logger.exception(
+                "Recovery planning failed closed for %s",
+                investigating.incident_id,
+            )
             return self.gate.transition(
                 investigating,
                 IncidentState.BLOCKED,

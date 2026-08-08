@@ -209,7 +209,7 @@ without changing incident state, and atomically changes a valid current warrant
 `AWAITING_APPROVAL → APPROVED`. Human rejection records the commander, rationale
 and server time and terminates as `BLOCKED/HUMAN_REJECTED` without execution. An
 expired current warrant becomes `BLOCKED/WARRANT_EXPIRED`; a retry begins a new
-attempt from quarantine, keeps the invoice business idempotency key and creates a
+attempt from quarantine, keeps the launch-scoped business idempotency key and creates a
 fresh warrant.
 
 After approval, publish the clean execution request and return immediately; the

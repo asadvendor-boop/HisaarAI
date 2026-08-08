@@ -53,7 +53,7 @@ class PaymentProposal(StrictModel):
 
 class AgentFinding(StrictModel):
     agent: str
-    summary: str = Field(min_length=5, max_length=400)
+    summary: str = Field(min_length=5, max_length=700)
     evidence_ids: list[str] = Field(min_length=1, max_length=8)
     requested_model: str
     actual_model: str
@@ -61,7 +61,7 @@ class AgentFinding(StrictModel):
 
 
 class RecoveryAgentOutput(StrictModel):
-    summary: str = Field(min_length=5, max_length=400)
+    summary: str = Field(min_length=5, max_length=700)
     evidence_ids: list[str] = Field(min_length=1, max_length=8)
 
 

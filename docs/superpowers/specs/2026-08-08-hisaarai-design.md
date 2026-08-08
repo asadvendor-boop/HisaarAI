@@ -185,7 +185,7 @@ Collections are intentionally minimal:
 - `continuity_checkpoints`
 
 The incident document holds the current state and version. The receipt document
-uses the stable business idempotency key so duplicate execution cannot create a
+uses the stable launch-scoped business idempotency key so Pub/Sub redelivery or duplicate execution cannot create a
 second payment.
 
 ### 4.5 Three user-managed service accounts
@@ -277,7 +277,7 @@ state/version no longer matches. Human rejection persists the commander subject,
 rationale and server timestamp, transitions to `BLOCKED/HUMAN_REJECTED` and
 creates no execution opportunity. An expired current warrant transitions to
 `BLOCKED/WARRANT_EXPIRED`; retry starts a new recovery attempt from quarantine,
-retains the invoice business idempotency key and creates a fresh warrant. Wrong
+retains the launch-scoped business idempotency key and creates a fresh warrant. Wrong
 identity is denied without changing incident state.
 
 Authentication is route-specific even though one Cloud Run service hosts the

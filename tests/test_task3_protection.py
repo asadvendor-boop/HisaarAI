@@ -180,3 +180,35 @@ def test_semantic_tamper_reaches_quarantine_after_real_agent_stage() -> None:
     assert incident.gemini_invocations == 1
     assert incident.proposal is not None
     assert incident.proposal.actual_model == "gemini-3.6-flash"
+    assert incident.business_idempotency_key == (
+        "pay:INV-2026-0819:event-semantic"
+    )
+
+
+def test_new_sandbox_launch_gets_fresh_business_key_but_redelivery_is_stable() -> None:
+    store = InMemoryStore()
+    ap = FakeAP("PK-ATTACKER-9911")
+    flow = InvoiceFlow(
+        settings=settings(),
+        store=store,
+        ap_client=ap,
+        screen=FakeScreen(ScreeningDecision.CLEAR, "semantic-tamper.pdf"),
+    )
+    first = flow.process_fixture(
+        fixture="semantic-tamper",
+        event_id="event-run-one",
+        correlation_id="corr-run-one",
+    )
+    redelivery = flow.process_fixture(
+        fixture="semantic-tamper",
+        event_id="event-run-one",
+        correlation_id="corr-run-one",
+    )
+    second = flow.process_fixture(
+        fixture="semantic-tamper",
+        event_id="event-run-two",
+        correlation_id="corr-run-two",
+    )
+    assert redelivery.incident_id == first.incident_id
+    assert redelivery.business_idempotency_key == first.business_idempotency_key
+    assert second.business_idempotency_key != first.business_idempotency_key
