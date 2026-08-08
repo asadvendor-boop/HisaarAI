@@ -14,6 +14,8 @@ and completes the sandbox payment exactly once.
 **Built from scratch:** all implementation in this repository was created for
 this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
 
+![HisaarAI governed recovery command room](docs/media/command-room.png)
+
 ## The four-minute story
 
 1. **Obvious attack:** a committed invoice contains a prompt injection. Real
