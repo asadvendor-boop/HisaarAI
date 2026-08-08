@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-09
 **Track:** Fortified Enterprise Fleet
-**Status:** Lean specification for user review
+**Status:** Approved lean build specification
 **Product rule:** Maximize judge-visible scoring value, not system breadth.
 
 ## 1. The product in one sentence
@@ -16,8 +16,8 @@ The first 30 seconds of every judge-facing artifact must make this transformatio
 obvious:
 
 > A poisoned invoice compromised an AI payment agent. Hisaar stopped the money,
-> quarantined the contaminated context, assembled a clean recovery team, and
-> completed the correct payment exactly once.
+> quarantined the contaminated context, assembled a clean recovery team,
+> obtained one human decision, and completed the correct payment exactly once.
 
 HisaarAI is not a generic security dashboard, invoice chatbot, agent framework or
 compliance simulator. It is one memorable governed-recovery product.
@@ -87,6 +87,14 @@ authority allowed to approve state transitions or release a sandbox mutation.
 Failure tolerance is visible: invalid agent output, timeout or missing evidence
 causes a safe `BLOCKED` outcome; compromised context is never copied into the
 standby; duplicate execution returns the existing receipt.
+
+Model Armor is fail-closed. Only an explicit successful, conclusive
+`NO_MATCH_FOUND` result may release screened text to Gemini. A successful
+`MATCH_FOUND` result persists `BLOCKED` with reason `MODEL_ARMOR_MATCH`.
+Unavailability, transport or permission errors, partial/skipped execution,
+malformed results and unknown outcomes persist
+`BLOCKED` with reason `SCREENING_UNAVAILABLE`. Both blocked branches invoke
+Gemini zero times and create no receipt.
 
 ### 2.3 Demo and Production Readiness — target 5/5
 
@@ -180,6 +188,14 @@ The incident document holds the current state and version. The receipt document
 uses the stable business idempotency key so duplicate execution cannot create a
 second payment.
 
+### 4.5 Three user-managed service accounts
+
+Use exactly `hisaar-app`, `hisaar-ap-runtime` and
+`hisaar-recovery-runtime`. Every Cloud Run or Agent Runtime deployment names its
+full service-account email explicitly; the default Compute Engine service account
+is never used. Google-managed platform service agents may still perform their
+documented control-plane work.
+
 ## 5. Agents and model routing
 
 Only these two model identifiers are allowed at runtime:
@@ -230,6 +246,8 @@ Hisaar Gate, not Shaahid or another LLM, decides whether the incident becomes
 
 The quick security-control beat uses a separate injection fixture. Model Armor
 blocks it before the AP agent runs, producing zero proposal and zero mutation.
+If Model Armor is unavailable, errored or inconclusive, the same input is blocked
+safely and is never described as an attack detection.
 
 ## 7. Deterministic authority
 
@@ -237,23 +255,44 @@ The lean state machine is:
 
 `DETECTED → QUARANTINED → INVESTIGATING → PLAN_READY → AWAITING_APPROVAL → APPROVED → COMPLETED → VERIFIED`
 
-`REJECTED` and `BLOCKED` are terminal alternatives.
+`BLOCKED` is the sole failure terminal, with a required reason.
 
 All state changes use a Firestore transaction that checks the current state and
 version. Gemini calls and external tool calls run outside transaction callbacks.
 
 The approval boundary uses:
 
-- a verified Google/IAP commander identity;
-- an allowlisted subject;
+- a Google Sign-In ID token held in browser memory and sent as a bearer token;
+- backend verification of Google's signature, issuer, expiry and the exact OAuth
+  web-client audience;
+- an allowlisted stable `sub` commander subject; email is display-only;
 - an exact same-origin, JSON-only request;
 - a server-side reload of the current warrant and trusted source version;
 - a ten-minute warrant expiry; and
 - one atomic `AWAITING_APPROVAL → APPROVED` transition.
 
-There is no separate browser nonce collection. A duplicate or stale approval
-cannot create another execution opportunity because the expected state/version
-no longer matches.
+There is no auth cookie or separate browser nonce collection. A duplicate or
+stale approval cannot create another execution opportunity because the expected
+state/version no longer matches. Human rejection persists the commander subject,
+rationale and server timestamp, transitions to `BLOCKED/HUMAN_REJECTED` and
+creates no execution opportunity. An expired current warrant transitions to
+`BLOCKED/WARRANT_EXPIRED`; retry starts a new recovery attempt from quarantine,
+retains the invoice business idempotency key and creates a fresh warrant. Wrong
+identity is denied without changing incident state.
+
+Authentication is route-specific even though one Cloud Run service hosts the
+application. Every Google token is checked for signature, issuer, expiry, exact
+route audience and expected subject or service-account email.
+`/api/commander/*` accepts only the configured Google web-client audience and
+allowlisted human subject. `/internal/pubsub/events` accepts only the configured
+Pub/Sub push audience and `hisaar-app` identity. Its strict discriminated
+envelope admits only `invoice.received`, `continuity.checkpoint` and
+`recovery.execute`, each with an event-specific idempotency key.
+`/internal/tools/ap/*` accepts only `hisaar-ap-runtime`; recovery tool routes
+accept only `hisaar-recovery-runtime`. Issuer validity alone never grants
+authority. The browser launch request publishes and returns; the UI polls
+persisted state rather than waiting synchronously for Pub/Sub to call the same
+service.
 
 ## 8. Command-room experience
 
@@ -289,10 +328,13 @@ is permitted.
 ## 9. Genuine multi-week context
 
 Fortified Enterprise Fleet explicitly asks how agents maintain context across
-weeks of asynchronous operation. A scheduled job creates genuine checkpoints on
-Day 0, Day 7, Day 14 and Day 21. Each checkpoint stores a short operational fact,
-its prior checkpoint reference and the actual server timestamp in Memory Bank and
-Firestore.
+weeks of asynchronous operation. Day 0 was bootstrapped directly through the
+Memory Bank API by the local deployer under the final Recovery Runtime. Cloud
+Scheduler, configured in `Asia/Karachi`, publishes date-keyed events through the
+authenticated Pub/Sub boundary to create genuine checkpoints on Day 7, Day 14
+and Day 21. Each checkpoint stores a short operational fact, its prior checkpoint
+reference and the actual server timestamp in Memory Bank and Firestore. Creation
+is idempotent by calendar date.
 
 The final demo shows the real sequence and one material use: the recovery fleet
 retrieves the latest trusted operational policy from that history. Missing future
@@ -305,7 +347,8 @@ There is no automatic GitHub workflow.
 
 The one local command `make demo-check` covers only these invariants:
 
-1. Injection input never reaches Gemini.
+1. Injection input and unavailable, errored or inconclusive screening never reach
+   Gemini.
 2. Vendor mismatch reaches `QUARANTINED` with no receipt.
 3. Execution before approval is denied.
 4. Wrong or expired approval is denied.

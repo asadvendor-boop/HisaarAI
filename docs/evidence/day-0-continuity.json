@@ -1,0 +1,36 @@
+{
+  "calendar": {
+    "day_0": "2026-08-09",
+    "day_14": "2026-08-23",
+    "day_21": "2026-08-30",
+    "day_7": "2026-08-16",
+    "timezone": "Asia/Karachi"
+  },
+  "configured_model_endpoint": "global",
+  "day": 0,
+  "fact": "HisaarAI Day 0 continuity policy: recovery must exclude quarantined invoice-derived context and use the trusted vendor master before any sandbox payment.",
+  "location": "us-central1",
+  "memory_create_time": "2026-08-08T19:50:44.209785+00:00",
+  "memory_creation_actor": "Local deployer application-default credentials; Memory is stored under the deployed Recovery Runtime",
+  "memory_name": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/6243621652144324608",
+  "memory_revision_create_time": "2026-08-08T19:50:44.209785+00:00",
+  "memory_revision_expire_time": "2027-08-08T19:50:44.195461+00:00",
+  "memory_revision_name": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/6243621652144324608/revisions/2389586264371232768",
+  "memory_update_time": "2026-08-08T19:50:44.209785+00:00",
+  "project_id": "hisaarai-agentic-2026",
+  "recorded_at_utc": "2026-08-08T20:04:57.316823+00:00",
+  "requested_model": "gemini-3.5-flash-lite",
+  "runtime_effective_identity": "hisaar-recovery-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com",
+  "runtime_name": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336",
+  "runtime_probe": {
+    "event_count": 1,
+    "response_text": "HisaarAI recovery operations prioritize system stabilization and data integrity while strictly prohibiting any financial transactions or payment processing."
+  },
+  "runtime_service_account": "hisaar-recovery-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com",
+  "schema_version": 1,
+  "scope": {
+    "app_name": "hisaarai",
+    "timeline": "all-things-agentic-2026"
+  },
+  "source": "Callable Google Agent Runtime plus Memory Bank and immutable MemoryRevision API readback"
+}

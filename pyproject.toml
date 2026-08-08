@@ -1,0 +1,14 @@
+[project]
+name = "hisaarai"
+version = "0.1.0"
+description = "HisaarAI governed agent-fleet recovery command room"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "cloudpickle==3.1.2",
+  "google-adk==2.6.3",
+  "google-cloud-aiplatform[adk,agent-engines]==1.163.0",
+  "pydantic==2.13.4",
+]
+
+[tool.uv]
+package = false

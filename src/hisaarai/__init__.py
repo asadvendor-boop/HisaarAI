@@ -1,0 +1,1 @@
+"""HisaarAI application package."""
