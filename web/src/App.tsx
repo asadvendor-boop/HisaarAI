@@ -158,6 +158,19 @@ function elapsedLabel(start?: string, end?: string) {
   return `${(elapsed / 1000).toFixed(1)} SEC`;
 }
 
+export function missingTimelineStepLabel(
+  step: IncidentState,
+  cleanTrustedPath: boolean,
+) {
+  if (
+    cleanTrustedPath
+    && (step === "QUARANTINED" || step === "INVESTIGATING")
+  ) {
+    return "NOT NEEDED";
+  }
+  return "PENDING";
+}
+
 function firstSentence(summary: string) {
   const match = summary.match(/^.*?[.!?](?:\s|$)/);
   const lead = match?.[0] ?? summary;
@@ -547,7 +560,7 @@ function App() {
                 const event = incident?.state_history.find((item) => item.state === step);
                 return (
                 <li className={incident?.state === step ? "current" : observedStates.has(step) ? "done" : ""} key={step}>
-                  <i /><span>{step.replaceAll("_", " ")}</span><small>{event ? new Date(event.at).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"}) : "PENDING"}</small>
+                  <i /><span>{step.replaceAll("_", " ")}</span><small>{event ? new Date(event.at).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"}) : missingTimelineStepLabel(step, cleanTrustedPath)}</small>
                 </li>
                 );
               })}
