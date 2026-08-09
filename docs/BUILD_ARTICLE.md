@@ -24,11 +24,14 @@ exact digest.
 
 The implementation uses Gemini 3.6 Flash and Gemini 3.5 Flash-Lite through Google
 ADK, two callable Agent Runtime resources with separate runtime identities,
-Memory Bank, Model Armor, Pub/Sub, Cloud Run, Firestore, Cloud Logging, and Cloud
-Trace. Agents receive typed bounded inputs; deterministic Gate code and the
-commander retain authority. A genuine Day-0 Memory revision is already part of
-the warrant. Day-7, Day-14 and Day-21 are scheduled but remain `PENDING`; only a
-revision captured on its actual date may extend the history.
+Agent Registry, Memory Bank, Model Armor, Pub/Sub, Cloud Run, Firestore, Cloud
+Logging, and Cloud Trace. The official Registry readback discovers exactly the
+two HisaarAI Runtime agents and their separate deployed identities; it is catalog
+proof rather than an execution boundary. Agents receive typed bounded inputs;
+deterministic Gate code and the commander retain authority. A genuine Day-0
+Memory revision is already part of the warrant. Day-7, Day-14 and Day-21 are
+scheduled but remain `PENDING`; only a revision captured on its actual date may
+extend the history.
 
 The command room compresses the architecture into one judge-readable screen:
 the altered and trusted bank fingerprints, live agent roles, the Gate-owned

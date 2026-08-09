@@ -37,10 +37,12 @@ production-money claim.
 HisaarAI uses Google ADK on two callable Agent Runtime resources. The protected
 AP agent uses Gemini 3.6 Flash; the recovery Runtime contains five distinct ADK
 roles routed across Gemini 3.6 Flash and Gemini 3.5 Flash-Lite with explicit
-thinking levels. Cloud Run hosts one FastAPI/React command room, Pub/Sub provides
-authenticated asynchronous delivery, Model Armor screens the PDF text and exact
-model input, Firestore holds the transactional authority and idempotent sandbox
-receipt, and Cloud Trace correlates the journey.
+thinking levels. An official Agent Registry readback discovers exactly those two
+HisaarAI Runtime agents and their separate identities; Registry is catalog proof,
+not approval authority. Cloud Run hosts one FastAPI/React command room, Pub/Sub
+provides authenticated asynchronous delivery, Model Armor screens the PDF text
+and exact model input, Firestore holds the transactional authority and
+idempotent sandbox receipt, and Cloud Trace correlates the journey.
 
 Memory Bank stores a genuine Day-0 revision under the final Recovery Runtime,
 with Day-7/14/21 checkpoints scheduled against the same endpoint. The recovery
@@ -83,13 +85,14 @@ and deterministic Gate code plus the commander decide whether work may proceed.
 - One human decision followed by one idempotent sandbox receipt
 - Deterministic verification that cannot be overruled by the witness agent
 - Genuine Day-0 Memory Bank evidence, with Day-7/14/21 capture scheduled on their real dates
+- Official Agent Registry discovery of exactly the two HisaarAI Runtime agents
 - One responsive command room with live Google provenance
 
 ## Built with
 
 Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, Google ADK, two Agent Runtime resources,
-Memory Bank, Model Armor, Vertex AI, Cloud Run, Pub/Sub, Cloud Scheduler,
-Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
+Agent Registry, Memory Bank, Model Armor, Vertex AI, Cloud Run, Pub/Sub, Cloud
+Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 
 ## Links to fill at submission
 
@@ -97,6 +100,7 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 - Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f>
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
+- Agent Registry evidence: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/evidence/agent-registry.json>
 - Demo video: `PENDING`
 - Optional public article candidate: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md> (bonus eligibility/acceptance not confirmed)
 

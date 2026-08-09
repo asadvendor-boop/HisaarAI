@@ -46,6 +46,8 @@ receipt. The Protected AP and Recovery Fleet are two callable Agent Runtime
 resources with separate runtime identities; the recovery resource holds five
 distinct roles because observation, investigation, planning, clean execution and
 witness narration require different evidence and authority boundaries.
+Official Agent Registry discovery catalogs exactly those two deployed Runtime
+agents; it adds discovery proof, not execution or approval authority.
 
 ## Google stack and model routing
 
@@ -58,12 +60,19 @@ witness narration require different evidence and authority boundaries.
 | Clean AP standby | `gemini-3.6-flash` | Medium | Approved request only |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default | Narrative only |
 
-The application uses Google ADK, two callable Agent Runtime resources, Memory
-Bank, Gemini on Vertex AI, Model Armor, Cloud Run, Pub/Sub, Cloud Scheduler,
-Firestore, Cloud Logging and Cloud Trace. No other Gemini model is allowed and
-no silent cross-model fallback is implemented. The protected proposal and
-specialist findings persist requested model, actual model and thinking level;
-runtime clients reject an unexpected model response.
+The application uses Google ADK, two callable Agent Runtime resources, Agent
+Registry, Memory Bank, Gemini on Vertex AI, Model Armor, Cloud Run, Pub/Sub,
+Cloud Scheduler, Firestore, Cloud Logging and Cloud Trace. No other Gemini model
+is allowed and no silent cross-model fallback is implemented. The protected
+proposal and specialist findings persist requested model, actual model and
+thinking level; runtime clients reject an unexpected model response.
+
+On 2026-08-09, the official Agent Registry readback returned exactly two
+HisaarAI entries: **HisaarAI Protected AP** and **HisaarAI Recovery Fleet**,
+automatically tied to their current Runtime resources and separate deployed
+identities. The bounded readback is recorded in
+[`docs/evidence/agent-registry.json`](docs/evidence/agent-registry.json); it does
+not include unrelated catalog entries.
 
 ## Genuine continuity clock
 

@@ -68,6 +68,8 @@ The architecture is deliberately small but real:
 - **Google ADK:** distinct agent roles receiving typed bounded inputs.
 - **Two callable Agent Runtime resources:** one protected AP Runtime and one
   recovery fleet Runtime, using separate runtime identities.
+- **Agent Registry:** official discovery readback catalogs exactly those two
+  HisaarAI Runtime agents; it is evidence, not an execution or authority layer.
 - **Memory Bank:** one genuine Day-0 checkpoint exists now; Day 7, Day 14 and
   Day 21 are scheduled and remain `PENDING` until their actual dates.
 - **Model Armor:** direct prompt/document screening before Gemini receives the
@@ -104,8 +106,9 @@ The public proof package contains:
 - One polished command-room UI driven by persisted backend state.
 - One continuous, unedited, English demo no longer than four minutes, once it is
   recorded and published; until then its status remains `PENDING`.
-- Visible Google Cloud proof: `.run.app` URL, both Runtime resource identities,
-  Memory Bank and a correlated trace or log view.
+- Visible Google Cloud proof: `.run.app` URL, the two-entry Agent Registry
+  discovery view, both Runtime resource identities, Memory Bank and a correlated
+  trace or log view.
 - A public repository with a clean architecture diagram, concise README and
   reproducible local/deployment instructions.
 - One genuine flagship journey plus a short Model Armor control beat.
@@ -325,8 +328,8 @@ It prioritizes comprehension over evidence density.
 - `Trusted payment: completed once`
 - Receipt identifier and replay `MATCH`
 - Shaahid verification summary
-- Google Cloud provenance chips linking both Runtime resources, Memory Bank and
-  correlated Trace evidence
+- Google Cloud provenance linking the two-entry Agent Registry discovery,
+  both Runtime resources, Memory Bank and correlated Trace evidence
 
 No fake map, simulated log stream, invented latency or decorative security score
 is permitted.
@@ -386,9 +389,9 @@ guaranteed latency or exhaustive least privilege.
   warrant as the human commander.
 - **2:35–3:05 — Safe completion:** the clean standby completes once; repeat returns
   the same receipt; Shaahid reports `MATCH`; Gate shows `VERIFIED`.
-- **3:05–3:35 — Platform proof:** show both Agent Runtime resources, the
-  correlated Google Cloud trace and genuine Memory Bank checkpoints available
-  at recording time.
+- **3:05–3:35 — Platform proof:** show the live two-entry Agent Registry
+  discovery, both Agent Runtime resources, the correlated Google Cloud trace and
+  genuine Memory Bank checkpoints available at recording time.
 - **3:35–4:00 — Close:** restate the business outcome and architecture in one
   sentence: Hisaar does not merely detect a compromised agent; it safely finishes
   the work.

@@ -1,0 +1,19 @@
+{
+  "captured_at": "2026-08-09",
+  "agents": [
+    {
+      "display_name": "HisaarAI Recovery Fleet",
+      "registry_resource_name": "projects/hisaarai-agentic-2026/locations/us-central1/agents/agentregistry-00000000-0000-0000-e16f-14415ef0f8ba",
+      "runtime_reference": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336",
+      "framework": "google-adk",
+      "identity": "hisaar-recovery-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com"
+    },
+    {
+      "display_name": "HisaarAI Protected AP",
+      "registry_resource_name": "projects/hisaarai-agentic-2026/locations/us-central1/agents/agentregistry-00000000-0000-0000-c499-1d501b350793",
+      "runtime_reference": "projects/957109932069/locations/us-central1/reasoningEngines/9065615757768916992",
+      "framework": "google-adk",
+      "identity": "hisaar-ap-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com"
+    }
+  ]
+}

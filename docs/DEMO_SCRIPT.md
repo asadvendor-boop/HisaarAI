@@ -90,13 +90,16 @@ deterministic `MATCH` are the complete claim for this take.
 
 ## 2:40–2:58 — Google proof before the final minute
 
-Point first to the `.run.app` address, then open or hover the proof links for both
-Agent Runtime resources, the named Firestore database, Model Armor and the
-correlated Trace. Point to the loaded Memory revision in the warrant.
+Point first to the `.run.app` address, then show the live Agent Registry catalog:
+exactly **HisaarAI Protected AP** and **HisaarAI Recovery Fleet**, each tied to
+its current Runtime and separate identity. Continue through the named Firestore
+database, Model Armor and correlated Trace, then point to the loaded Memory
+revision in the warrant.
 
-“These are live Google resources, not UI labels. The primary and recovery
-Runtimes use different user-managed service accounts; the default Compute
-service account is not deployed.”
+“These are live Google resources, not UI labels. Agent Registry discovers the
+two Runtime agents; it does not grant approval authority. The primary and
+recovery Runtimes use different user-managed service accounts, and the default
+Compute service account is not deployed.”
 
 ## 2:58–3:20 — Close
 

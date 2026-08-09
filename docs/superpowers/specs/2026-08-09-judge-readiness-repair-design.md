@@ -61,8 +61,9 @@ long identifiers do not dominate the four-minute recording.
 
 ## Claim calibration and submission
 
-- Public materials claim two callable ADK Agent Runtime resources, not a distinct
-  Agent Registry integration unless a separate live readback is captured.
+- Public materials claim two callable ADK Agent Runtime resources and, after the
+  2026-08-09 official live readback, Agent Registry discovery of exactly those
+  two HisaarAI Runtime agents. Registry is catalog proof, not execution authority.
 - “Tool boundaries” becomes “typed input and authority boundaries” because the
   fleet is routed through bounded payloads rather than agent-callable tool APIs.
 - Devpost explicitly names synthetic PDF fixtures, the Firestore vendor master

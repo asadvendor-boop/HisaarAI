@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
   <title id="title">HisaarAI governed multi-agent recovery architecture</title>
-  <desc id="description">A dark industrial diagram separating purple agent reasoning in two Agent Runtime resources from amber deterministic authority in Cloud Run Hisaar Gate and Firestore.</desc>
+  <desc id="description">A dark industrial diagram separating purple agent reasoning in two Agent Runtime resources from amber deterministic authority in Cloud Run Hisaar Gate and Firestore, with Agent Registry as discovery catalog proof.</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#080b11"/>
@@ -21,6 +21,9 @@
     <marker id="arrow-authority" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
       <path d="M0 0L10 5L0 10Z" fill="#ffb454"/>
     </marker>
+    <marker id="arrow-catalog" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#4cc6b7"/>
+    </marker>
     <style>
       .label { font: 700 19px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .04em; fill: #f5f7fb; }
       .kicker { font: 700 13px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .14em; fill: #8e9aad; }
@@ -33,10 +36,12 @@
       .security { fill: #251923; stroke: #e96b8d; stroke-width: 2.5; }
       .data { fill: #142628; stroke: #4cc6b7; stroke-width: 2.5; }
       .trace { fill: #152130; stroke: #5b9de8; stroke-width: 2.5; }
+      .catalog { fill: #12262a; stroke: #4cc6b7; stroke-width: 2; }
       .flow { fill: none; stroke: #8e9aad; stroke-width: 3; marker-end: url(#arrow-neutral); }
       .reason-flow { fill: none; stroke: #a88cff; stroke-width: 3; marker-end: url(#arrow-reason); }
       .authority-flow { fill: none; stroke: #ffb454; stroke-width: 3; marker-end: url(#arrow-authority); }
       .telemetry { fill: none; stroke: #5b9de8; stroke-width: 2; stroke-dasharray: 8 8; marker-end: url(#arrow-neutral); opacity: .8; }
+      .catalog-flow { fill: none; stroke: #4cc6b7; stroke-width: 2; stroke-dasharray: 7 7; marker-end: url(#arrow-catalog); opacity: .9; }
     </style>
   </defs>
 
@@ -53,6 +58,13 @@
     <text x="88" y="211" class="label">Command Room UI</text>
     <text x="88" y="241" class="copy">Google ID token for mutations</text>
     <text x="88" y="265" class="copy">Public read-only incident proof</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="295" width="360" height="80" rx="12" class="catalog"/>
+    <text x="82" y="319" class="kicker" fill="#79ddd1">DISCOVERY CATALOG</text>
+    <text x="82" y="346" class="label">Agent Registry</text>
+    <text x="82" y="367" class="small">2 VERIFIED HISAARAI RUNTIME AGENTS</text>
   </g>
 
   <g filter="url(#shadow)">
@@ -148,6 +160,8 @@
   <path d="M700 285H515V620H650V657" class="authority-flow"/>
   <text x="525" y="608" class="small" fill="#ffc77f">DATE-GATED CHECKPOINT WRITE</text>
   <path d="M918 730H930V550H957" class="reason-flow"/>
+  <path d="M555 410H500V348H428" class="catalog-flow"/>
+  <path d="M965 390H940V325H428" class="catalog-flow"/>
   <path d="M883 300V625H1240V657" class="telemetry"/>
   <path d="M330 520V625H1090V657" class="telemetry"/>
   <path d="M1250 585V657" class="telemetry"/>

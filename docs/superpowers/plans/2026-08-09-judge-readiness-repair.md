@@ -93,15 +93,17 @@ Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, React, TypeScript and Vite.
 
 **Interfaces:**
 - Public materials say “two callable Agent Runtime resources” and “typed input
-  and authority boundaries”; they do not claim a separately proven Registry or
-  agent-callable tool layer.
+  and authority boundaries.” After official live readback, they may also claim
+  Agent Registry discovery of exactly those two Runtime agents, but no
+  agent-callable tool layer or Registry execution authority.
 - Devpost names the three data sources and one implementation learning.
 - README documents every required environment variable and the no-cloud
   `make demo-check` path.
 - Demo opens outcome-first, states the observed `n=1` transformation, shows
   cloud proof before the final minute and remains under four minutes.
 
-- [ ] Remove or replace unsupported Registry/tool-boundary claims everywhere.
+- [x] Calibrate Registry and tool-boundary claims everywhere; after the official
+      readback, add only the bounded two-agent discovery proof.
 - [ ] Add the outcome-first buyer/data-source/learnings copy and static diagram.
 - [ ] Update setup and public testing instructions without adding release
       ceremony.

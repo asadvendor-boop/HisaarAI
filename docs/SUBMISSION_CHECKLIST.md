@@ -29,6 +29,11 @@ This is a lean human checklist, not a release verifier.
 - [x] Only `gemini-3.6-flash` and `gemini-3.5-flash-lite` are used.
 - [x] Google ADK, Agent Runtime, Google Cloud services, and new hackathon work
   are visible in the repo and demo.
+- [x] Official Agent Registry readback lists exactly **HisaarAI Protected AP**
+  and **HisaarAI Recovery Fleet**, tied to Runtime resources
+  `9065615757768916992` and `6980660236528910336` with their separate deployed
+  identities; the bounded evidence is in
+  [`evidence/agent-registry.json`](evidence/agent-registry.json).
 - [x] README, architecture, limitations, setup, provenance, fixtures, and live
   evidence are present.
 - [ ] Record one continuous normal-speed English demo no longer than four
