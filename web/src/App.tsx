@@ -217,11 +217,18 @@ function App() {
       pendingLaunchRef.current = false;
       setData(nextData);
       if (wasPendingLaunch) {
-        setNotice(
-          nextData.incident.state === "BLOCKED"
-            ? "Model Armor blocked the injection before Gemini."
-            : "Authenticated event delivered. Hisaar Gate is live.",
-        );
+        if (nextData.incident.state !== "BLOCKED") {
+          setNotice("Authenticated event delivered. Hisaar Gate is live.");
+        } else if (
+          nextData.incident.reason === "MODEL_ARMOR_MATCH"
+          && nextData.incident.screening_decision === "MATCH"
+        ) {
+          setNotice("Model Armor matched the injection and blocked it before Gemini.");
+        } else if (nextData.incident.reason === "SCREENING_UNAVAILABLE") {
+          setNotice("Screening was unavailable. Hisaar Gate failed closed before Gemini.");
+        } else {
+          setNotice(`Hisaar Gate failed closed: ${nextData.incident.reason?.replaceAll("_", " ") ?? "BLOCK REASON UNAVAILABLE"}.`);
+        }
       }
     } catch (error) {
       if (requestSequence !== refreshSequenceRef.current) return;
@@ -347,8 +354,15 @@ function App() {
   const quarantineTime = elapsedLabel(detectedAt, quarantinedAt);
   const totalTime = elapsedLabel(detectedAt, verifiedAt);
   const modelArmorBlock = incident?.state === "BLOCKED"
+    && incident.reason === "MODEL_ARMOR_MATCH"
+    && incident.screening_decision === "MATCH"
     && incident.gemini_invocations === 0
-    && incident.screening_decision !== "CLEAR"
+    && !incident.proposal
+    && !data?.receipt;
+  const screeningUnavailable = incident?.state === "BLOCKED"
+    && incident.reason === "SCREENING_UNAVAILABLE"
+    && incident.screening_decision === "UNAVAILABLE"
+    && incident.gemini_invocations === 0
     && !incident.proposal
     && !data?.receipt;
   const trustedExecution = incident?.state === "VERIFIED"
@@ -411,13 +425,19 @@ function App() {
           </article>
           <article className="control-cell">
             <span>HISAAR CONTROL</span>
-            <strong>{modelArmorBlock ? "BLOCKED BEFORE GEMINI" : quarantinedAt ? "QUARANTINED BEFORE UNSAFE RECEIPT" : "CONTROL NOT REACHED"}</strong>
-            <p>{modelArmorBlock
+            <strong>{modelArmorBlock
+              ? "BLOCKED BEFORE GEMINI"
+              : screeningUnavailable
+                ? "SCREENING_UNAVAILABLE / FAIL CLOSED"
+                : quarantinedAt
+                  ? "QUARANTINED BEFORE UNSAFE RECEIPT"
+                  : "CONTROL NOT REACHED"}</strong>
+            <p>{modelArmorBlock || screeningUnavailable
               ? `${incident.gemini_invocations} GEMINI CALLS / ${data?.receipt ? 1 : 0} MUTATIONS`
               : quarantineTime
                 ? `TIME TO QUARANTINE ${quarantineTime}`
                 : "No observed control timing yet."}</p>
-            {(modelArmorBlock || quarantineTime) && <small>OBSERVED RUN / n=1</small>}
+            {(modelArmorBlock || screeningUnavailable || quarantineTime) && <small>OBSERVED RUN / n=1</small>}
           </article>
           <article className={trustedExecution ? "after-cell verified" : "after-cell"}>
             <span>AFTER</span>
@@ -431,7 +451,7 @@ function App() {
               : incident?.state === "BLOCKED" && !data?.receipt
                 ? "NO RECEIPT / NO MUTATION"
                 : "Awaiting persisted receipt and verification."}</p>
-            {(trustedExecution || modelArmorBlock) && <small>OBSERVED RUN / n=1</small>}
+            {(trustedExecution || modelArmorBlock || screeningUnavailable) && <small>OBSERVED RUN / n=1</small>}
           </article>
         </section>
 
