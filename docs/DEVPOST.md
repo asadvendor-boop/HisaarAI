@@ -110,6 +110,8 @@ Open either read-only proof link to inspect a genuine hosted incident without an
 account. New launches and the exact-warrant approval are intentionally limited
 to the allowlisted Incident Commander. The verified-recovery link is expected to
 show the attacker proposal, quarantine, trusted destination, one receipt,
-deterministic `MATCH` and `VERIFIED`; the Model Armor link is expected to show
+deterministic `MATCH` and `VERIFIED`. A judge can click the public read-only
+receipt replay to recompute the warrant/source/receipt comparison and return the
+same receipt without any mutation. The Model Armor link is expected to show
 `MATCH`, zero Gemini calls and no receipt. Demo video: `PENDING` until a public
 URL exists.

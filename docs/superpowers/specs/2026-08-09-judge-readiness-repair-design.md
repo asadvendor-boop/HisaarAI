@@ -1,7 +1,7 @@
 # HisaarAI Judge-Readiness Repair Design
 
-**Date:** 2026-08-09  
-**Status:** Approved by the user on 2026-08-09  
+**Date:** 2026-08-09
+**Status:** Approved by the user on 2026-08-09
 **Scope rule:** Repair judge-visible truth, resilience and scoring clarity only.
 
 ## Outcome
@@ -86,4 +86,3 @@ The repair is ready for recording only after:
    `VERIFIED`;
 5. a fresh hosted clean control completes normally;
 6. the public proof links and final Devpost copy match those observed behaviors.
-

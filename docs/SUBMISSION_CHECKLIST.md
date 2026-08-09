@@ -48,7 +48,8 @@ This is a lean human checklist, not a release verifier.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
 - [ ] Reopen every submitted public URL from a signed-out browser and confirm
-  the app, repository and video are publicly readable.
+  the app, repository and video are publicly readable; on the verified proof,
+  run the public read-only replay and confirm the same receipt returns `MATCH`.
 - [ ] Keep the hosted app and both read-only proof links live through the full
   judging period.
 

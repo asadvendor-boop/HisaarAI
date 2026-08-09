@@ -170,6 +170,38 @@ def create_app(
             "receipt": receipt.model_dump(mode="json") if receipt else None,
         }
 
+    def replay_readback(incident_id: str) -> dict[str, str]:
+        try:
+            incident = store.get_incident(incident_id)
+            receipt = store.get_receipt(incident.business_idempotency_key)
+        except NotFoundError as exc:
+            raise HTTPException(status_code=404, detail="Incident not found") from exc
+        if (
+            incident.state.value != "VERIFIED"
+            or incident.verification != "MATCH"
+            or receipt is None
+            or receipt.incident_id != incident.incident_id
+            or receipt.receipt_id != incident.receipt_id
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Replay requires a verified incident with its stable receipt",
+            )
+        if not governed_recovery.gate.receipt_matches(incident, receipt):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Replay receipt comparison failed",
+            )
+        return {
+            "state": "VERIFIED",
+            "receipt_id": receipt.receipt_id,
+            "replay": "MATCH",
+        }
+
+    @app.get("/api/incidents/{incident_id}/replay")
+    def public_replay(incident_id: str) -> dict[str, str]:
+        return replay_readback(incident_id)
+
     @app.get("/api/continuity")
     def read_continuity() -> dict[str, object]:
         return {
@@ -262,32 +294,7 @@ def create_app(
         _caller: AuthenticatedCaller = Depends(commander_auth),
     ) -> dict[str, str]:
         _same_origin_json(request)
-        try:
-            incident = store.get_incident(incident_id)
-            receipt = store.get_receipt(incident.business_idempotency_key)
-        except NotFoundError as exc:
-            raise HTTPException(status_code=404, detail="Incident not found") from exc
-        if (
-            incident.state.value != "VERIFIED"
-            or incident.verification != "MATCH"
-            or receipt is None
-            or receipt.incident_id != incident.incident_id
-            or receipt.receipt_id != incident.receipt_id
-        ):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Replay requires a verified incident with its stable receipt",
-            )
-        if not governed_recovery.gate.receipt_matches(incident, receipt):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Replay receipt comparison failed",
-            )
-        return {
-            "state": "VERIFIED",
-            "receipt_id": receipt.receipt_id,
-            "replay": "MATCH",
-        }
+        return replay_readback(incident_id)
 
     @app.post("/api/commander/incidents/{incident_id}/reject")
     def reject(

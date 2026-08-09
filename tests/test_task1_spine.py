@@ -427,6 +427,32 @@ def test_replay_recomputes_the_bound_receipt_comparison(
     assert replayed.json()["detail"] == "Replay receipt comparison failed"
 
 
+def test_public_replay_proof_needs_no_account_and_returns_the_bound_receipt(
+    settings: Settings,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    governed.approve(
+        incident.incident_id,
+        commander_subject=settings.commander_subject,
+        warrant_digest=incident.warrant.digest,
+    )
+    verified, receipt = governed.execute_and_verify(incident.incident_id)
+    assert verified.state == IncidentState.VERIFIED
+    assert receipt is not None
+    client = TestClient(
+        create_app(settings, store=store, governed_recovery=governed)
+    )
+
+    replayed = client.get(f"/api/incidents/{incident.incident_id}/replay")
+
+    assert replayed.status_code == 200
+    assert replayed.json() == {
+        "state": "VERIFIED",
+        "receipt_id": receipt.receipt_id,
+        "replay": "MATCH",
+    }
+
+
 def test_completed_receipt_resumes_verification_without_a_second_mutation(
     settings: Settings,
 ) -> None:

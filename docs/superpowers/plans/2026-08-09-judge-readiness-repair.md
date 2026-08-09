@@ -133,4 +133,3 @@ Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, React, TypeScript and Vite.
       candidate if those IDs changed after the first deployment.
 - [ ] Perform desktop/mobile browser inspection and two timed continuous
       rehearsals; leave recording/upload/submission as explicit human actions.
-

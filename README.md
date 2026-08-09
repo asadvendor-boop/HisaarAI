@@ -166,6 +166,11 @@ Firestore authority:
 - **Block before Gemini** is expected to show Model Armor `MATCH`, zero Gemini
   invocations, no proposal and no receipt.
 
+On the verified proof, a signed-out judge can also click **Verify one-receipt
+replay**. That public read-only action reloads the persisted warrant and receipt,
+recomputes the deterministic comparison, and returns the same receipt with
+`MATCH`; it cannot launch, approve or mutate an incident.
+
 Launch, reject and approval remain restricted to the allowlisted Incident
 Commander because that identity boundary is part of the product. The public
 video remains **PENDING** until a public URL exists; these links are the current

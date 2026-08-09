@@ -328,10 +328,7 @@ function App() {
     if (!data?.receipt || data.incident.state !== "VERIFIED") return;
     setBusy("replay");
     try {
-      const result = await api(`/api/commander/incidents/${data.incident.incident_id}/replay`, {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
+      const result = await api(`/api/incidents/${data.incident.incident_id}/replay`);
       if (result.replay !== "MATCH" || result.receipt_id !== data.receipt.receipt_id) {
         throw new Error("Replay did not return the bound receipt.");
       }
@@ -584,14 +581,12 @@ function App() {
             </dl>
             {incident?.state === "VERIFIED" && data?.receipt && (
               <div className="replay-control">
-                <button className="replay" onClick={replay} disabled={!token || !!busy}>
+                <button className="replay" onClick={replay} disabled={!!busy}>
                   {busy === "replay" ? "VERIFYING RECEIPT…" : "VERIFY ONE-RECEIPT REPLAY"}
                 </button>
                 <p aria-live="polite">{replayEvidence
                   ? `${replayEvidence.verdict} / ${replayEvidence.receiptId}`
-                  : !token
-                    ? `ONE RECEIPT BOUND / ${data.receipt.receipt_id}`
-                    : "ONE RECEIPT BOUND / REPLAY NOT YET RUN"}</p>
+                  : `ONE RECEIPT BOUND / ${data.receipt.receipt_id} / REPLAY NOT YET RUN`}</p>
               </div>
             )}
           </article>
