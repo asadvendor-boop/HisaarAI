@@ -94,8 +94,8 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 Future entries are never backfilled or shown as complete early. Recovery reads
 the latest real revision and persists its exact resource name in the warrant.
 Day-0 evidence is in [`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).
-The authenticated run revision and the current hosted UI revision are identified
-separately alongside the latest injection and semantic-path readbacks in
+The authenticated run revision is recorded alongside the latest injection,
+semantic-path and clean-control readbacks in
 [`docs/evidence/hosted-judge-path.json`](docs/evidence/hosted-judge-path.json).
 
 ## Run the no-cloud product check

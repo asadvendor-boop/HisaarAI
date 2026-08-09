@@ -108,6 +108,23 @@ function stateIndex(state?: IncidentState) {
 
 function agentStatus(index: number, incident: Incident | null, receipt: Receipt | null) {
   if (!incident) return "STANDBY";
+  const cleanPath = !!incident.proposal
+    && !!incident.trusted_vendor
+    && incident.proposal.bank_fingerprint === incident.trusted_vendor.bank_fingerprint
+    && !incident.state_history.some((event) => event.state === "QUARANTINED")
+    && incident.findings.length === 0;
+  if (cleanPath) {
+    if (index === 0) return "COMPLETE";
+    if (index >= 1 && index <= 3) return "NOT NEEDED";
+    if (index === 4) {
+      if (receipt) return "COMPLETE";
+      return incident.state === "APPROVED" || incident.state === "COMPLETED"
+        ? "ACTIVE"
+        : "CLEAN / LOCKED";
+    }
+    if (incident.witness_summary) return "COMPLETE";
+    return incident.state === "COMPLETED" ? "ACTIVE" : "STANDBY";
+  }
   if (incident.state === "BLOCKED") {
     if (index === 0) {
       if (incident.reason === "PROTECTED_AP_FAILED") return "FAILED";
@@ -378,6 +395,11 @@ function App() {
     && incident.gemini_invocations === 0
     && !incident.proposal
     && !data?.receipt;
+  const cleanTrustedPath = !!incident?.proposal
+    && !!incident.trusted_vendor
+    && incident.screening_decision === "CLEAR"
+    && incident.proposal.bank_fingerprint === incident.trusted_vendor.bank_fingerprint
+    && !quarantinedAt;
   const trustedExecution = incident?.state === "VERIFIED"
     && incident.verification === "MATCH"
     && !!data?.receipt
@@ -447,13 +469,17 @@ function App() {
                 ? "SCREENING_UNAVAILABLE / FAIL CLOSED"
                 : quarantinedAt
                   ? "QUARANTINED BEFORE UNSAFE RECEIPT"
-                  : "CONTROL NOT REACHED"}</strong>
+                  : cleanTrustedPath
+                    ? "TRUSTED SOURCE MATCH / GOVERNED APPROVAL"
+                    : "CONTROL NOT REACHED"}</strong>
             <p>{modelArmorBlock || screeningUnavailable
               ? `${incident.gemini_invocations} GEMINI CALLS / ${data?.receipt ? 1 : 0} MUTATIONS`
               : quarantineTime
                 ? `TIME TO QUARANTINE ${quarantineTime}`
-                : "No observed control timing yet."}</p>
-            {(modelArmorBlock || screeningUnavailable || quarantineTime) && <small>OBSERVED RUN / n=1</small>}
+                : cleanTrustedPath
+                  ? "MODEL ARMOR CLEAR / NO QUARANTINE REQUIRED"
+                  : "No observed control timing yet."}</p>
+            {(modelArmorBlock || screeningUnavailable || quarantineTime || cleanTrustedPath) && <small>OBSERVED RUN / n=1</small>}
           </article>
           <article className={trustedExecution ? "after-cell verified" : "after-cell"}>
             <span>AFTER</span>
