@@ -11,9 +11,15 @@ and completes the sandbox payment exactly once.
 **Hackathon:** All Things Agentic 2026  
 **Track:** Fortified Enterprise Fleet  
 **Hosted app:** <https://hisaarai-2wkruw66na-uc.a.run.app/>  
-**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d)
+**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-fbd18054a45e4c77) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796) · [clean control](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195)
 **Built from scratch:** all implementation in this repository was created for
 this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
+
+**Observed hosted transformation (`n=1`, synthetic sandbox):** attacker routing
+was quarantined in 41.1 seconds with zero unsafe receipts; after one human
+decision, the trusted receipt was `VERIFIED` at 88.0 seconds and its public
+read-only replay returned the same receipt with `MATCH`. These are run-specific
+measurements, not a customer or production-money claim.
 
 ![HisaarAI governed recovery command room](docs/media/command-room.png)
 

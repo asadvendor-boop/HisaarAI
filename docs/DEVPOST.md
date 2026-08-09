@@ -27,9 +27,10 @@ verified.
 
 In one observed hosted run (`n=1`), a protected AP agent proposed an attacker
 destination for a PKR 4.275M synthetic invoice. HisaarAI quarantined it before
-any receipt, obtained one accountable approval, and produced one verified
-sandbox receipt to the trusted destination. This is the observed demo
-transformation, not a generalized performance, customer-deployment or
+any receipt in 41.1 seconds, obtained one accountable approval, and produced one
+verified sandbox receipt to the trusted destination at 88.0 seconds. A public
+read-only replay returned that same receipt with `MATCH`. This is the observed
+demo transformation, not a generalized performance, customer-deployment or
 production-money claim.
 
 ## How we built it
@@ -97,8 +98,9 @@ Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
-- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f>
-- Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d>
+- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-fbd18054a45e4c77>
+- Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>
+- Public read-only clean control: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Agent Registry evidence: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/evidence/agent-registry.json>
 - Demo video: `PENDING`

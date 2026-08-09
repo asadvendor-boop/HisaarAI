@@ -95,8 +95,9 @@ const steps: IncidentState[] = [
 ];
 
 const publicProofs = [
-  ["VERIFIED RECOVERY", "inc-invoice-f5ad15f9f622490f"],
-  ["BLOCK BEFORE GEMINI", "inc-invoice-419caa6acdfc444d"],
+  ["VERIFIED RECOVERY", "inc-invoice-fbd18054a45e4c77"],
+  ["BLOCK BEFORE GEMINI", "inc-invoice-5d86da12456b4796"],
+  ["CLEAN CONTROL", "inc-invoice-473fbd809fca4195"],
 ] as const;
 
 function stateIndex(state?: IncidentState) {

@@ -1,11 +1,11 @@
 {
-  "schema_version": 2,
-  "recorded_at_utc": "2026-08-09T07:26:47Z",
+  "schema_version": 3,
+  "recorded_at_utc": "2026-08-09T09:57:15Z",
   "hosted_url": "https://hisaarai-2wkruw66na-uc.a.run.app",
-  "recorded_run_revision": "hisaarai-00009-hlc",
-  "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:44a926cd888883a435d481bc46dc6b8c7c01561a22d607bd31800f7b40724700",
-  "current_cloud_run_revision": "hisaarai-00013-248",
-  "current_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:d87250902a82fe117cc5c6cdd3e2f3babee2bad28dcdd642bd33a0b8a42c967b",
+  "recorded_run_revision": "hisaarai-00014-knr",
+  "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:ebceb81360755310f728914b1f4a75edfe8a78d1ff6c00b66654811847fbe4a3",
+  "current_cloud_run_revision": "hisaarai-00014-knr",
+  "current_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:ebceb81360755310f728914b1f4a75edfe8a78d1ff6c00b66654811847fbe4a3",
   "current_health_status": "ok",
   "commander_auth": {
     "provider": "Google Sign-In",
@@ -14,7 +14,7 @@
     "oauth_client_status": "CONFIGURED"
   },
   "injection_control": {
-    "incident_id": "inc-invoice-419caa6acdfc444d",
+    "incident_id": "inc-invoice-5d86da12456b4796",
     "state": "BLOCKED",
     "reason": "MODEL_ARMOR_MATCH",
     "state_history": [
@@ -25,14 +25,14 @@
     "extracted_text_screening": "MATCH",
     "gemini_invocations": 0,
     "receipt": null,
-    "trace_id": "51c63168ac364ecc9826ff2618506107",
+    "trace_id": "eafb99cd5ef4f6907e2c6c237699f630",
     "cloud_trace_readback_status": 200,
     "spans": [
       "hisaarai.model_armor"
     ]
   },
   "semantic_tamper": {
-    "incident_id": "inc-invoice-f5ad15f9f622490f",
+    "incident_id": "inc-invoice-fbd18054a45e4c77",
     "state": "VERIFIED",
     "state_history": [
       "DETECTED",
@@ -49,16 +49,24 @@
     "trusted_bank_fingerprint": "PK-NSTAR-TRUSTED-8842",
     "executed_bank_fingerprint": "PK-NSTAR-TRUSTED-8842",
     "verification": "MATCH",
-    "receipt": {
-      "receipt_id": "rcpt-753e226d0b10",
-      "business_idempotency_key": "pay:INV-2026-0819:invoice-f5ad15f9f622490f",
-      "created_at": "2026-08-09T06:55:41.711381Z"
+    "observed_metrics": {
+      "sample_size": 1,
+      "detection_to_quarantine_seconds": 41.1,
+      "detection_to_verified_seconds": 88.0,
+      "unsafe_receipts": 0,
+      "trusted_receipts": 1
     },
-    "exact_replay": {
-      "pubsub_message_id": "20815833006228087",
+    "receipt": {
+      "receipt_id": "rcpt-1a7ce572b8d6",
+      "business_idempotency_key": "pay:INV-2026-0819:invoice-fbd18054a45e4c77",
+      "created_at": "2026-08-09T09:53:27.141628Z"
+    },
+    "public_read_only_replay": {
+      "http_status": 200,
       "state": "VERIFIED",
-      "receipt_id": "rcpt-753e226d0b10",
-      "receipt_created_at": "2026-08-09T06:55:41.711381Z"
+      "receipt_id": "rcpt-1a7ce572b8d6",
+      "verdict": "MATCH",
+      "receipt_created_at_unchanged": true
     },
     "agents": [
       {
@@ -77,14 +85,48 @@
         "thinking": "HIGH"
       }
     ],
-    "warrant_digest": "8431d0c1045ff48106d4b17e2ffa79c6f0a99164af0818267c75f4e0a9912094",
+    "warrant_digest": "5483097b0d2c408019c6cfbbf8c1bd45ddb12722dc7e7d8af5507f4f31bdd2dd",
     "continuity_revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/6243621652144324608/revisions/2389586264371232768",
-    "trace_id": "26b24aaee87d350ba7bf402adb9fab6e",
+    "trace_id": "b1a1f2589884b4ba2f20fa97811a000d",
     "cloud_trace_readback_status": 200,
     "spans": [
       "hisaarai.model_armor",
       "hisaarai.protected_ap",
       "hisaarai.recovery_fleet_plan",
+      "hisaarai.clean_standby",
+      "hisaarai.sandbox_receipt",
+      "hisaarai.shaahid_witness"
+    ]
+  },
+  "clean_control": {
+    "incident_id": "inc-invoice-473fbd809fca4195",
+    "state": "VERIFIED",
+    "state_history": [
+      "DETECTED",
+      "PLAN_READY",
+      "AWAITING_APPROVAL",
+      "APPROVED",
+      "COMPLETED",
+      "VERIFIED"
+    ],
+    "screening": "CLEAR",
+    "proposed_bank_fingerprint": "PK-NSTAR-TRUSTED-8842",
+    "trusted_bank_fingerprint": "PK-NSTAR-TRUSTED-8842",
+    "executed_bank_fingerprint": "PK-NSTAR-TRUSTED-8842",
+    "verification": "MATCH",
+    "receipt_id": "rcpt-77c3af25ca0e",
+    "public_read_only_replay": {
+      "http_status": 200,
+      "state": "VERIFIED",
+      "receipt_id": "rcpt-77c3af25ca0e",
+      "verdict": "MATCH",
+      "receipt_created_at_unchanged": true
+    },
+    "trace_id": "1e99c210fc1ec21466a4a0a5fcea6219",
+    "cloud_trace_readback_status": 200,
+    "spans": [
+      "hisaarai.model_armor",
+      "hisaarai.protected_ap",
       "hisaarai.clean_standby",
       "hisaarai.sandbox_receipt",
       "hisaarai.shaahid_witness"

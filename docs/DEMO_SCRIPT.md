@@ -4,7 +4,7 @@
 
 1. Use a 16:9 browser window at 1440×900 or 1920×1080, with browser zoom at
    80–90%, and silence desktop notifications.
-2. Open the [verified read-only proof](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f),
+2. Open the [verified read-only proof](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-fbd18054a45e4c77),
    sign in, and wait until the command line reads
    `Google identity verified: asad.ali@pildat.org`.
 3. Keep the final `VERIFIED` incident loaded. Keep the browser console and
@@ -20,9 +20,9 @@ speed.
 
 “This is one observed hosted run, `n=1`: a protected AP agent proposed an
 attacker destination for this PKR 4.275M synthetic invoice. HisaarAI quarantined
-it before any receipt, obtained one accountable approval, and completed one
-verified sandbox receipt to the trusted destination. The agent was compromised.
-The payment was not.”
+it in 41.1 seconds with zero unsafe receipts, obtained one accountable approval,
+and completed one verified sandbox receipt to the trusted destination at 88.0
+seconds. The agent was compromised. The payment was not.”
 
 Point once to the proposed attacker fingerprint, `QUARANTINED BEFORE UNSAFE
 RECEIPT`, trusted executed fingerprint, one receipt, `MATCH` and `VERIFIED`.
