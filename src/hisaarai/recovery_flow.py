@@ -145,7 +145,7 @@ class RecoveryFlow:
                     "invoice_id": investigating.invoice_id,
                     "proposal": {
                         "vendor_id": proposal.vendor_id,
-                        "amount_minor": proposal.amount_minor,
+                        "amount_display": proposal.amount_minor / 100,
                         "currency": proposal.currency,
                         "proposed_bank_fingerprint": proposal.bank_fingerprint,
                     },

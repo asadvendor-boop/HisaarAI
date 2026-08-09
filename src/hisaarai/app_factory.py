@@ -60,6 +60,20 @@ class GoogleEventPublisher:
         return str(future.result(timeout=20))
 
 
+def _is_exact_approval_retry(
+    incident: Any,
+    *,
+    commander_subject: str,
+    warrant_digest: str,
+) -> bool:
+    return (
+        incident.state.value in {"APPROVED", "COMPLETED", "VERIFIED"}
+        and incident.warrant is not None
+        and incident.approved_by == commander_subject
+        and incident.warrant.digest == warrant_digest
+    )
+
+
 def _same_origin_json(request: Request) -> None:
     content_type = request.headers.get("content-type", "")
     if not content_type.lower().startswith("application/json"):
@@ -213,18 +227,62 @@ def create_app(
                 warrant_digest=body.warrant_digest,
             )
         except (ConflictError, NotFoundError) as exc:
-            raise HTTPException(status_code=409, detail=str(exc)) from exc
+            try:
+                approved = store.get_incident(incident_id)
+            except NotFoundError:
+                raise HTTPException(status_code=409, detail=str(exc)) from exc
+            if not _is_exact_approval_retry(
+                approved,
+                commander_subject=caller.subject,
+                warrant_digest=body.warrant_digest,
+            ):
+                raise HTTPException(status_code=409, detail=str(exc)) from exc
         if approved.state.value != "APPROVED":
             return {"accepted": False, "state": approved.state.value}
         event = EventEnvelope(
-            event_id=f"execute-{uuid.uuid4().hex[:16]}",
+            event_id=f"execute-{approved.attempt_id}",
             event_type="recovery.execute",
             idempotency_key=approved.business_idempotency_key,
             correlation_id=approved.correlation_id,
             payload={"incident_id": approved.incident_id},
         )
-        publisher.publish(event)
+        try:
+            publisher.publish(event)
+        except Exception as exc:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Recovery execution publish failed; retry the exact approval",
+            ) from exc
         return {"accepted": True, "state": approved.state.value}
+
+    @app.post("/api/commander/incidents/{incident_id}/replay")
+    def replay(
+        incident_id: str,
+        request: Request,
+        _caller: AuthenticatedCaller = Depends(commander_auth),
+    ) -> dict[str, str]:
+        _same_origin_json(request)
+        try:
+            incident = store.get_incident(incident_id)
+            receipt = store.get_receipt(incident.business_idempotency_key)
+        except NotFoundError as exc:
+            raise HTTPException(status_code=404, detail="Incident not found") from exc
+        if (
+            incident.state.value != "VERIFIED"
+            or incident.verification != "MATCH"
+            or receipt is None
+            or receipt.incident_id != incident.incident_id
+            or receipt.receipt_id != incident.receipt_id
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Replay requires a verified incident with its stable receipt",
+            )
+        return {
+            "state": "VERIFIED",
+            "receipt_id": receipt.receipt_id,
+            "replay": "MATCH",
+        }
 
     @app.post("/api/commander/incidents/{incident_id}/reject")
     def reject(

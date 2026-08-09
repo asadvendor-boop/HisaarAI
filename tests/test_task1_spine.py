@@ -9,8 +9,18 @@ import pytest
 from hisaarai import auth
 from hisaarai.app_factory import create_app
 from hisaarai.config import Settings
-from hisaarai.contracts import IncidentState
+from hisaarai.contracts import (
+    AgentFinding,
+    IncidentState,
+    PaymentProposal,
+    StandbyOutput,
+    VendorRecord,
+    WitnessOutput,
+)
 from hisaarai.events import EventEnvelope
+from hisaarai.gate import HisaarGate
+from hisaarai.governance import GovernedRecovery
+from hisaarai.recovery_flow import RecoveryFlow
 from hisaarai.store import InMemoryStore
 
 
@@ -44,6 +54,118 @@ def settings() -> Settings:
 def _push(event: dict[str, object]) -> dict[str, object]:
     data = base64.b64encode(json.dumps(event).encode()).decode()
     return {"message": {"data": data, "messageId": "pubsub-1"}}
+
+
+class FakeRecoveryRuntime:
+    def plan(self, payload: dict[str, object]) -> list[AgentFinding]:
+        return [
+            AgentFinding(
+                agent=name,
+                summary=f"{name} supplied bounded recovery evidence.",
+                evidence_ids=[str(payload["incident_id"])],
+                requested_model=model,
+                actual_model=model,
+                thinking_level=thinking,
+            )
+            for name, model, thinking in [
+                ("Raasid", "gemini-3.5-flash-lite", "DEFAULT"),
+                ("Kashif", "gemini-3.6-flash", "HIGH"),
+                ("Muslih", "gemini-3.6-flash", "HIGH"),
+            ]
+        ]
+
+    def execute(self, payload: dict[str, object]) -> StandbyOutput:
+        return StandbyOutput(
+            decision="EXECUTE_APPROVED_WARRANT",
+            incident_id=str(payload["incident_id"]),
+            warrant_digest=str(payload["warrant_digest"]),
+            vendor_id=str(payload["vendor_id"]),
+            amount_minor=int(payload["amount_minor"]),
+            currency=str(payload["currency"]),
+            bank_fingerprint=str(payload["bank_fingerprint"]),
+        )
+
+    def witness(self, _payload: dict[str, object]) -> WitnessOutput:
+        return WitnessOutput(
+            verdict="MATCH",
+            summary="Deterministic warrant, source and receipt fields agree.",
+        )
+
+
+class RecordingPublisher:
+    def __init__(self, *, fail_first: bool = False) -> None:
+        self.fail_first = fail_first
+        self.events: list[EventEnvelope] = []
+
+    def publish(self, event: EventEnvelope) -> str:
+        self.events.append(event)
+        if self.fail_first and len(self.events) == 1:
+            raise RuntimeError("simulated publisher outage")
+        return event.event_id
+
+
+def _awaiting_approval(
+    settings: Settings,
+) -> tuple[InMemoryStore, object, GovernedRecovery]:
+    store = InMemoryStore()
+    gate = HisaarGate(store)
+    vendor = VendorRecord(
+        vendor_id="vendor-northstar",
+        display_name="Northstar Medical Supplies",
+        bank_fingerprint="PK-NSTAR-TRUSTED-8842",
+        version=7,
+    )
+    store.put_vendor(vendor)
+    incident = gate.open_incident(
+        invoice_id="INV-2026-0819",
+        correlation_id="corr-command-room",
+        business_idempotency_key="pay:INV-2026-0819",
+    )
+    quarantined = gate.evaluate_proposal(
+        incident,
+        PaymentProposal(
+            invoice_id=incident.invoice_id,
+            vendor_id=vendor.vendor_id,
+            amount_minor=427_500_000,
+            currency="PKR",
+            bank_fingerprint="PK-ATTACKER-9911",
+            requested_model="gemini-3.6-flash",
+            actual_model="gemini-3.6-flash",
+            thinking_level="MEDIUM",
+            source_context_id="screened:contaminated-session",
+        ),
+        vendor,
+    )
+    runtime = FakeRecoveryRuntime()
+    awaiting = RecoveryFlow(
+        settings=settings,
+        store=store,
+        runtime=runtime,
+        checkpoint_loader=lambda: {
+            "fact": "Recovery uses the trusted vendor master.",
+            "memory_revision_name": "memory-revision-1",
+        },
+    ).plan(quarantined.incident_id)
+    return store, awaiting, GovernedRecovery(
+        settings=settings,
+        store=store,
+        runtime=runtime,
+    )
+
+
+def _commander_claims(settings: Settings) -> dict[str, object]:
+    return {
+        "iss": "https://accounts.google.com",
+        "sub": settings.commander_subject,
+        "email": "commander@example.com",
+    }
+
+
+def _commander_headers() -> dict[str, str]:
+    return {
+        "Authorization": "Bearer signed-google-token",
+        "Origin": "http://testserver",
+    }
 
 
 def test_event_envelope_rejects_unknown_types() -> None:
@@ -161,3 +283,132 @@ def test_pubsub_route_rejects_wrong_service_account(
         ),
     )
     assert response.status_code == 403
+
+
+def test_exact_approval_retry_republishes_stable_event_after_publisher_failure(
+    settings: Settings,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    publisher = RecordingPublisher(fail_first=True)
+    monkeypatch.setattr(
+        auth.id_token,
+        "verify_oauth2_token",
+        lambda *_args, **_kwargs: _commander_claims(settings),
+    )
+    client = TestClient(
+        create_app(
+            settings,
+            store=store,
+            governed_recovery=governed,
+            publisher=publisher,
+        ),
+        raise_server_exceptions=False,
+    )
+    payload = {"warrant_digest": incident.warrant.digest}
+
+    failed = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/approve",
+        headers=_commander_headers(),
+        json=payload,
+    )
+
+    assert failed.status_code == 503
+    assert store.get_incident(incident.incident_id).state == IncidentState.APPROVED
+
+    wrong_digest = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/approve",
+        headers=_commander_headers(),
+        json={"warrant_digest": "0" * 64},
+    )
+
+    assert wrong_digest.status_code == 409
+    assert len(publisher.events) == 1
+
+    retried = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/approve",
+        headers=_commander_headers(),
+        json=payload,
+    )
+
+    assert retried.status_code == 202
+    assert retried.json() == {"accepted": True, "state": "APPROVED"}
+    assert [event.event_id for event in publisher.events] == [
+        f"execute-{incident.attempt_id}",
+        f"execute-{incident.attempt_id}",
+    ]
+
+
+def test_terminal_approval_retry_does_not_publish_and_replay_returns_receipt(
+    settings: Settings,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    publisher = RecordingPublisher()
+    monkeypatch.setattr(
+        auth.id_token,
+        "verify_oauth2_token",
+        lambda *_args, **_kwargs: _commander_claims(settings),
+    )
+    client = TestClient(
+        create_app(
+            settings,
+            store=store,
+            governed_recovery=governed,
+            publisher=publisher,
+        )
+    )
+    payload = {"warrant_digest": incident.warrant.digest}
+    approved = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/approve",
+        headers=_commander_headers(),
+        json=payload,
+    )
+    assert approved.status_code == 202
+    verified, receipt = governed.execute_and_verify(incident.incident_id)
+    assert verified.state == IncidentState.VERIFIED
+    assert receipt is not None
+
+    terminal = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/approve",
+        headers=_commander_headers(),
+        json=payload,
+    )
+    replayed = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/replay",
+        headers=_commander_headers(),
+        json={},
+    )
+
+    assert terminal.status_code == 202
+    assert terminal.json() == {"accepted": False, "state": "VERIFIED"}
+    assert len(publisher.events) == 1
+    assert replayed.status_code == 200
+    assert replayed.json() == {
+        "state": "VERIFIED",
+        "receipt_id": receipt.receipt_id,
+        "replay": "MATCH",
+    }
+
+
+def test_replay_rejects_non_verified_incident(
+    settings: Settings,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    monkeypatch.setattr(
+        auth.id_token,
+        "verify_oauth2_token",
+        lambda *_args, **_kwargs: _commander_claims(settings),
+    )
+    client = TestClient(
+        create_app(settings, store=store, governed_recovery=governed)
+    )
+
+    response = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/replay",
+        headers=_commander_headers(),
+        json={},
+    )
+
+    assert response.status_code == 409

@@ -39,7 +39,9 @@ raasid = Agent(
     instruction=(
         "Observe only the bounded incident JSON supplied by HisaarAI. State what "
         "was proposed, what trusted source disagreed, and which genuine continuity "
-        "revision governs recovery. Never approve or execute. Cite only evidence "
+        "revision governs recovery. proposal.amount_display is expressed in major "
+        "currency units; never infer or request minor units. Never approve or "
+        "execute. Cite only evidence "
         "identifiers present in the input. Keep the summary under 500 characters."
     ),
     output_schema=RecoveryAgentOutput,

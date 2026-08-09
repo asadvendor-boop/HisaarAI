@@ -130,6 +130,24 @@ def test_recovery_uses_revision_and_excludes_contaminated_context() -> None:
     assert "invoice text" not in payload.lower()
 
 
+def test_recovery_planning_receives_major_currency_display_not_minor_units() -> None:
+    store = InMemoryStore()
+    incident = quarantined(store)
+    runtime = FakeRuntime()
+
+    RecoveryFlow(
+        settings=settings(),
+        store=store,
+        runtime=runtime,
+        checkpoint_loader=lambda: CHECKPOINT,
+    ).plan(incident.incident_id)
+
+    assert runtime.payload is not None
+    proposal = runtime.payload["proposal"]
+    assert proposal["amount_display"] == 4_275_000.0
+    assert "amount_minor" not in proposal
+
+
 def test_recovery_agent_failure_is_terminal_and_creates_no_warrant() -> None:
     store = InMemoryStore()
     incident = quarantined(store)
