@@ -37,7 +37,9 @@ This is a lean human checklist, not a release verifier.
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
 - [x] Put the final `VERIFIED` incident ID into the read-only hosted link in the
-  README and [`DEVPOST.md`](DEVPOST.md); confirm it opens without signing in.
+  README and [`DEVPOST.md`](DEVPOST.md). On 2026-08-09 the coordinator
+  externally verified that unauthenticated `GET /` plus both proof API readbacks
+  returned HTTP 200; this status is live evidence, not inferred from code.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
 - [ ] Reopen every submitted public URL from a signed-out browser and confirm

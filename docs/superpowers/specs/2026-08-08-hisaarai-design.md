@@ -68,7 +68,8 @@ The architecture is deliberately small but real:
 - **Google ADK:** distinct agent roles receiving typed bounded inputs.
 - **Two callable Agent Runtime resources:** one protected AP Runtime and one
   recovery fleet Runtime, using separate runtime identities.
-- **Memory Bank:** genuine Day-0/7/14/21 continuity checkpoints.
+- **Memory Bank:** one genuine Day-0 checkpoint exists now; Day 7, Day 14 and
+  Day 21 are scheduled and remain `PENDING` until their actual dates.
 - **Model Armor:** direct prompt/document screening before Gemini receives the
   committed security fixture.
 - **Pub/Sub:** asynchronous invoice arrival.
@@ -332,16 +333,19 @@ is permitted.
 
 Fortified Enterprise Fleet explicitly asks how agents maintain context across
 weeks of asynchronous operation. Day 0 was bootstrapped directly through the
-Memory Bank API by the local deployer under the final Recovery Runtime. Cloud
-Scheduler, configured in `Asia/Karachi`, publishes date-keyed events through the
-authenticated Pub/Sub boundary to create genuine checkpoints on Day 7, Day 14
-and Day 21. Each checkpoint stores a short operational fact, its prior checkpoint
-reference and the actual server timestamp in Memory Bank and Firestore. Creation
-is idempotent by calendar date.
+Memory Bank API by the local deployer under the final Recovery Runtime and is the
+only checkpoint that exists now. Cloud Scheduler is configured in
+`Asia/Karachi` to publish date-keyed events through the authenticated Pub/Sub
+boundary on Day 7, Day 14 and Day 21, but those checkpoints remain `PENDING`
+until their actual dates. If created on schedule, each future checkpoint stores
+a short operational fact, its prior checkpoint reference and the actual server
+timestamp in Memory Bank and Firestore. Creation is date-gated and idempotent by
+calendar date.
 
-The final demo shows the real sequence and one material use: the recovery fleet
-retrieves the latest trusted operational policy from that history. Missing future
-checkpoints are labelled pending; they are never backfilled or simulated.
+The demo shows only the real checkpoints available at recording time—currently
+Day 0—and one material use: the recovery fleet retrieves the latest trusted
+operational policy revision. Missing future checkpoints are labelled pending;
+they are never backfilled or simulated.
 
 ## 10. Minimum reliability work
 

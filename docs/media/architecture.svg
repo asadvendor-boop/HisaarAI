@@ -128,7 +128,7 @@
     <rect x="555" y="665" width="355" height="130" rx="14" class="data"/>
     <text x="585" y="704" class="kicker" fill="#79ddd1">TRUSTED CONTEXT</text>
     <text x="585" y="744" class="label">Memory Bank</text>
-    <text x="585" y="774" class="copy">Genuine immutable revisions only</text>
+    <text x="585" y="774" class="copy">Latest trusted revision • read by Recovery Fleet</text>
   </g>
 
   <g filter="url(#shadow)">
@@ -145,8 +145,9 @@
   <path d="M733 355V308" class="reason-flow"/>
   <path d="M1065 243H1152" class="authority-flow"/>
   <path d="M950 300V320H1250V327" class="authority-flow"/>
-  <path d="M965 550H930V730H918" class="reason-flow"/>
-  <path d="M733 545V657" class="reason-flow"/>
+  <path d="M700 285H515V620H650V657" class="authority-flow"/>
+  <text x="525" y="608" class="small" fill="#ffc77f">DATE-GATED CHECKPOINT WRITE</text>
+  <path d="M918 730H930V550H957" class="reason-flow"/>
   <path d="M883 300V625H1240V657" class="telemetry"/>
   <path d="M330 520V625H1090V657" class="telemetry"/>
   <path d="M1250 585V657" class="telemetry"/>
