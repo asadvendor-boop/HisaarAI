@@ -1,5 +1,17 @@
 # HisaarAI — continuous four-minute demo
 
+## Before pressing Record
+
+1. Use a 16:9 browser window at 1440×900 or 1920×1080, with browser zoom at
+   80–90%, and silence desktop notifications.
+2. Open <https://hisaarai-2wkruw66na-uc.a.run.app/>, sign in, and wait until the
+   command line reads `Google identity verified: asad.ali@pildat.org`.
+3. Return to the top of the page with no incident loaded. Keep the browser
+   console and terminal closed throughout the take.
+4. Start recording, pause for one second, then follow the timed path below at
+   normal speed. If a live step errors, discard the take instead of explaining
+   around it.
+
 ## 0:00–0:25 — The hook
 
 Open the live command room at normal speed.
