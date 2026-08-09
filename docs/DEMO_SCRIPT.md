@@ -15,8 +15,8 @@ Point to PKR 4.275M at risk, the six named agents and the two real Gemini models
 Run **Test Model Armor**. Show the backend-driven terminal incident:
 
 - Model Armor `MATCH`
-- Gemini invocations `0`
-- receipt `None`
+- Protected AP `WITHHELD`
+- receipt `No mutation`
 
 “The PDF itself is not my claim. Model Armor blocked the exact extracted text
 that would have entered Gemini.”
@@ -55,11 +55,12 @@ The clean AP standby executes. Show:
 
 - trusted fingerprint
 - one receipt
-- replay `MATCH`
+- deterministic `MATCH`
 - Shaahid's sentence
 - Gate `VERIFIED`
 
-Repeat the execution event or replay control and show the same receipt ID.
+“Hisaar Gate owns finality. Shaahid explains the result, but cannot mark it
+verified.”
 
 ## 3:25–3:50 — Google proof
 
@@ -74,4 +75,3 @@ service account is not deployed.”
 
 “HisaarAI does not merely detect a bad agent. It contains the context, governs
 the recovery, and safely completes the business outcome.”
-

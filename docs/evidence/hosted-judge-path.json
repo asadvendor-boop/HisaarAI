@@ -1,11 +1,11 @@
 {
   "schema_version": 2,
-  "recorded_at_utc": "2026-08-09T07:20:38Z",
+  "recorded_at_utc": "2026-08-09T07:26:47Z",
   "hosted_url": "https://hisaarai-2wkruw66na-uc.a.run.app",
   "recorded_run_revision": "hisaarai-00009-hlc",
   "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:44a926cd888883a435d481bc46dc6b8c7c01561a22d607bd31800f7b40724700",
-  "current_cloud_run_revision": "hisaarai-00012-dkj",
-  "current_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:8dd5b6af18ab55d842e820b8deaf8eb1cc182b73375e9f544794a35bfcfbb41b",
+  "current_cloud_run_revision": "hisaarai-00013-248",
+  "current_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:d87250902a82fe117cc5c6cdd3e2f3babee2bad28dcdd642bd33a0b8a42c967b",
   "current_health_status": "ok",
   "commander_auth": {
     "provider": "Google Sign-In",

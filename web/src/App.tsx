@@ -102,10 +102,13 @@ function stateIndex(state?: IncidentState) {
 
 function agentStatus(index: number, incident: Incident | null) {
   if (!incident) return "STANDBY";
+  if (incident.state === "BLOCKED") {
+    if (index === 0) return incident.gemini_invocations === 0 ? "WITHHELD" : "COMPLETE";
+    return index === 4 ? "ISOLATED" : "WITHHELD";
+  }
   const current = stateIndex(incident.state);
   const thresholds = [0, 2, 2, 3, 5, 7];
   if (current < thresholds[index]) return index === 4 ? "ISOLATED" : "STANDBY";
-  if (incident.state === "BLOCKED" && index > 0) return "WITHHELD";
   if (index === 4 && current < 5) return "CLEAN / LOCKED";
   return current === thresholds[index] ? "ACTIVE" : "COMPLETE";
 }
@@ -384,7 +387,7 @@ function App() {
           </article>
           <article className={`outcome panel ${incident?.state === "VERIFIED" ? "verified" : ""}`}>
             <header><p>FINALITY</p><h2>{incident?.state === "VERIFIED" ? "Work safely completed." : "Unsafe payment remains blocked."}</h2></header>
-            <div className="outcome-score"><strong>{incident?.verification ?? "—"}</strong><span>REPLAY VERDICT</span></div>
+            <div className="outcome-score"><strong>{incident?.verification ?? "—"}</strong><span>VERIFICATION VERDICT</span></div>
             <dl>
               <div><dt>Receipt</dt><dd>{data?.receipt?.receipt_id ?? "No mutation"}</dd></div>
               <div><dt>Executed destination</dt><dd>{data?.receipt?.bank_fingerprint ?? "Locked"}</dd></div>
