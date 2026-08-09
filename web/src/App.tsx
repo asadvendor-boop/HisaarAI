@@ -266,7 +266,9 @@ function App() {
       setNotice(
         fixture === "semantic-tamper"
           ? "Invoice event published. Watching the protected path."
-          : "Security control published. Watching Model Armor.",
+          : fixture === "injection-control"
+            ? "Security control published. Watching Model Armor."
+            : "Clean invoice published. Watching the normal governed path.",
       );
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Launch failed");
@@ -397,6 +399,9 @@ function App() {
               </button>
               <button className="secondary" onClick={() => launch("injection-control")} disabled={!token || !!busy}>
                 TEST MODEL ARMOR
+              </button>
+              <button className="secondary" onClick={() => launch("clean-control")} disabled={!token || !!busy}>
+                {busy === "clean-control" ? "PUBLISHING…" : "RUN CLEAN CONTROL"}
               </button>
             </div>
             <p className="notice" aria-live="polite"><span>COMMAND</span> {notice}</p>
