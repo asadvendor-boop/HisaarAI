@@ -287,15 +287,17 @@ Authentication is route-specific even though one Cloud Run service hosts the
 application. Every Google token is checked for signature, issuer, expiry, exact
 route audience and expected subject or service-account email.
 `/api/commander/*` accepts only the configured Google web-client audience and
-allowlisted human subject. `/internal/pubsub/events` accepts only the configured
-Pub/Sub push audience and `hisaar-app` identity. Its strict discriminated
-envelope admits only `invoice.received`, `continuity.checkpoint` and
-`recovery.execute`, each with an event-specific idempotency key.
-`/internal/tools/ap/*` accepts only `hisaar-ap-runtime`; recovery tool routes
-accept only `hisaar-recovery-runtime`. Issuer validity alone never grants
-authority. The browser launch request publishes and returns; the UI polls
-persisted state rather than waiting synchronously for Pub/Sub to call the same
-service.
+allowlisted human subject; commander mutations also require same-origin JSON.
+`/internal/pubsub/events` accepts only the configured Pub/Sub push audience and
+`hisaar-app` identity. Its strict discriminated envelope admits only
+`invoice.received`, `continuity.checkpoint` and `recovery.execute`, each with an
+event-specific idempotency key. The Cloud Run application invokes the two Vertex
+Agent Runtime resources using its configured Google client credentials; runtime
+resource names and separate deployed runtime identities are recorded as
+provenance. There are no per-runtime HTTP tool routes. Issuer validity alone
+never grants authority. The browser launch request publishes and returns; the UI
+polls persisted state rather than waiting synchronously for Pub/Sub to call the
+same service.
 
 ## 8. Command-room experience
 
