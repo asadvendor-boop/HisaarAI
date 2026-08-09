@@ -594,6 +594,7 @@ function App() {
 
         <footer className="provenance">
           <span>REAL GOOGLE PROVENANCE</span>
+          <a href="https://console.cloud.google.com/agent-platform/agent-registry?project=hisaarai-agentic-2026" target="_blank">AGENT REGISTRY ↗</a>
           <a href="https://console.cloud.google.com/vertex-ai/agents/agent-engines?project=hisaarai-agentic-2026" target="_blank">2 AGENT RUNTIMES ↗</a>
           <a href="https://console.cloud.google.com/firestore/databases/hisaarai/data/panel?project=hisaarai-agentic-2026" target="_blank">FIRESTORE AUTHORITY ↗</a>
           <a href="https://console.cloud.google.com/security/model-armor?project=hisaarai-agentic-2026" target="_blank">MODEL ARMOR ↗</a>
