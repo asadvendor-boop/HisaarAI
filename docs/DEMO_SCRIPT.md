@@ -75,3 +75,26 @@ service account is not deployed.”
 
 “HisaarAI does not merely detect a bad agent. It contains the context, governs
 the recovery, and safely completes the business outcome.”
+
+## Public upload metadata
+
+**Title:** HisaarAI — Governed Recovery for Compromised Agent Fleets | All Things Agentic 2026
+
+**Description:**
+
+> HisaarAI contains a compromised enterprise agent, excludes contaminated
+> context, obtains one accountable human decision, and safely completes the
+> interrupted work. This continuous live demo shows real Google Model Armor,
+> Gemini 3.6 Flash and 3.5 Flash-Lite agents on ADK Agent Runtime, Memory Bank,
+> Pub/Sub, Firestore and Cloud Trace.
+>
+> Track: Fortified Enterprise Fleet — All Things Agentic Hackathon 2026
+>
+> Live app: https://hisaarai-2wkruw66na-uc.a.run.app/
+>
+> Source: https://github.com/asadvendor-boop/HisaarAI
+>
+> #AllThingsAgentic #Gemini #GoogleCloud
+
+Set visibility to **Public**, not Unlisted, and choose a clean 16:9 frame showing
+the final `VERIFIED` state as the thumbnail.

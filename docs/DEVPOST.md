@@ -21,7 +21,7 @@ Accounts Payable journey, real Model Armor blocks an obvious injection before
 Gemini, while deterministic Hisaar Gate catches a harder semantic bank-detail
 tamper that a content filter correctly clears. Raasid, Kashif and Muslih
 reconstruct a trusted-source warrant; the clean AP standby executes it once;
-Shaahid narrates a deterministic receipt replay; only Gate can mark the incident
+Shaahid narrates the deterministic receipt comparison; only Gate can mark the incident
 verified.
 
 ## How we built it
@@ -62,7 +62,7 @@ by the trusted-source Gate.
 - Five specialized recovery roles on the final-named Recovery Runtime
 - One human decision followed by one idempotent sandbox receipt
 - Deterministic verification that cannot be overruled by the witness agent
-- Genuine, timestamped Memory Bank continuity across the hackathon calendar
+- Genuine Day-0 Memory Bank evidence, with Day-7/14/21 capture scheduled on their real dates
 - One responsive command room with live Google provenance
 
 ## Built with

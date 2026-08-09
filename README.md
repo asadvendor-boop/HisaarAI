@@ -75,7 +75,7 @@ Memory Bank, Gemini on Vertex AI, Model Armor, Cloud Run, Pub/Sub, Cloud
 Scheduler, Firestore, Cloud Logging and Cloud Trace. No other Gemini model is
 allowed and no silent cross-model fallback is implemented.
 
-## Genuine multi-week continuity
+## Genuine continuity clock
 
 The final-named Recovery Runtime holds a real Memory Bank chain:
 
@@ -89,7 +89,8 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 Future entries are never backfilled or shown as complete early. Recovery reads
 the latest real revision and persists its exact resource name in the warrant.
 Day-0 evidence is in [`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).
-The latest same-revision hosted injection and semantic-path readbacks are in
+The authenticated run revision and the current hosted UI revision are identified
+separately alongside the latest injection and semantic-path readbacks in
 [`docs/evidence/hosted-judge-path.json`](docs/evidence/hosted-judge-path.json).
 
 ## Run locally

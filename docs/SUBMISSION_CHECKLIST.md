@@ -14,7 +14,7 @@ This is a lean human checklist, not a release verifier.
 - [x] Sign in from the hosted command room and confirm the backend identity
   readback shows `asad.ali@pildat.org`.
 - [x] Run one fresh flagship incident, approve its current warrant once, and
-  confirm `VERIFIED`, one receipt, replay `MATCH`, and the trusted fingerprint.
+  confirm `VERIFIED`, one stable receipt, deterministic `MATCH`, and the trusted fingerprint.
 
 ## Submission package
 
@@ -48,5 +48,5 @@ This is a lean human checklist, not a release verifier.
 2. Semantic tamper: screening `CLEAR`, fingerprint mismatch, `QUARANTINED`.
 3. Governance: real Memory revision, three specialist outputs, one exact warrant,
    signed-in approval.
-4. Outcome: trusted fingerprint, one receipt, replay `MATCH`, Gate `VERIFIED`,
+4. Outcome: trusted fingerprint, one receipt, deterministic `MATCH`, Gate `VERIFIED`,
    and real Google provenance links.
