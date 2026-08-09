@@ -11,7 +11,7 @@ and completes the sandbox payment exactly once.
 **Hackathon:** All Things Agentic 2026  
 **Track:** Fortified Enterprise Fleet  
 **Hosted app:** <https://hisaarai-2wkruw66na-uc.a.run.app/>  
-**Read-only live proof:** [semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-semantic-001) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-injection-001)
+**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d)
 **Built from scratch:** all implementation in this repository was created for
 this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
 

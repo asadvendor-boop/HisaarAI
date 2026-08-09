@@ -74,8 +74,8 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
-- Public read-only semantic recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-semantic-001>
-- Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-final-injection-001>
+- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f>
+- Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Demo video: `PENDING`
 - Optional public article: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md>

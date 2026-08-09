@@ -128,6 +128,8 @@ function App() {
       : "Sign in as Incident Commander to begin.",
   );
   const signInRef = useRef<HTMLDivElement>(null);
+  const pendingLaunchRef = useRef(false);
+  const refreshSequenceRef = useRef(0);
 
   const api = useCallback(
     async (url: string, init: RequestInit = {}) => {
@@ -183,9 +185,30 @@ function App() {
 
   const refresh = useCallback(async () => {
     if (!incidentId) return;
+    const requestSequence = ++refreshSequenceRef.current;
     try {
-      setData(await api(`/api/incidents/${incidentId}`));
+      const nextData = await api(`/api/incidents/${incidentId}`);
+      if (requestSequence !== refreshSequenceRef.current) return;
+      const wasPendingLaunch = pendingLaunchRef.current;
+      pendingLaunchRef.current = false;
+      setData(nextData);
+      if (wasPendingLaunch) {
+        setNotice(
+          nextData.incident.state === "BLOCKED"
+            ? "Model Armor blocked the injection before Gemini."
+            : "Authenticated event delivered. Hisaar Gate is live.",
+        );
+      }
     } catch (error) {
+      if (requestSequence !== refreshSequenceRef.current) return;
+      if (
+        error instanceof Error
+        && error.message === "Incident not found"
+        && pendingLaunchRef.current
+      ) {
+        setNotice("Event accepted. Waiting for authenticated Pub/Sub delivery.");
+        return;
+      }
       setNotice(error instanceof Error ? error.message : "Incident read failed");
     }
   }, [api, incidentId]);
@@ -205,6 +228,7 @@ function App() {
         method: "POST",
         body: JSON.stringify({ fixture }),
       });
+      pendingLaunchRef.current = true;
       setIncidentId(result.incident_id);
       setNotice(
         fixture === "semantic-tamper"

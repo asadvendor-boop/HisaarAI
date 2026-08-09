@@ -4,16 +4,16 @@ This is a lean human checklist, not a release verifier.
 
 ## Morning: finish the one manual identity boundary
 
-- [ ] Complete the Google organization password prompt already open in Chrome.
-- [ ] Create one OAuth 2.0 **Web application** client in project
+- [x] Complete the Google organization password prompt already open in Chrome.
+- [x] Create one OAuth 2.0 **Web application** client in project
   `hisaarai-agentic-2026`.
-- [ ] Add the authorized JavaScript origin
+- [x] Add the authorized JavaScript origin
   `https://hisaarai-2wkruw66na-uc.a.run.app`.
-- [ ] Update Cloud Run with that client ID and commander subject
+- [x] Update Cloud Run with that client ID and commander subject
   `112064919795236933947`; keep every other setting unchanged.
-- [ ] Sign in from the hosted command room and confirm the backend identity
+- [x] Sign in from the hosted command room and confirm the backend identity
   readback shows `asad.ali@pildat.org`.
-- [ ] Run one fresh flagship incident, approve its current warrant once, and
+- [x] Run one fresh flagship incident, approve its current warrant once, and
   confirm `VERIFIED`, one receipt, replay `MATCH`, and the trusted fingerprint.
 
 ## Submission package
@@ -31,7 +31,7 @@ This is a lean human checklist, not a release verifier.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
-- [ ] Put the final `VERIFIED` incident ID into the read-only hosted link in the
+- [x] Put the final `VERIFIED` incident ID into the read-only hosted link in the
   README and [`DEVPOST.md`](DEVPOST.md); confirm it opens without signing in.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
