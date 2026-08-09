@@ -94,6 +94,11 @@ const steps: IncidentState[] = [
   "VERIFIED",
 ];
 
+const publicProofs = [
+  ["VERIFIED RECOVERY", "inc-invoice-f5ad15f9f622490f"],
+  ["BLOCK BEFORE GEMINI", "inc-invoice-419caa6acdfc444d"],
+] as const;
+
 function stateIndex(state?: IncidentState) {
   if (!state) return -1;
   if (state === "BLOCKED") return 1;
@@ -107,10 +112,25 @@ function agentStatus(index: number, incident: Incident | null) {
     return index === 4 ? "ISOLATED" : "WITHHELD";
   }
   const current = stateIndex(incident.state);
-  const thresholds = [0, 2, 2, 3, 5, 7];
+  const thresholds = [0, 2, 2, 3, 5, 6];
   if (current < thresholds[index]) return index === 4 ? "ISOLATED" : "STANDBY";
   if (index === 4 && current < 5) return "CLEAN / LOCKED";
   return current === thresholds[index] ? "ACTIVE" : "COMPLETE";
+}
+
+function elapsedLabel(start?: string, end?: string) {
+  if (!start || !end) return null;
+  const elapsed = new Date(end).getTime() - new Date(start).getTime();
+  if (!Number.isFinite(elapsed) || elapsed < 0) return null;
+  if (elapsed < 1000) return `${elapsed} MS`;
+  if (elapsed < 10000) return `${(elapsed / 1000).toFixed(2)} SEC`;
+  return `${(elapsed / 1000).toFixed(1)} SEC`;
+}
+
+function firstSentence(summary: string) {
+  const match = summary.match(/^.*?[.!?](?:\s|$)/);
+  const lead = match?.[0] ?? summary;
+  return [lead, summary.slice(lead.length)] as const;
 }
 
 function shortHash(value?: string | null, length = 16) {
@@ -125,6 +145,7 @@ function App() {
   const [data, setData] = useState<IncidentResponse | null>(null);
   const [continuity, setContinuity] = useState<Record<string, unknown>>({});
   const [busy, setBusy] = useState("");
+  const [replayEvidence, setReplayEvidence] = useState<{ receiptId: string; verdict: string } | null>(null);
   const [notice, setNotice] = useState(
     sharedIncidentId
       ? "Read-only hosted evidence loaded. Commander sign-in is required only for new actions."
@@ -223,6 +244,8 @@ function App() {
     return () => window.clearInterval(timer);
   }, [incidentId, refresh]);
 
+  useEffect(() => setReplayEvidence(null), [incidentId]);
+
   const launch = async (fixture = "semantic-tamper") => {
     setBusy(fixture);
     setData(null);
@@ -262,16 +285,76 @@ function App() {
     }
   };
 
+  const reject = async () => {
+    if (!data?.incident.warrant) return;
+    setBusy("reject");
+    try {
+      await api(`/api/commander/incidents/${data.incident.incident_id}/reject`, {
+        method: "POST",
+        body: JSON.stringify({ rationale: "Commander rejected this recovery warrant." }),
+      });
+      setNotice("Recovery warrant rejected. Execution remains blocked.");
+      await refresh();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Rejection failed");
+    } finally {
+      setBusy("");
+    }
+  };
+
+  const replay = async () => {
+    if (!data?.receipt || data.incident.state !== "VERIFIED") return;
+    setBusy("replay");
+    try {
+      const result = await api(`/api/commander/incidents/${data.incident.incident_id}/replay`, {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+      if (result.replay !== "MATCH" || result.receipt_id !== data.receipt.receipt_id) {
+        throw new Error("Replay did not return the bound receipt.");
+      }
+      setReplayEvidence({ receiptId: result.receipt_id, verdict: result.replay });
+      setNotice(`One-receipt replay matched ${result.receipt_id}.`);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Replay failed");
+    } finally {
+      setBusy("");
+    }
+  };
+
   const incident = data?.incident ?? null;
   const amount = useMemo(() => {
-    if (!incident?.proposal) return "PKR 4.275M";
+    if (!incident?.proposal) return "NOT LOADED";
     return new Intl.NumberFormat("en-PK", {
       style: "currency",
       currency: incident.proposal.currency,
       maximumFractionDigits: 0,
     }).format(incident.proposal.amount_minor / 100);
   }, [incident]);
-  const progress = stateIndex(incident?.state);
+  const timelineSteps = useMemo(() => {
+    if (incident?.state !== "BLOCKED") return steps;
+    return incident.state_history.reduce<IncidentState[]>((observed, item) => (
+      observed.includes(item.state) ? observed : [...observed, item.state]
+    ), []);
+  }, [incident]);
+  const observedStates = useMemo(
+    () => new Set(incident?.state_history.map((item) => item.state) ?? []),
+    [incident],
+  );
+  const detectedAt = incident?.state_history.find((item) => item.state === "DETECTED")?.at;
+  const quarantinedAt = incident?.state_history.find((item) => item.state === "QUARANTINED")?.at;
+  const verifiedAt = incident?.state_history.find((item) => item.state === "VERIFIED")?.at;
+  const quarantineTime = elapsedLabel(detectedAt, quarantinedAt);
+  const totalTime = elapsedLabel(detectedAt, verifiedAt);
+  const modelArmorBlock = incident?.state === "BLOCKED"
+    && incident.gemini_invocations === 0
+    && incident.screening_decision !== "CLEAR"
+    && !incident.proposal
+    && !data?.receipt;
+  const trustedExecution = incident?.state === "VERIFIED"
+    && incident.verification === "MATCH"
+    && !!data?.receipt
+    && data.receipt.bank_fingerprint === incident.trusted_vendor?.bank_fingerprint;
 
   return (
     <div className="shell">
@@ -289,6 +372,7 @@ function App() {
       <main id="main">
         <section className="hero bastion">
           <div className="hero-copy">
+            <p className="buyer">FOR ACCOUNTS PAYABLE OPERATIONS</p>
             <p className="eyebrow">GOVERNED MULTI-AGENT RECOVERY / 01</p>
             <h1>The agent was compromised.<br /><em>The payment was not.</em></h1>
             <p className="lede">HisaarAI quarantines a poisoned workflow, reconstructs clean context, obtains one human decision, and safely finishes the work.</p>
@@ -302,6 +386,14 @@ function App() {
               </button>
             </div>
             <p className="notice" aria-live="polite"><span>COMMAND</span> {notice}</p>
+            {!token && !sharedIncidentId && (
+              <nav className="public-proof-links" aria-label="Public read-only proof">
+                <span>NO SIGN-IN REQUIRED</span>
+                {publicProofs.map(([label, proofId]) => (
+                  <a href={`/?incident=${proofId}`} key={proofId}>{label} ↗</a>
+                ))}
+              </nav>
+            )}
           </div>
           <div className="risk-dial" aria-label={`Amount at risk ${amount}`}>
             <div className="dial-ring"><span>PROTECTED</span><strong>{amount}</strong><small>AMOUNT AT RISK</small></div>
@@ -309,6 +401,38 @@ function App() {
               <i /> {incident?.state ?? "READY"}
             </div>
           </div>
+        </section>
+
+        <section className="outcome-strip" aria-label="Incident before, control and after outcome">
+          <article>
+            <span>BEFORE</span>
+            <strong>{incident?.proposal ? `${incident.proposal.bank_fingerprint} / ${amount}` : "NO PROPOSAL LOADED"}</strong>
+            <p>{incident?.proposal ? "Persisted proposed destination and amount." : "Awaiting persisted incident evidence."}</p>
+          </article>
+          <article className="control-cell">
+            <span>HISAAR CONTROL</span>
+            <strong>{modelArmorBlock ? "BLOCKED BEFORE GEMINI" : quarantinedAt ? "QUARANTINED BEFORE UNSAFE RECEIPT" : "CONTROL NOT REACHED"}</strong>
+            <p>{modelArmorBlock
+              ? `${incident.gemini_invocations} GEMINI CALLS / ${data?.receipt ? 1 : 0} MUTATIONS`
+              : quarantineTime
+                ? `TIME TO QUARANTINE ${quarantineTime}`
+                : "No observed control timing yet."}</p>
+            {(modelArmorBlock || quarantineTime) && <small>OBSERVED RUN / n=1</small>}
+          </article>
+          <article className={trustedExecution ? "after-cell verified" : "after-cell"}>
+            <span>AFTER</span>
+            <strong>{trustedExecution
+              ? `${data.receipt!.bank_fingerprint} / ONE RECEIPT`
+              : incident?.state === "BLOCKED" && !data?.receipt
+                ? "WORKFLOW SAFELY STOPPED"
+                : "OUTCOME NOT REACHED"}</strong>
+            <p>{trustedExecution
+              ? `MATCH${totalTime ? ` / TOTAL ${totalTime}` : ""}`
+              : incident?.state === "BLOCKED" && !data?.receipt
+                ? "NO RECEIPT / NO MUTATION"
+                : "Awaiting persisted receipt and verification."}</p>
+            {(trustedExecution || modelArmorBlock) && <small>OBSERVED RUN / n=1</small>}
+          </article>
         </section>
 
         <section className="agent-rail" aria-label="Agent fleet">
@@ -328,16 +452,25 @@ function App() {
         <section className="command-grid">
           <article className="panel comparison bastion">
             <header><p>AUTHORITY CHECK</p><h2>Invoice vs. trusted source</h2></header>
-            <div className="comparison-row unsafe">
-              <span>INVOICE DESTINATION</span>
-              <code>{incident?.proposal?.bank_fingerprint ?? "PK-ATTACKER-9911"}</code>
-              <b>{incident ? "MISMATCH" : "PENDING"}</b>
-            </div>
-            <div className="comparison-row trusted">
-              <span>VENDOR MASTER v{incident?.trusted_vendor?.version ?? 7}</span>
-              <code>{incident?.trusted_vendor?.bank_fingerprint ?? "PK-NSTAR-TRUSTED-8842"}</code>
-              <b>TRUSTED</b>
-            </div>
+            {incident?.proposal && incident.trusted_vendor ? (
+              <>
+                <div className="comparison-row unsafe">
+                  <span>INVOICE DESTINATION</span>
+                  <code>{incident.proposal.bank_fingerprint}</code>
+                  <b>{incident.proposal.bank_fingerprint === incident.trusted_vendor.bank_fingerprint ? "MATCH" : "MISMATCH"}</b>
+                </div>
+                <div className="comparison-row trusted">
+                  <span>VENDOR MASTER v{incident.trusted_vendor.version}</span>
+                  <code>{incident.trusted_vendor.bank_fingerprint}</code>
+                  <b>TRUSTED</b>
+                </div>
+              </>
+            ) : (
+              <div className="authority-empty">
+                <b>NOT REACHED</b><span>NO PROPOSAL</span>
+                <p>Authority comparison waits for persisted proposal and trusted-vendor evidence.</p>
+              </div>
+            )}
             <div className="armor-line">
               <span>MODEL ARMOR</span>
               <div><i className={incident?.screening_decision === "CLEAR" ? "clear" : ""} /></div>
@@ -348,11 +481,14 @@ function App() {
           <article className="panel timeline-panel">
             <header><p>LIVE RECOVERY</p><h2>Governed state rail</h2></header>
             <ol className="timeline">
-              {steps.map((step, index) => (
-                <li className={index < progress ? "done" : index === progress ? "current" : ""} key={step}>
-                  <i /><span>{step.replaceAll("_", " ")}</span><small>{incident?.state_history.find((item) => item.state === step) ? new Date(incident.state_history.find((item) => item.state === step)!.at).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"}) : "LOCKED"}</small>
+              {timelineSteps.map((step) => {
+                const event = incident?.state_history.find((item) => item.state === step);
+                return (
+                <li className={incident?.state === step ? "current" : observedStates.has(step) ? "done" : ""} key={step}>
+                  <i /><span>{step.replaceAll("_", " ")}</span><small>{event ? new Date(event.at).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"}) : "PENDING"}</small>
                 </li>
-              ))}
+                );
+              })}
             </ol>
           </article>
 
@@ -360,6 +496,7 @@ function App() {
             <header><p>HUMAN BOUNDARY</p><h2>Recovery warrant</h2></header>
             {incident?.warrant ? (
               <>
+                {incident.state === "AWAITING_APPROVAL" && <div className="execution-gate">EXECUTION GATE: <strong>APPROVAL_REQUIRED</strong></div>}
                 <dl>
                   <div><dt>Correction</dt><dd>Trusted vendor master v{incident.warrant.trusted_vendor_version}</dd></div>
                   <div><dt>Destination</dt><dd><code>{incident.warrant.bank_fingerprint}</code></dd></div>
@@ -367,9 +504,16 @@ function App() {
                   <div><dt>Memory revision</dt><dd><code>{shortHash(incident.warrant.continuity_revision_name.split("/").at(-1))}</code></dd></div>
                   <div><dt>Expires</dt><dd>{new Date(incident.warrant.expires_at).toLocaleTimeString()}</dd></div>
                 </dl>
-                <button className="approve" onClick={approve} disabled={!token || incident.state !== "AWAITING_APPROVAL" || !!busy}>
-                  {busy === "approve" ? "VERIFYING IDENTITY…" : "APPROVE EXACT WARRANT"}
-                </button>
+                <div className="approval-actions">
+                  <button className="approve" onClick={approve} disabled={!token || incident.state !== "AWAITING_APPROVAL" || !!busy}>
+                    {busy === "approve" ? "VERIFYING IDENTITY…" : "APPROVE EXACT WARRANT"}
+                  </button>
+                  {incident.state === "AWAITING_APPROVAL" && (
+                    <button className="reject" onClick={reject} disabled={!token || !!busy}>
+                      {busy === "reject" ? "REJECTING…" : "REJECT WARRANT"}
+                    </button>
+                  )}
+                </div>
               </>
             ) : <div className="warrant-empty"><span>⌁</span><p>Warrant remains sealed until the clean recovery plan is ready.</p></div>}
           </article>
@@ -381,18 +525,32 @@ function App() {
             <div className="finding-list">
               {["Raasid", "Kashif", "Muslih"].map((name, index) => {
                 const finding = incident?.findings.find((item) => item.agent === name);
-                return <div className="finding" key={name}><b>0{index + 1}</b><div><h3>{name}</h3><p>{finding?.summary ?? "Waiting for bounded incident evidence."}</p></div><span>{finding?.thinking_level ?? agents[index + 1][3]}</span></div>;
+                const summary = finding?.summary ?? "Waiting for bounded incident evidence.";
+                const [lead, rest] = firstSentence(summary);
+                return <div className="finding" key={name}><b>0{index + 1}</b><div><h3>{name}</h3><p><strong>{lead}</strong>{rest}</p></div><span>{finding?.thinking_level ?? agents[index + 1][3]}</span></div>;
               })}
             </div>
           </article>
           <article className={`outcome panel ${incident?.state === "VERIFIED" ? "verified" : ""}`}>
-            <header><p>FINALITY</p><h2>{incident?.state === "VERIFIED" ? "Work safely completed." : "Unsafe payment remains blocked."}</h2></header>
+            <header><p>FINALITY</p><h2>{incident?.state === "VERIFIED" ? "Work safely completed." : incident?.state === "BLOCKED" ? "Workflow safely stopped." : "Awaiting persisted outcome."}</h2></header>
             <div className="outcome-score"><strong>{incident?.verification ?? "—"}</strong><span>VERIFICATION VERDICT</span></div>
             <dl>
               <div><dt>Receipt</dt><dd>{data?.receipt?.receipt_id ?? "No mutation"}</dd></div>
               <div><dt>Executed destination</dt><dd>{data?.receipt?.bank_fingerprint ?? "Locked"}</dd></div>
               <div><dt>Shaahid</dt><dd>{incident?.witness_summary ?? "Awaiting deterministic comparison."}</dd></div>
             </dl>
+            {incident?.state === "VERIFIED" && data?.receipt && (
+              <div className="replay-control">
+                <button className="replay" onClick={replay} disabled={!token || !!busy}>
+                  {busy === "replay" ? "VERIFYING RECEIPT…" : "VERIFY ONE-RECEIPT REPLAY"}
+                </button>
+                <p aria-live="polite">{replayEvidence
+                  ? `${replayEvidence.verdict} / ${replayEvidence.receiptId}`
+                  : !token
+                    ? `ONE RECEIPT BOUND / ${data.receipt.receipt_id}`
+                    : "ONE RECEIPT BOUND / REPLAY NOT YET RUN"}</p>
+              </div>
+            )}
           </article>
         </section>
 
