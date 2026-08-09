@@ -137,53 +137,65 @@ class GovernedRecovery:
         incident = self.store.get_incident(incident_id)
         existing = self.store.get_receipt(incident.business_idempotency_key)
         if existing and incident.state == IncidentState.VERIFIED:
+            if not self.gate.receipt_matches(incident, existing):
+                raise ConflictError("VERIFIED_RECEIPT_DISAGREEMENT")
             return incident, existing
-        if incident.state != IncidentState.APPROVED or incident.warrant is None:
+        if incident.warrant is None:
             raise ConflictError("APPROVAL_REQUIRED")
         warrant = incident.warrant
-        clean_payload = {
-            "incident_id": incident.incident_id,
-            "attempt_id": incident.attempt_id,
-            "warrant_id": warrant.warrant_id,
-            "warrant_digest": warrant.digest,
-            "vendor_id": warrant.vendor_id,
-            "amount_minor": warrant.amount_minor,
-            "currency": warrant.currency,
-            "bank_fingerprint": warrant.bank_fingerprint,
-        }
-        with stage_span(
-            incident.correlation_id,
-            "clean_standby",
-            incident_id=incident.incident_id,
-        ):
-            standby = self.runtime.execute(clean_payload)
-        if standby.model_dump(exclude={"decision"}) != {
-            "incident_id": incident.incident_id,
-            "warrant_digest": warrant.digest,
-            "vendor_id": warrant.vendor_id,
-            "amount_minor": warrant.amount_minor,
-            "currency": warrant.currency,
-            "bank_fingerprint": warrant.bank_fingerprint,
-        }:
-            return self.gate.transition(
-                incident,
-                IncidentState.BLOCKED,
-                reason="STANDBY_OUTPUT_DISAGREEMENT",
-            ), None
-        request = CleanExecutionRequest(
-            **clean_payload,
-            business_idempotency_key=incident.business_idempotency_key,
-        )
-        with stage_span(
-            incident.correlation_id,
-            "sandbox_receipt",
-            incident_id=incident.incident_id,
-        ):
-            receipt = self.erp.execute(
-                request,
-                executor_identity=self.settings.recovery_runtime_service_account,
+        if incident.state == IncidentState.COMPLETED:
+            if existing is None:
+                raise ConflictError("COMPLETED_RECEIPT_MISSING")
+            if not self.gate.receipt_matches(incident, existing):
+                return self.gate.verify_receipt(incident, existing), existing
+            completed = incident
+            receipt = existing
+        else:
+            if incident.state != IncidentState.APPROVED:
+                raise ConflictError("APPROVAL_REQUIRED")
+            clean_payload = {
+                "incident_id": incident.incident_id,
+                "attempt_id": incident.attempt_id,
+                "warrant_id": warrant.warrant_id,
+                "warrant_digest": warrant.digest,
+                "vendor_id": warrant.vendor_id,
+                "amount_minor": warrant.amount_minor,
+                "currency": warrant.currency,
+                "bank_fingerprint": warrant.bank_fingerprint,
+            }
+            with stage_span(
+                incident.correlation_id,
+                "clean_standby",
+                incident_id=incident.incident_id,
+            ):
+                standby = self.runtime.execute(clean_payload)
+            if standby.model_dump(exclude={"decision"}) != {
+                "incident_id": incident.incident_id,
+                "warrant_digest": warrant.digest,
+                "vendor_id": warrant.vendor_id,
+                "amount_minor": warrant.amount_minor,
+                "currency": warrant.currency,
+                "bank_fingerprint": warrant.bank_fingerprint,
+            }:
+                return self.gate.transition(
+                    incident,
+                    IncidentState.BLOCKED,
+                    reason="STANDBY_OUTPUT_DISAGREEMENT",
+                ), None
+            request = CleanExecutionRequest(
+                **clean_payload,
+                business_idempotency_key=incident.business_idempotency_key,
             )
-        completed = self.store.get_incident(incident.incident_id)
+            with stage_span(
+                incident.correlation_id,
+                "sandbox_receipt",
+                incident_id=incident.incident_id,
+            ):
+                receipt = self.erp.execute(
+                    request,
+                    executor_identity=self.settings.recovery_runtime_service_account,
+                )
+            completed = self.store.get_incident(incident.incident_id)
         deterministic_verdict = (
             "MATCH" if self.gate.receipt_matches(completed, receipt) else "MISMATCH"
         )

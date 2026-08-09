@@ -105,11 +105,24 @@ function stateIndex(state?: IncidentState) {
   return steps.indexOf(state);
 }
 
-function agentStatus(index: number, incident: Incident | null) {
+function agentStatus(index: number, incident: Incident | null, receipt: Receipt | null) {
   if (!incident) return "STANDBY";
   if (incident.state === "BLOCKED") {
-    if (index === 0) return incident.gemini_invocations === 0 ? "WITHHELD" : "COMPLETE";
-    return index === 4 ? "ISOLATED" : "WITHHELD";
+    if (index === 0) {
+      if (incident.reason === "PROTECTED_AP_FAILED") return "FAILED";
+      return incident.proposal ? "COMPLETE" : "WITHHELD";
+    }
+    if (index >= 1 && index <= 3) {
+      return incident.findings.some((finding) => finding.agent === agents[index][0])
+        ? "COMPLETE"
+        : "WITHHELD";
+    }
+    if (index === 4) {
+      if (incident.reason === "STANDBY_OUTPUT_DISAGREEMENT") return "FAILED";
+      return receipt ? "COMPLETE" : "ISOLATED";
+    }
+    if (incident.reason?.startsWith("WITNESS_")) return "FAILED";
+    return incident.witness_summary ? "COMPLETE" : "WITHHELD";
   }
   const current = stateIndex(incident.state);
   const thresholds = [0, 2, 2, 3, 5, 6];
@@ -462,7 +475,7 @@ function App() {
 
         <section className="agent-rail" aria-label="Agent fleet">
           {agents.map(([name, role, model, thinking], index) => {
-            const status = agentStatus(index, incident);
+            const status = agentStatus(index, incident, data?.receipt ?? null);
             return (
               <article className={`agent-card ${status === "ACTIVE" ? "active" : ""}`} key={name}>
                 <div className="agent-index">0{index + 1}</div>
@@ -522,6 +535,7 @@ function App() {
             {incident?.warrant ? (
               <>
                 {incident.state === "AWAITING_APPROVAL" && <div className="execution-gate">EXECUTION GATE: <strong>APPROVAL_REQUIRED</strong></div>}
+                {incident.state === "APPROVED" && <div className="execution-gate">EXECUTION GATE: <strong>PUBLISH_RETRY_AVAILABLE</strong></div>}
                 <dl>
                   <div><dt>Correction</dt><dd>Trusted vendor master v{incident.warrant.trusted_vendor_version}</dd></div>
                   <div><dt>Destination</dt><dd><code>{incident.warrant.bank_fingerprint}</code></dd></div>
@@ -530,8 +544,12 @@ function App() {
                   <div><dt>Expires</dt><dd>{new Date(incident.warrant.expires_at).toLocaleTimeString()}</dd></div>
                 </dl>
                 <div className="approval-actions">
-                  <button className="approve" onClick={approve} disabled={!token || incident.state !== "AWAITING_APPROVAL" || !!busy}>
-                    {busy === "approve" ? "VERIFYING IDENTITY…" : "APPROVE EXACT WARRANT"}
+                  <button className="approve" onClick={approve} disabled={!token || !["AWAITING_APPROVAL", "APPROVED"].includes(incident.state) || !!busy}>
+                    {busy === "approve"
+                      ? "VERIFYING IDENTITY…"
+                      : incident.state === "APPROVED"
+                        ? "RETRY EXECUTION PUBLISH"
+                        : "APPROVE EXACT WARRANT"}
                   </button>
                   {incident.state === "AWAITING_APPROVAL" && (
                     <button className="reject" onClick={reject} disabled={!token || !!busy}>
@@ -585,7 +603,27 @@ function App() {
           <a href="https://console.cloud.google.com/firestore/databases/hisaarai/data/panel?project=hisaarai-agentic-2026" target="_blank">FIRESTORE AUTHORITY ↗</a>
           <a href="https://console.cloud.google.com/security/model-armor?project=hisaarai-agentic-2026" target="_blank">MODEL ARMOR ↗</a>
           <a href={incident ? `https://console.cloud.google.com/traces/explorer?project=hisaarai-agentic-2026&traceId=${incident.trace_id}` : "https://console.cloud.google.com/traces/explorer?project=hisaarai-agentic-2026"} target="_blank">CORRELATED TRACE ↗</a>
-          <span>CONTINUITY {Object.values(continuity).filter(Boolean).length}/4 GENUINE</span>
+          <details className="continuity-proof">
+            <summary>CONTINUITY {Object.values(continuity).filter(Boolean).length}/4 GENUINE</summary>
+            <div>
+              {[
+                ["day_0", "DAY 0", "2026-08-09"],
+                ["day_7", "DAY 7", "2026-08-16"],
+                ["day_14", "DAY 14", "2026-08-23"],
+                ["day_21", "DAY 21", "2026-08-30"],
+              ].map(([key, label, date]) => {
+                const checkpoint = continuity[key] as Record<string, unknown> | null | undefined;
+                const revision = typeof checkpoint?.memory_revision_name === "string"
+                  ? checkpoint.memory_revision_name.split("/").at(-1)
+                  : null;
+                return (
+                  <p className={checkpoint ? "recorded" : "pending"} key={key}>
+                    <b>{label}</b><time>{date}</time><span>{checkpoint ? `RECORDED / ${shortHash(revision, 10)}` : "PENDING"}</span>
+                  </p>
+                );
+              })}
+            </div>
+          </details>
         </footer>
       </main>
     </div>

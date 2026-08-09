@@ -11,6 +11,7 @@ from hisaarai.app_factory import create_app
 from hisaarai.config import Settings
 from hisaarai.contracts import (
     AgentFinding,
+    CleanExecutionRequest,
     IncidentState,
     PaymentProposal,
     StandbyOutput,
@@ -389,6 +390,75 @@ def test_terminal_approval_retry_does_not_publish_and_replay_returns_receipt(
         "receipt_id": receipt.receipt_id,
         "replay": "MATCH",
     }
+
+
+def test_replay_recomputes_the_bound_receipt_comparison(
+    settings: Settings,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    monkeypatch.setattr(
+        auth.id_token,
+        "verify_oauth2_token",
+        lambda *_args, **_kwargs: _commander_claims(settings),
+    )
+    governed.approve(
+        incident.incident_id,
+        commander_subject=settings.commander_subject,
+        warrant_digest=incident.warrant.digest,
+    )
+    verified, receipt = governed.execute_and_verify(incident.incident_id)
+    assert verified.state == IncidentState.VERIFIED
+    assert receipt is not None
+    store._receipts[incident.business_idempotency_key] = receipt.model_copy(
+        update={"bank_fingerprint": "PK-DISAGREEMENT-0000"}
+    )
+    client = TestClient(
+        create_app(settings, store=store, governed_recovery=governed)
+    )
+
+    replayed = client.post(
+        f"/api/commander/incidents/{incident.incident_id}/replay",
+        headers=_commander_headers(),
+        json={},
+    )
+
+    assert replayed.status_code == 409
+    assert replayed.json()["detail"] == "Replay receipt comparison failed"
+
+
+def test_completed_receipt_resumes_verification_without_a_second_mutation(
+    settings: Settings,
+) -> None:
+    store, incident, governed = _awaiting_approval(settings)
+    approved = governed.approve(
+        incident.incident_id,
+        commander_subject=settings.commander_subject,
+        warrant_digest=incident.warrant.digest,
+    )
+    assert approved.warrant is not None
+    warrant = approved.warrant
+    receipt = governed.erp.execute(
+        CleanExecutionRequest(
+            incident_id=approved.incident_id,
+            attempt_id=approved.attempt_id,
+            warrant_id=warrant.warrant_id,
+            warrant_digest=warrant.digest,
+            business_idempotency_key=approved.business_idempotency_key,
+            vendor_id=warrant.vendor_id,
+            amount_minor=warrant.amount_minor,
+            currency=warrant.currency,
+            bank_fingerprint=warrant.bank_fingerprint,
+        ),
+        executor_identity=settings.recovery_runtime_service_account,
+    )
+    assert store.get_incident(approved.incident_id).state == IncidentState.COMPLETED
+
+    resumed, same_receipt = governed.execute_and_verify(approved.incident_id)
+
+    assert resumed.state == IncidentState.VERIFIED
+    assert same_receipt == receipt
+    assert store.get_receipt(approved.business_idempotency_key) == receipt
 
 
 def test_replay_rejects_non_verified_incident(

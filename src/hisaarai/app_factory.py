@@ -278,6 +278,11 @@ def create_app(
                 status_code=status.HTTP_409_CONFLICT,
                 detail="Replay requires a verified incident with its stable receipt",
             )
+        if not governed_recovery.gate.receipt_matches(incident, receipt):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Replay receipt comparison failed",
+            )
         return {
             "state": "VERIFIED",
             "receipt_id": receipt.receipt_id,

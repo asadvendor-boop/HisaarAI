@@ -143,7 +143,10 @@ class HisaarGate:
             return False
         warrant = incident.warrant
         return (
-            receipt.warrant_digest == warrant.digest
+            receipt.business_idempotency_key == incident.business_idempotency_key
+            and receipt.incident_id == incident.incident_id
+            and receipt.attempt_id == incident.attempt_id
+            and receipt.warrant_digest == warrant.digest
             and receipt.vendor_id == warrant.vendor_id
             and receipt.amount_minor == warrant.amount_minor
             and receipt.currency == warrant.currency
