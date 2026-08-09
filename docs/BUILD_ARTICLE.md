@@ -23,11 +23,12 @@ the expiring warrant, and requires an allowlisted Google identity to approve its
 exact digest.
 
 The implementation uses Gemini 3.6 Flash and Gemini 3.5 Flash-Lite through Google
-ADK, two deployed Agent Runtimes, Agent Registry, Memory Bank, Model Armor,
-Pub/Sub, Cloud Run, Firestore, Cloud Logging, and Cloud Trace. A genuine Day-0
-Memory revision is already part of the warrant; scheduled Day-7, Day-14, and
-Day-21 checkpoints extend the same policy history without backfilling future
-evidence.
+ADK, two callable Agent Runtime resources with separate runtime identities,
+Memory Bank, Model Armor, Pub/Sub, Cloud Run, Firestore, Cloud Logging, and Cloud
+Trace. Agents receive typed bounded inputs; deterministic Gate code and the
+commander retain authority. A genuine Day-0 Memory revision is already part of
+the warrant. Day-7, Day-14 and Day-21 are scheduled but remain `PENDING`; only a
+revision captured on its actual date may extend the history.
 
 The command room compresses the architecture into one judge-readable screen:
 the altered and trusted bank fingerprints, live agent roles, the Gate-owned
@@ -35,6 +36,13 @@ warrant, the authenticated human decision, one sandbox receipt, replay status,
 and Google Cloud provenance. The core claim stays deliberately narrow: HisaarAI
 is a sandbox recovery demonstration using committed fixtures, not a production
 payment processor and not a statistical security benchmark.
+
+The data is equally bounded: synthetic PDF fixtures provide invoice evidence, a
+Firestore vendor master supplies the trusted bank fingerprint, and a Firestore
+sandbox ledger holds the receipt. In one observed hosted run (`n=1`), the system
+transformed an attacker-destination proposal into one verified sandbox receipt
+at the trusted destination. That observation is not customer validation or a
+claim about production-money impact.
 
 The result is not another incident dashboard. It is a governed recovery product:
 contain the agent, preserve the business outcome, and prove exactly what happened.

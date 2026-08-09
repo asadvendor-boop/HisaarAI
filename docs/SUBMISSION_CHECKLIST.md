@@ -18,6 +18,11 @@ This is a lean human checklist, not a release verifier.
 
 ## Submission package
 
+- [ ] Confirm every entrant is eligible, the Devpost roster is complete, and
+  all teammates are listed exactly as required.
+- [ ] Confirm licenses and permissions cover source, dependencies, synthetic
+  fixtures, screenshots, music and every asset shown in the submission.
+
 - [x] Hosted app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
 - [x] Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - [x] Fortified Enterprise Fleet track is named consistently.
@@ -35,12 +40,21 @@ This is a lean human checklist, not a release verifier.
   README and [`DEVPOST.md`](DEVPOST.md); confirm it opens without signing in.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
+- [ ] Reopen every submitted public URL from a signed-out browser and confirm
+  the app, repository and video are publicly readable.
+- [ ] Keep the hosted app and both read-only proof links live through the full
+  judging period.
 
 ## Optional only after the core submission is complete
 
-- [x] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly, not unlisted.
-- [x] Verify the article keeps the explicit hackathon-entry purpose statement.
-- [x] Add its public URL to [`DEVPOST.md`](DEVPOST.md).
+- [ ] Confirm the current rules still offer article/social bonuses and their
+  exact eligibility conditions; do not treat acceptance as confirmed.
+- [ ] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly if eligible, not
+  unlisted.
+- [ ] Verify the article keeps the explicit hackathon-entry purpose statement.
+- [ ] Add its public URL to [`DEVPOST.md`](DEVPOST.md).
+- [ ] Publish the optional social post from an eligible entrant account and add
+  the public URL only if the current rules require it.
 
 ## Four things to show on camera
 

@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">HisaarAI governed multi-agent recovery architecture</title>
+  <desc id="description">A dark industrial diagram separating purple agent reasoning in two Agent Runtime resources from amber deterministic authority in Cloud Run Hisaar Gate and Firestore.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080b11"/>
+      <stop offset="1" stop-color="#121723"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#242b38" stroke-width="1" opacity="0.45"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow-neutral" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#8e9aad"/>
+    </marker>
+    <marker id="arrow-reason" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#a88cff"/>
+    </marker>
+    <marker id="arrow-authority" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#ffb454"/>
+    </marker>
+    <style>
+      .label { font: 700 19px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .04em; fill: #f5f7fb; }
+      .kicker { font: 700 13px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .14em; fill: #8e9aad; }
+      .copy { font: 500 15px Inter, ui-sans-serif, system-ui, sans-serif; fill: #c6cedb; }
+      .small { font: 650 13px Inter, ui-sans-serif, system-ui, sans-serif; fill: #dbe1ea; }
+      .role { font: 700 12px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .05em; fill: #e9e2ff; }
+      .neutral { fill: #171d28; stroke: #465165; stroke-width: 2; }
+      .reason { fill: #1c1830; stroke: #8f71ee; stroke-width: 2.5; }
+      .authority { fill: #2a2015; stroke: #f2a64a; stroke-width: 2.5; }
+      .security { fill: #251923; stroke: #e96b8d; stroke-width: 2.5; }
+      .data { fill: #142628; stroke: #4cc6b7; stroke-width: 2.5; }
+      .trace { fill: #152130; stroke: #5b9de8; stroke-width: 2.5; }
+      .flow { fill: none; stroke: #8e9aad; stroke-width: 3; marker-end: url(#arrow-neutral); }
+      .reason-flow { fill: none; stroke: #a88cff; stroke-width: 3; marker-end: url(#arrow-reason); }
+      .authority-flow { fill: none; stroke: #ffb454; stroke-width: 3; marker-end: url(#arrow-authority); }
+      .telemetry { fill: none; stroke: #5b9de8; stroke-width: 2; stroke-dasharray: 8 8; marker-end: url(#arrow-neutral); opacity: .8; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#background)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <path d="M42 51H1558" stroke="#303849" stroke-width="1"/>
+  <text x="60" y="45" class="kicker" fill="#ffb454">HISAARAI / FORTIFIED ENTERPRISE FLEET</text>
+  <text x="60" y="88" class="label" font-size="31">Reasoning proposes. Deterministic authority decides.</text>
+  <text x="1540" y="45" class="kicker" text-anchor="end">GOVERNED AP RECOVERY / STATIC VIEW</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="140" width="300" height="145" rx="14" class="neutral"/>
+    <text x="88" y="176" class="kicker">HUMAN SURFACE</text>
+    <text x="88" y="211" class="label">Command Room UI</text>
+    <text x="88" y="241" class="copy">Google ID token for mutations</text>
+    <text x="88" y="265" class="copy">Public read-only incident proof</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="420" y="158" width="220" height="110" rx="14" class="neutral"/>
+    <text x="448" y="196" class="kicker">ASYNC DELIVERY</text>
+    <text x="448" y="232" class="label">Pub/Sub</text>
+    <text x="448" y="254" class="small">Authenticated push</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="700" y="125" width="365" height="175" rx="14" class="authority"/>
+    <rect x="720" y="145" width="110" height="27" rx="13" fill="#f2a64a" opacity="0.2"/>
+    <text x="775" y="164" class="kicker" text-anchor="middle" fill="#ffc77f">AUTHORITY</text>
+    <text x="730" y="208" class="label">Cloud Run / Hisaar Gate</text>
+    <text x="730" y="239" class="copy">State machine • warrant • approval</text>
+    <text x="730" y="265" class="copy">Release • receipt comparison • finality</text>
+    <text x="730" y="286" class="small" fill="#ffc77f">NO LANGUAGE MODEL</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1160" y="125" width="375" height="175" rx="14" class="data"/>
+    <text x="1190" y="164" class="kicker" fill="#79ddd1">PERSISTED AUTHORITY</text>
+    <text x="1190" y="205" class="label">Firestore</text>
+    <text x="1190" y="237" class="copy">Trusted vendor master</text>
+    <text x="1190" y="263" class="copy">Incident + warrant transactions</text>
+    <text x="1190" y="286" class="copy">Idempotent sandbox ledger</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="180" y="380" width="300" height="140" rx="14" class="security"/>
+    <text x="210" y="418" class="kicker" fill="#ff94b1">FAIL-CLOSED SCREENING</text>
+    <text x="210" y="458" class="label">Model Armor</text>
+    <text x="210" y="488" class="copy">PDF text + exact model input</text>
+    <text x="210" y="510" class="small">MATCH / CLEAR / UNAVAILABLE</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="555" y="355" width="355" height="190" rx="14" class="reason"/>
+    <rect x="575" y="375" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
+    <text x="641" y="394" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
+    <text x="585" y="437" class="label">Protected AP Runtime</text>
+    <text x="585" y="468" class="copy">Separate runtime identity</text>
+    <text x="585" y="494" class="copy">Screened, typed invoice input</text>
+    <text x="585" y="520" class="small" fill="#c3b2ff">Proposal only • no ledger access</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="965" y="335" width="570" height="250" rx="14" class="reason"/>
+    <rect x="985" y="355" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
+    <text x="1051" y="374" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
+    <text x="995" y="417" class="label">Recovery Fleet Runtime</text>
+    <text x="995" y="444" class="copy">Separate runtime identity • bounded incident evidence</text>
+
+    <rect x="995" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
+    <rect x="1101" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
+    <rect x="1207" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
+    <rect x="1313" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
+    <rect x="1419" y="470" width="90" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
+    <text x="1043" y="498" class="role" text-anchor="middle">RAASID</text>
+    <text x="1043" y="521" class="small" text-anchor="middle">Observe</text>
+    <text x="1149" y="498" class="role" text-anchor="middle">KASHIF</text>
+    <text x="1149" y="521" class="small" text-anchor="middle">Investigate</text>
+    <text x="1255" y="498" class="role" text-anchor="middle">MUSLIH</text>
+    <text x="1255" y="521" class="small" text-anchor="middle">Plan</text>
+    <text x="1361" y="498" class="role" text-anchor="middle">CLEAN AP</text>
+    <text x="1361" y="521" class="small" text-anchor="middle">Execute</text>
+    <text x="1464" y="498" class="role" text-anchor="middle">SHAAHID</text>
+    <text x="1464" y="521" class="small" text-anchor="middle">Narrate</text>
+    <text x="995" y="566" class="small" fill="#c3b2ff">No role can approve or set VERIFIED</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="555" y="665" width="355" height="130" rx="14" class="data"/>
+    <text x="585" y="704" class="kicker" fill="#79ddd1">TRUSTED CONTEXT</text>
+    <text x="585" y="744" class="label">Memory Bank</text>
+    <text x="585" y="774" class="copy">Genuine immutable revisions only</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="965" y="665" width="570" height="130" rx="14" class="trace"/>
+    <text x="995" y="704" class="kicker" fill="#87bfff">OBSERVABILITY</text>
+    <text x="995" y="744" class="label">Cloud Trace</text>
+    <text x="995" y="774" class="copy">Correlated spans across the observed hosted journey</text>
+  </g>
+
+  <path d="M360 213H412" class="flow"/>
+  <path d="M640 213H692" class="flow"/>
+  <path d="M700 285H515V365H480" class="authority-flow"/>
+  <path d="M480 450H547" class="flow"/>
+  <path d="M733 355V308" class="reason-flow"/>
+  <path d="M1065 243H1152" class="authority-flow"/>
+  <path d="M950 300V320H1250V327" class="authority-flow"/>
+  <path d="M965 550H930V730H918" class="reason-flow"/>
+  <path d="M733 545V657" class="reason-flow"/>
+  <path d="M883 300V625H1240V657" class="telemetry"/>
+  <path d="M330 520V625H1090V657" class="telemetry"/>
+  <path d="M1250 585V657" class="telemetry"/>
+
+  <g transform="translate(60 835)">
+    <rect width="18" height="18" rx="4" fill="#1c1830" stroke="#8f71ee" stroke-width="2"/>
+    <text x="30" y="15" class="small">AGENT REASONING / NON-AUTHORITATIVE</text>
+    <rect x="365" width="18" height="18" rx="4" fill="#2a2015" stroke="#f2a64a" stroke-width="2"/>
+    <text x="395" y="15" class="small">DETERMINISTIC AUTHORITY</text>
+    <rect x="655" width="18" height="18" rx="4" fill="#142628" stroke="#4cc6b7" stroke-width="2"/>
+    <text x="685" y="15" class="small">TRUSTED / PERSISTED DATA</text>
+    <path d="M1010 9H1060" class="telemetry"/>
+    <text x="1075" y="15" class="small">CORRELATED TELEMETRY</text>
+  </g>
+</svg>

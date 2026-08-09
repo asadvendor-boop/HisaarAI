@@ -83,7 +83,8 @@ Create only the resources needed by the visible journey:
   `hisaar-app` token identity. Grant the Pub/Sub service agent Token Creator on
   that identity and the subscription creator `actAs`; use the same boundary for
   continuity events.
-- Register or confirm both Runtime entries in Agent Registry.
+- Deploy and read back both callable Runtime resource names and their separate
+  runtime identities.
 - Mirror the Day-0 checkpoint into Firestore, preserving its real server time
   and MemoryRevision name. Schedule the remaining checkpoint dates against the
   final app endpoint.
@@ -96,8 +97,10 @@ audience and expected subject or service-account-email checks:
 - `/api/commander/*`: Google web-client audience plus allowlisted human `sub`.
 - `/internal/pubsub/events`: Pub/Sub push audience plus `hisaar-app` identity and
   one of the three allowed event types.
-- `/internal/tools/ap/*`: only `hisaar-ap-runtime`.
-- `/internal/tools/recovery/*`: only `hisaar-recovery-runtime`.
+- Protected AP Runtime invocation: typed bounded input under
+  `hisaar-ap-runtime`.
+- Recovery Fleet Runtime invocation: typed bounded input under
+  `hisaar-recovery-runtime`.
 
 **Done when:** the `.run.app` health page works, both Runtime resource names are
 real, Day 0 is visible from Memory Bank and Firestore, and future checkpoints are
@@ -239,7 +242,8 @@ Above the fold must communicate within 30 seconds:
 The main view shows invoice versus vendor fingerprint, the live recovery
 timeline and the authoritative warrant/approval panel. The outcome shows unsafe
 payment blocked, trusted payment completed once, receipt, replay `MATCH`,
-Shaahid’s summary and real Google Runtime/Registry/trace provenance links.
+Shaahid’s summary and real proof links for both Runtime resources, Memory Bank
+and the correlated Trace.
 
 Do not add extra pages, fake log streams, invented scores, generic analytics or
 configuration screens. Meet responsive layout, keyboard focus and readable

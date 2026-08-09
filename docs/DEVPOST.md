@@ -14,7 +14,8 @@ Fortified Enterprise Fleet
 
 ## What it does
 
-HisaarAI is a visual command room that contains a compromised enterprise agent,
+HisaarAI is a visual command room for Accounts Payable Operations leaders. It
+contains a compromised enterprise agent,
 excludes its contaminated context, and safely completes the business process
 through a clean specialist fleet and one accountable human decision. In the live
 Accounts Payable journey, real Model Armor blocks an obvious injection before
@@ -23,6 +24,13 @@ tamper that a content filter correctly clears. Raasid, Kashif and Muslih
 reconstruct a trusted-source warrant; the clean AP standby executes it once;
 Shaahid narrates the deterministic receipt comparison; only Gate can mark the incident
 verified.
+
+In one observed hosted run (`n=1`), a protected AP agent proposed an attacker
+destination for a PKR 4.275M synthetic invoice. HisaarAI quarantined it before
+any receipt, obtained one accountable approval, and produced one verified
+sandbox receipt to the trusted destination. This is the observed demo
+transformation, not a generalized performance, customer-deployment or
+production-money claim.
 
 ## How we built it
 
@@ -39,6 +47,13 @@ with Day-7/14/21 checkpoints scheduled against the same endpoint. The recovery
 fleet materially reads the latest immutable revision to select trusted-vendor
 reconstruction; missing future dates are shown as pending, never fabricated.
 
+## Other data sources
+
+The demonstration uses synthetic PDF fixtures as incoming evidence, a Firestore
+vendor master as the trusted bank-detail source, and a Firestore sandbox ledger
+as the receipt authority. No customer invoice, production ERP or real bank is
+connected.
+
 ## What makes it different
 
 Most agent-security demos stop after detection. HisaarAI proves the harder
@@ -46,7 +61,7 @@ enterprise outcome: safely finish the interrupted work without letting an LLM
 self-approve, copying quarantined context, or paying twice. Its command room
 makes the trust boundary visible to a non-technical judge in seconds.
 
-## Challenges
+## Findings and learnings
 
 The most difficult boundary was preserving useful multi-agent reasoning without
 making model output authoritative. We solved this with short typed role outputs,
@@ -55,6 +70,11 @@ and version transactions, and one receipt keyed by the stable launch-scoped
 business key. We also calibrated Model Armor honestly: the committed injection is blocked
 on exact extracted text, while the semantic tamper clears screening and is caught
 by the trusted-source Gate.
+
+The main learning was that role separation is useful only when authority is also
+separated: agents interpret variable evidence, but typed bounded inputs limit
+what crosses contexts, separate runtime identities isolate execution surfaces,
+and deterministic Gate code plus the commander decide whether work may proceed.
 
 ## Accomplishments
 
@@ -67,7 +87,7 @@ by the trusted-source Gate.
 
 ## Built with
 
-Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, Google ADK, Agent Runtime, Agent Registry,
+Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, Google ADK, two Agent Runtime resources,
 Memory Bank, Model Armor, Vertex AI, Cloud Run, Pub/Sub, Cloud Scheduler,
 Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 
@@ -78,11 +98,14 @@ Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-419caa6acdfc444d>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Demo video: `PENDING`
-- Optional public article: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md>
+- Optional public article candidate: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md> (bonus eligibility/acceptance not confirmed)
 
 ## Testing instructions
 
 Open either read-only proof link to inspect a genuine hosted incident without an
 account. New launches and the exact-warrant approval are intentionally limited
-to the allowlisted Incident Commander; the public continuous demo video shows
-that authenticated path from launch through one receipt and `VERIFIED`.
+to the allowlisted Incident Commander. The verified-recovery link is expected to
+show the attacker proposal, quarantine, trusted destination, one receipt,
+deterministic `MATCH` and `VERIFIED`; the Model Armor link is expected to show
+`MATCH`, zero Gemini calls and no receipt. Demo video: `PENDING` until a public
+URL exists.

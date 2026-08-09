@@ -37,27 +37,15 @@ this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    UI["One-screen command room"] -->|"Google ID token"| APP["Cloud Run / Hisaar Gate"]
-    UI -->|"launch"| PS["Pub/Sub"]
-    PS -->|"authenticated push"| APP
-    APP --> MA["Model Armor"]
-    APP --> AP["Protected AP Agent Runtime"]
-    APP --> DB[("Firestore authority + sandbox ledger")]
-    APP --> RF["Recovery Fleet Agent Runtime"]
-    RF --> R["Raasid"]
-    RF --> K["Kashif"]
-    RF --> M["Muslih"]
-    RF --> C["Clean AP standby"]
-    RF --> S["Shaahid"]
-    RF --> MB["Memory Bank + immutable revisions"]
-    APP --> CT["Correlated Cloud Trace"]
-```
+![HisaarAI architecture: agent reasoning remains separate from deterministic authority](docs/media/architecture.svg)
 
 One Cloud Run service keeps the hackathon build small. Authority remains
-separated in code: models can propose and narrate, while transactional Gate code
-alone changes state, releases execution and verifies the receipt.
+separated: models receive typed bounded inputs and can propose or narrate, while
+transactional Gate code alone changes state, releases execution and verifies the
+receipt. The Protected AP and Recovery Fleet are two callable Agent Runtime
+resources with separate runtime identities; the recovery resource holds five
+distinct roles because observation, investigation, planning, clean execution and
+witness narration require different evidence and authority boundaries.
 
 ## Google stack and model routing
 
@@ -70,10 +58,12 @@ alone changes state, releases execution and verifies the receipt.
 | Clean AP standby | `gemini-3.6-flash` | Medium | Approved request only |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default | Narrative only |
 
-The application uses Google ADK, two callable Agent Runtimes, Agent Registry,
-Memory Bank, Gemini on Vertex AI, Model Armor, Cloud Run, Pub/Sub, Cloud
-Scheduler, Firestore, Cloud Logging and Cloud Trace. No other Gemini model is
-allowed and no silent cross-model fallback is implemented.
+The application uses Google ADK, two callable Agent Runtime resources, Memory
+Bank, Gemini on Vertex AI, Model Armor, Cloud Run, Pub/Sub, Cloud Scheduler,
+Firestore, Cloud Logging and Cloud Trace. No other Gemini model is allowed and
+no silent cross-model fallback is implemented. The protected proposal and
+specialist findings persist requested model, actual model and thinking level;
+runtime clients reject an unexpected model response.
 
 ## Genuine continuity clock
 
@@ -82,9 +72,9 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 | Checkpoint | Date (Asia/Karachi) | Status |
 |---|---:|---|
 | Day 0 | 2026-08-09 | Recorded |
-| Day 7 | 2026-08-16 | Scheduled |
-| Day 14 | 2026-08-23 | Scheduled |
-| Day 21 | 2026-08-30 | Scheduled |
+| Day 7 | 2026-08-16 | Scheduled / `PENDING` |
+| Day 14 | 2026-08-23 | Scheduled / `PENDING` |
+| Day 21 | 2026-08-30 | Scheduled / `PENDING` |
 
 Future entries are never backfilled or shown as complete early. Recovery reads
 the latest real revision and persists its exact resource name in the warrant.
@@ -93,7 +83,19 @@ The authenticated run revision and the current hosted UI revision are identified
 separately alongside the latest injection and semantic-path readbacks in
 [`docs/evidence/hosted-judge-path.json`](docs/evidence/hosted-judge-path.json).
 
-## Run locally
+## Run the no-cloud product check
+
+```bash
+make demo-check
+```
+
+This is the concise judge/developer path: it needs the locked Python environment
+but no Google credentials or cloud access. It runs exactly eight focused
+business invariants: fail-closed screening, semantic quarantine, pre-approval
+denial, wrong/expired approval denial, contaminated-context exclusion,
+idempotent receipt replay, verification disagreement and the clean control.
+
+## Run the application locally
 
 Requirements: Python 3.13, `uv`, Node.js 22+, Google application-default
 credentials, and access to the configured Google Cloud project.
@@ -104,42 +106,71 @@ npm ci --prefix web
 npm run build --prefix web
 export PYTHONPATH=src
 export HISAAR_WEB_DIST=web/dist
-# Configure the HISAAR_* values documented in src/hisaarai/config.py
+# Configure the three required authentication values in the table below.
 uv run uvicorn hisaarai.app:app --port 8080
 ```
+
+`Settings.from_env()` reads exactly these environment variables. “Defaulted”
+means the application supplies the shown value when the variable is absent;
+only the three authentication values are required for the normal app startup.
+
+| Environment variable | Requirement | Default |
+|---|---|---|
+| `GOOGLE_CLOUD_PROJECT` | Defaulted | `hisaarai-agentic-2026` |
+| `HISAAR_LOCATION` | Defaulted | `us-central1` |
+| `HISAAR_FIRESTORE_DATABASE` | Defaulted | `hisaarai` |
+| `HISAAR_EVENT_TOPIC` | Defaulted | `hisaar-events` |
+| `HISAAR_PUBSUB_AUDIENCE` | **Required** | None |
+| `HISAAR_COMMANDER_OAUTH_CLIENT_ID` | **Required** | None |
+| `HISAAR_COMMANDER_SUBJECT` | **Required** | None |
+| `HISAAR_APP_SERVICE_ACCOUNT` | Defaulted | `hisaar-app@<project>.iam.gserviceaccount.com` |
+| `HISAAR_AP_RUNTIME_SERVICE_ACCOUNT` | Defaulted | `hisaar-ap-runtime@<project>.iam.gserviceaccount.com` |
+| `HISAAR_RECOVERY_RUNTIME_SERVICE_ACCOUNT` | Defaulted | `hisaar-recovery-runtime@<project>.iam.gserviceaccount.com` |
+| `HISAAR_RECOVERY_RUNTIME_NAME` | Defaulted | `projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336` |
+| `HISAAR_AP_RUNTIME_NAME` | Defaulted | `projects/957109932069/locations/us-central1/reasoningEngines/9065615757768916992` |
+| `HISAAR_MODEL_ARMOR_TEMPLATE` | Defaulted | `hisaarai-ingress` |
+| `HISAAR_ENVIRONMENT` | Defaulted | `production` |
 
 The web client holds the Google Identity credential only in memory. Every
 commander mutation is JSON-only and same-origin; the backend validates Google's
 signature, issuer, expiry, exact OAuth audience and the allowlisted stable
 subject.
 
-## Judge access
+## Data sources
+
+- Three synthetic PDF fixtures provide the injection-control, semantic-tamper
+  and clean-control inputs; they contain no customer documents.
+- The Firestore vendor master is the trusted source used to detect the semantic
+  bank-fingerprint mismatch and reconstruct the clean request.
+- The Firestore sandbox ledger stores the application-level receipt; it does not
+  connect to a bank or production ERP.
+
+## Judge access and public proof
 
 The hosted command room and the two read-only proof links above are public and
 need no account. They load genuine persisted incidents from the deployed
-Firestore authority. Launch, reject and approval remain restricted to the
-allowlisted Incident Commander because that identity boundary is part of the
-product, not a judging inconvenience. The final public video will show the
-complete live mutation path; judges can inspect its resulting incident through
-the same read-only interface.
+Firestore authority:
 
-## The only product check
+- **Verified semantic recovery** is expected to show the proposed attacker
+  fingerprint, semantic quarantine before any receipt, the trusted executed
+  fingerprint, one sandbox receipt, deterministic `MATCH` and final `VERIFIED`.
+- **Block before Gemini** is expected to show Model Armor `MATCH`, zero Gemini
+  invocations, no proposal and no receipt.
 
-```bash
-make demo-check
-```
-
-This runs exactly eight focused business invariants: fail-closed screening,
-semantic quarantine, pre-approval denial, wrong/expired approval denial,
-contaminated-context exclusion, idempotent receipt replay, verification
-disagreement, and the clean control. There is deliberately no GitHub Actions
-pipeline, deployment-on-push, repository SHA ceremony, benchmark suite or
-statistical claim.
+Launch, reject and approval remain restricted to the allowlisted Incident
+Commander because that identity boundary is part of the product. The public
+video remains **PENDING** until a public URL exists; these links are the current
+no-sign-in evidence. There is deliberately no GitHub Actions pipeline,
+deployment-on-push, repository SHA ceremony, benchmark suite or statistical
+claim.
 
 ## Honest limitations
 
 - All financial effects are confined to a Firestore sandbox ledger; HisaarAI
   does not connect to a real bank or ERP.
+- The PDFs, vendor records and ledger are synthetic hackathon data. The observed
+  hosted transformation is one run (`n=1`), not customer validation, a
+  population result or a claim of production-money impact.
 - Model Armor screens PDF text and the exact extracted text; embedded PDF images
   are outside this demo's screening claim.
 - The multi-week chain is shown only for checkpoints that genuinely exist at

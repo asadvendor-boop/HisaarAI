@@ -65,10 +65,9 @@ The architecture is deliberately small but real:
 
 - **Gemini 3.6 Flash and Gemini 3.5 Flash Lite:** reasoning and structured agent
   work, with the model and thinking level visible per agent.
-- **Google ADK:** multi-agent delegation and tool boundaries.
-- **Two Agent Runtime deployments:** one protected AP runtime and one recovery
-  fleet runtime.
-- **Agent Registry:** judge-visible catalog entries for the deployed fleet.
+- **Google ADK:** distinct agent roles receiving typed bounded inputs.
+- **Two callable Agent Runtime resources:** one protected AP Runtime and one
+  recovery fleet Runtime, using separate runtime identities.
 - **Memory Bank:** genuine Day-0/7/14/21 continuity checkpoints.
 - **Model Armor:** direct prompt/document screening before Gemini receives the
   committed security fixture.
@@ -79,10 +78,11 @@ The architecture is deliberately small but real:
 - **Agent Observability / Cloud Trace and Logging:** one correlated trace across
   the visible recovery.
 
-The architecture demonstrates separation through agent roles and tool
-permissions, not through a large number of microservices, databases or service
-accounts. Hisaar Gate is deterministic application code and remains the only
-authority allowed to approve state transitions or release a sandbox mutation.
+The architecture demonstrates separation through agent roles, typed bounded
+inputs, separate runtime identities and deterministic authority, not through a
+large number of microservices or databases. Hisaar Gate is deterministic
+application code and remains the only authority allowed to approve state
+transitions or release a sandbox mutation.
 
 Failure tolerance is visible: invalid agent output, timeout or missing evidence
 causes a safe `BLOCKED` outcome; compromised context is never copied into the
@@ -101,9 +101,10 @@ Gemini zero times and create no receipt.
 The public proof package contains:
 
 - One polished command-room UI driven by persisted backend state.
-- One continuous, unedited, English demo no longer than four minutes.
-- Visible Google Cloud proof: `.run.app` URL, Runtime/Registry identity and a
-  correlated trace or log view.
+- One continuous, unedited, English demo no longer than four minutes, once it is
+  recorded and published; until then its status remains `PENDING`.
+- Visible Google Cloud proof: `.run.app` URL, both Runtime resource identities,
+  Memory Bank and a correlated trace or log view.
 - A public repository with a clean architecture diagram, concise README and
   reproducible local/deployment instructions.
 - One genuine flagship journey plus a short Model Armor control beat.
@@ -156,8 +157,9 @@ a sandbox payment. It cannot write the sandbox ledger directly.
 ### 4.2 Recovery Fleet Runtime
 
 Contains Raasid, Kashif, Muslih, the clean AP standby and Shaahid. The agents have
-separate ADK roles and tool allowlists. They may inspect bounded incident evidence
-and propose recovery actions but cannot self-approve Hisaar Gate.
+separate ADK roles, typed outputs and bounded inputs. They may inspect bounded
+incident evidence and propose recovery actions but cannot self-approve Hisaar
+Gate.
 
 ### 4.3 One Cloud Run application
 
@@ -320,7 +322,8 @@ It prioritizes comprehension over evidence density.
 - `Trusted payment: completed once`
 - Receipt identifier and replay `MATCH`
 - Shaahid verification summary
-- Google Cloud provenance chips linking the Runtime/Registry/trace evidence
+- Google Cloud provenance chips linking both Runtime resources, Memory Bank and
+  correlated Trace evidence
 
 No fake map, simulated log stream, invented latency or decorative security score
 is permitted.
@@ -377,8 +380,9 @@ guaranteed latency or exhaustive least privilege.
   warrant as the human commander.
 - **2:35–3:05 — Safe completion:** the clean standby completes once; repeat returns
   the same receipt; Shaahid reports `MATCH`; Gate shows `VERIFIED`.
-- **3:05–3:35 — Platform proof:** show Agent Registry/Runtime, the correlated
-  Google Cloud trace and genuine Memory Bank week checkpoints.
+- **3:05–3:35 — Platform proof:** show both Agent Runtime resources, the
+  correlated Google Cloud trace and genuine Memory Bank checkpoints available
+  at recording time.
 - **3:35–4:00 — Close:** restate the business outcome and architecture in one
   sentence: Hisaar does not merely detect a compromised agent; it safely finishes
   the work.
@@ -424,7 +428,8 @@ HisaarAI is ready when:
 - the flagship ends with one correct sandbox receipt and replay `MATCH`;
 - all six agents have readable, distinct roles and truthful model provenance;
 - the command room makes the business value understandable within 30 seconds;
-- the video shows an unedited live action and visible Google Cloud proof;
+- the video, once publicly recorded, shows an unedited live action and visible
+  Google Cloud proof;
 - the real continuity checkpoints available by submission time are shown without
   fabrication;
 - the repository contains the required diagram and setup instructions; and

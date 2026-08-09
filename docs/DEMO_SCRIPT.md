@@ -4,25 +4,30 @@
 
 1. Use a 16:9 browser window at 1440×900 or 1920×1080, with browser zoom at
    80–90%, and silence desktop notifications.
-2. Open <https://hisaarai-2wkruw66na-uc.a.run.app/>, sign in, and wait until the
-   command line reads `Google identity verified: asad.ali@pildat.org`.
-3. Return to the top of the page with no incident loaded. Keep the browser
-   console and terminal closed throughout the take.
+2. Open the [verified read-only proof](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-f5ad15f9f622490f),
+   sign in, and wait until the command line reads
+   `Google identity verified: asad.ali@pildat.org`.
+3. Keep the final `VERIFIED` incident loaded. Keep the browser console and
+   terminal closed throughout the take.
 4. Start recording, pause for one second, then follow the timed path below at
    normal speed. If a live step errors, discard the take instead of explaining
    around it.
 
-## 0:00–0:25 — The hook
+## 0:00–0:25 — Open on the verified transformation
 
-Open the live command room at normal speed.
+Show the loaded `BEFORE / CONTROL / AFTER` strip and final receipt at normal
+speed.
 
-“Enterprise agents fail in two ways: an obvious attack, or a plausible business
-input that silently changes the action. HisaarAI safely finishes the work after
-either failure. The agent was compromised. The payment was not.”
+“This is one observed hosted run, `n=1`: a protected AP agent proposed an
+attacker destination for this PKR 4.275M synthetic invoice. HisaarAI quarantined
+it before any receipt, obtained one accountable approval, and completed one
+verified sandbox receipt to the trusted destination. The agent was compromised.
+The payment was not.”
 
-Point to PKR 4.275M at risk, the six named agents and the two real Gemini models.
+Point once to the proposed attacker fingerprint, `QUARANTINED BEFORE UNSAFE
+RECEIPT`, trusted executed fingerprint, one receipt, `MATCH` and `VERIFIED`.
 
-## 0:25–0:55 — Real first-line defense
+## 0:25–0:50 — Real first-line defense
 
 Run **Test Model Armor**. Show the backend-driven terminal incident:
 
@@ -33,7 +38,7 @@ Run **Test Model Armor**. Show the backend-driven terminal incident:
 “The PDF itself is not my claim. Model Armor blocked the exact extracted text
 that would have entered Gemini.”
 
-## 0:55–1:25 — The harder semantic failure
+## 0:50–1:20 — The harder semantic failure
 
 Run **Flagship incident**. Show Model Armor clear, the Protected AP active, the
 attacker fingerprint against vendor-master v7, and `QUARANTINED` before a receipt.
@@ -41,7 +46,7 @@ attacker fingerprint against vendor-master v7, and `QUARANTINED` before a receip
 “A generic injection detector cannot catch a valid-looking bank change. Hisaar
 Gate can, because the LLM never owns execution authority.”
 
-## 1:25–2:10 — The recovery fleet
+## 1:20–1:55 — Why this is a fleet
 
 Let the live state rail advance. Read only the first sentence from each card:
 
@@ -52,16 +57,22 @@ Let the live state rail advance. Read only the first sentence from each card:
 Open the continuity chip and show the real Day-0 MemoryRevision; future dates
 remain pending. Point to the same revision on the warrant.
 
-## 2:10–2:45 — One governed decision
+“These agents interpret variable evidence: observation, blast-radius analysis,
+recovery planning, clean execution and witness narration need distinct context.
+Typed bounded inputs and separate Runtime identities keep those contexts apart.
+None can release money: deterministic Hisaar Gate owns state and the commander
+owns the one approval.”
+
+## 1:55–2:20 — One governed decision
 
 Show the ten-minute warrant, exact digest, vendor-master correction and clean
-destination. Mention the visible pre-approval denial. Approve once using the
-signed-in commander identity.
+destination. Point to `APPROVAL_REQUIRED`, then approve once using the signed-in
+commander identity.
 
 “The browser cannot choose values. The server reloads this exact warrant and the
 current vendor source before one atomic approval.”
 
-## 2:45–3:25 — Finish exactly once
+## 2:20–2:40 — Finish once
 
 The clean AP standby executes. Show:
 
@@ -74,19 +85,25 @@ The clean AP standby executes. Show:
 “Hisaar Gate owns finality. Shaahid explains the result, but cannot mark it
 verified.”
 
-## 3:25–3:50 — Google proof
+Do not run receipt replay during the recording; the persisted receipt and
+deterministic `MATCH` are the complete claim for this take.
 
-Open or hover the real provenance chips: both Agent Runtime resources, Model
-Armor, named Firestore database, correlated Trace, and Memory Bank.
+## 2:40–2:58 — Google proof before the final minute
+
+Point first to the `.run.app` address, then open or hover the proof links for both
+Agent Runtime resources, the named Firestore database, Model Armor and the
+correlated Trace. Point to the loaded Memory revision in the warrant.
 
 “These are live Google resources, not UI labels. The primary and recovery
 Runtimes use different user-managed service accounts; the default Compute
 service account is not deployed.”
 
-## 3:50–4:00 — Close
+## 2:58–3:20 — Close
 
-“HisaarAI does not merely detect a bad agent. It contains the context, governs
-the recovery, and safely completes the business outcome.”
+“HisaarAI does not merely detect a bad agent. On synthetic PDFs, a Firestore
+vendor master and a sandbox ledger, it contains the context, governs recovery
+and completes one observed sandbox outcome. This is a continuous, normal-speed
+take; it is not customer deployment or production money.”
 
 ## Public upload metadata
 
