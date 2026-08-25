@@ -77,11 +77,17 @@ This is a lean human checklist, not a release verifier.
 - [ ] Treat Gemma as a separate optional decision. Do not add Veo or Lyria; do
   not let any model-bonus attempt delay the core video or submission.
 
-## Four things to show on camera
+## Five things to show on camera
 
-1. Injection: Model Armor `MATCH`, Gemini calls `0`, receipt `None`.
-2. Semantic tamper: screening `CLEAR`, fingerprint mismatch, `QUARANTINED`.
-3. Governance: real Memory revision, three specialist outputs, one exact warrant,
-   signed-in approval.
-4. Outcome: trusted fingerprint, one receipt, deterministic `MATCH`, Gate `VERIFIED`,
-   and real Google provenance links.
+1. Problem and solution: attacker destination and PKR 4.275M at risk, followed
+   by quarantine, trusted-context recovery, one human decision and safe
+   completion.
+2. Injection: Model Armor `INJECTION MATCH / BLOCKED`, Gemini calls `0`, no
+   receipt and no mutation.
+3. Orchestration and governance: six functional ADK roles across two Agent
+   Runtime resources, three specialist outputs, one exact warrant and signed-in
+   approval.
+4. Platform proof: Agent Registry, Agent Runtime, Memory Bank and Model Armor,
+   with one sentence explaining the purpose of each.
+5. Outcome and audit: trusted fingerprint, one receipt, deterministic `MATCH`,
+   Gate `VERIFIED`, separate identities and real Google Cloud provenance.
