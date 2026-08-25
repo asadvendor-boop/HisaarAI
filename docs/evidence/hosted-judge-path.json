@@ -4,6 +4,8 @@
   "hosted_url": "https://hisaarai-2wkruw66na-uc.a.run.app",
   "recorded_run_revision": "hisaarai-00018-jxt",
   "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:0538db56c691f72b2cf90ba0d20df620a4afd4d76ce6b45f42b1f82d01a7d595",
+  "current_presentation_revision": "hisaarai-00019-p8p",
+  "current_presentation_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:8bf7e056f047f0d9a213041869bfecd436b99e02c5025fdaabba03f9705ab08b",
   "current_health_status": "ok",
   "commander_auth": {
     "provider": "Google Sign-In",
