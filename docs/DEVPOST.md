@@ -21,17 +21,18 @@ through a clean specialist fleet and one accountable human decision. In the live
 Accounts Payable journey, real Model Armor blocks an obvious injection before
 Gemini, while deterministic Hisaar Gate catches a harder semantic bank-detail
 tamper that a content filter correctly clears. Raasid, Kashif and Muslih
-reconstruct a trusted-source warrant; the clean AP standby executes it once;
-Shaahid narrates the deterministic receipt comparison; only Gate can mark the incident
-verified.
+reconstruct a trusted-source warrant; Clean AP validates the exact approved
+request; Hisaar Gate, running under the application persistence identity,
+commits the idempotent sandbox receipt and performs deterministic verification.
+Shaahid narrates that comparison; only Gate can mark the incident verified.
 
 In one observed hosted run (`n=1`), a protected AP agent proposed an attacker
 destination for a PKR 4.275M synthetic invoice. HisaarAI quarantined it before
-any receipt in 31.9 seconds and reached approval-ready in 54.0 seconds. After one
-accountable human decision, automated execution and verification took 10.8
+any receipt in 3.72 seconds and reached approval-ready in 29.8 seconds. After one
+accountable human decision, automated execution and verification took 11.5
 seconds and produced one trusted sandbox receipt. A public read-only replay
-returned that same receipt with `MATCH`. The 267.7-second end-to-end time includes
-203.0 seconds of human review. This is an observed sandbox transformation, not a
+returned that same receipt with `MATCH`. The 71.7-second end-to-end time includes
+30.4 seconds of human review. This is an observed sandbox transformation, not a
 generalized performance, customer-deployment or production-money claim.
 
 ## How we built it
@@ -50,8 +51,9 @@ Memory Bank stores a genuine Day-0 → Day-7 → Day-14 predecessor chain under 
 final Recovery Runtime. The scheduled Day-7 and Day-14 deliveries initially hit
 a Vertex API validation change; after a one-line request fix on August 25, the
 original jobs were recovered without backdating their real creation times. The
-fresh flagship warrant materially binds the resulting Day-14 revision. Day-21
-remains pending until its scheduled date.
+recovery path consumes a Firestore checkpoint mirror bound to the exact genuine
+Memory Bank revision resource name; the fresh flagship warrant preserves the
+resulting Day-14 binding. Day-21 remains pending until its scheduled date.
 
 ## Other data sources
 
@@ -68,6 +70,17 @@ Most agent-security demos stop after detection. HisaarAI proves the harder
 enterprise outcome: safely finish the interrupted work without letting an LLM
 self-approve, copying quarantined context, or paying twice. Its command room
 makes the trust boundary visible to a non-technical judge in seconds.
+
+## Why now
+
+On August 25, Google Cloud [introduced Gemini Enterprise for Financial
+Services](https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services)
+around specialized financial skills, secure data connections, acting agents and
+centralized governance. HisaarAI explores the complementary recovery problem:
+when a financial agent's context is poisoned, how can the institution contain
+it, reconstruct trusted context and safely finish the work exactly once?
+HisaarAI demonstrates aligned design principles; it does not claim integration
+with the preview product.
 
 ## Findings and learnings
 
@@ -103,7 +116,7 @@ Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
-- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-aba694bdd8ee48e0>
+- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2>
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>
 - Public read-only clean control: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>

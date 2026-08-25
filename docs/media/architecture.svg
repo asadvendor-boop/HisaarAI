@@ -80,7 +80,7 @@
     <text x="775" y="164" class="kicker" text-anchor="middle" fill="#ffc77f">AUTHORITY</text>
     <text x="730" y="208" class="label">Cloud Run / Hisaar Gate</text>
     <text x="730" y="239" class="copy">State machine • warrant • approval</text>
-    <text x="730" y="265" class="copy">Release • receipt comparison • finality</text>
+    <text x="730" y="265" class="copy">App identity persists receipt • deterministic finality</text>
     <text x="730" y="286" class="small" fill="#ffc77f">NO LANGUAGE MODEL</text>
   </g>
 
@@ -106,8 +106,8 @@
     <rect x="575" y="375" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
     <text x="641" y="394" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
     <text x="585" y="437" class="label">Protected AP Runtime</text>
-    <text x="585" y="468" class="copy">Separate runtime identity</text>
-    <text x="585" y="494" class="copy">Screened, typed invoice input</text>
+    <text x="585" y="468" class="copy">Google ADK • Gemini 3.6 Flash / Vertex AI</text>
+    <text x="585" y="494" class="copy">Screened typed input • separate identity</text>
     <text x="585" y="520" class="small" fill="#c3b2ff">Proposal only • no ledger access</text>
   </g>
 
@@ -116,7 +116,7 @@
     <rect x="985" y="355" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
     <text x="1051" y="374" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
     <text x="995" y="417" class="label">Recovery Fleet Runtime</text>
-    <text x="995" y="444" class="copy">Separate runtime identity • bounded incident evidence</text>
+    <text x="995" y="444" class="copy">Google ADK • Gemini 3.6 + 3.5 Flash-Lite / Vertex AI</text>
 
     <rect x="995" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
     <rect x="1101" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
@@ -130,17 +130,17 @@
     <text x="1255" y="498" class="role" text-anchor="middle">MUSLIH</text>
     <text x="1255" y="521" class="small" text-anchor="middle">Plan</text>
     <text x="1361" y="498" class="role" text-anchor="middle">CLEAN AP</text>
-    <text x="1361" y="521" class="small" text-anchor="middle">Execute</text>
+    <text x="1361" y="521" class="small" text-anchor="middle">Validate</text>
     <text x="1464" y="498" class="role" text-anchor="middle">SHAAHID</text>
     <text x="1464" y="521" class="small" text-anchor="middle">Narrate</text>
-    <text x="995" y="566" class="small" fill="#c3b2ff">No role can approve or set VERIFIED</text>
+    <text x="995" y="566" class="small" fill="#c3b2ff">Separate identity • bounded evidence • no role can approve or set VERIFIED</text>
   </g>
 
   <g filter="url(#shadow)">
     <rect x="555" y="665" width="355" height="130" rx="14" class="data"/>
     <text x="585" y="704" class="kicker" fill="#79ddd1">TRUSTED CONTEXT</text>
     <text x="585" y="744" class="label">Memory Bank</text>
-    <text x="585" y="774" class="copy">Latest trusted revision • read by Recovery Fleet</text>
+    <text x="585" y="774" class="small">Genuine revision • bound through Firestore checkpoint mirror</text>
   </g>
 
   <g filter="url(#shadow)">

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -57,4 +58,32 @@ test("observed flagship timing separates automation from human review", async (t
     approvedExecution: "10.8 SEC",
     total: "267.7 SEC",
   });
+});
+
+test("Model Armor detection is labeled as a security block, not a workflow match", async (t) => {
+  const previousWindow = globalThis.window;
+  globalThis.window = { location: { search: "" } };
+  t.after(() => {
+    globalThis.window = previousWindow;
+  });
+
+  const server = await createServer({
+    appType: "custom",
+    logLevel: "silent",
+    root: fileURLToPath(new URL("..", import.meta.url)),
+    server: { middlewareMode: true },
+  });
+  t.after(() => server.close());
+
+  const app = await server.ssrLoadModule("/src/App.tsx");
+
+  assert.equal(app.modelArmorLabel("MATCH", true), "INJECTION MATCH / BLOCKED");
+  assert.equal(app.modelArmorLabel("CLEAR", false), "CLEAR");
+});
+
+test("the hosted command room declares a favicon instead of generating a 404", async () => {
+  const indexPath = fileURLToPath(new URL("../index.html", import.meta.url));
+  const html = await readFile(indexPath, "utf8");
+
+  assert.match(html, /<link rel="icon"/);
 });

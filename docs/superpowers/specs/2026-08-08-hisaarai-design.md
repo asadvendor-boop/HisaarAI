@@ -1,5 +1,9 @@
 # HisaarAI — Judge-First Product Design
 
+> **Historical planning artifact.** The final runtime and submission truth are
+> defined by `README.md`, `docs/DEVPOST.md` and the August 25 final-rubric
+> polish design. Do not use conflicting earlier demo or continuity wording.
+
 **Date:** 2026-08-09
 **Track:** Fortified Enterprise Fleet
 **Status:** Approved lean build specification

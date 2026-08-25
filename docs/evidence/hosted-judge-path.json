@@ -1,11 +1,11 @@
 {
-  "schema_version": 4,
-  "recorded_at_utc": "2026-08-25T08:19:32Z",
+  "schema_version": 5,
+  "recorded_at_utc": "2026-08-25T17:28:10Z",
   "hosted_url": "https://hisaarai-2wkruw66na-uc.a.run.app",
-  "recorded_run_revision": "hisaarai-00018-jxt",
-  "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:0538db56c691f72b2cf90ba0d20df620a4afd4d76ce6b45f42b1f82d01a7d595",
-  "current_presentation_revision": "hisaarai-00019-p8p",
-  "current_presentation_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:8bf7e056f047f0d9a213041869bfecd436b99e02c5025fdaabba03f9705ab08b",
+  "recorded_run_revision": "hisaarai-00021-7pj",
+  "recorded_run_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:f4508349547ac7d7dd5070abb1c8e9217963dee855c20ede2eaf50341dbed8a2",
+  "current_presentation_revision": "hisaarai-00022-jj5",
+  "current_presentation_image": "us-central1-docker.pkg.dev/hisaarai-agentic-2026/hisaarai/app@sha256:10f71f9a85095c39be3c3e4f32ef8d7d66ce1125a503bd6aed676e6cf7c05539",
   "current_health_status": "ok",
   "commander_auth": {
     "provider": "Google Sign-In",
@@ -32,7 +32,7 @@
     ]
   },
   "semantic_tamper": {
-    "incident_id": "inc-invoice-aba694bdd8ee48e0",
+    "incident_id": "inc-invoice-1f8fa7d20b0e49b2",
     "state": "VERIFIED",
     "state_history": [
       "DETECTED",
@@ -51,24 +51,25 @@
     "verification": "MATCH",
     "observed_metrics": {
       "sample_size": 1,
-      "detection_to_quarantine_seconds": 31.9,
-      "detection_to_approval_ready_seconds": 54.0,
-      "human_review_seconds": 203.0,
-      "approval_to_verified_seconds": 10.8,
-      "detection_to_verified_seconds": 267.7,
+      "detection_to_quarantine_seconds": 3.72,
+      "detection_to_approval_ready_seconds": 29.8,
+      "human_review_seconds": 30.4,
+      "approval_to_verified_seconds": 11.5,
+      "detection_to_verified_seconds": 71.7,
       "unsafe_receipts": 0,
       "trusted_receipts": 1
     },
     "receipt": {
-      "receipt_id": "rcpt-5937483c4bcb",
-      "business_idempotency_key": "pay:INV-2026-0819:invoice-aba694bdd8ee48e0",
-      "created_at": "2026-08-25T08:11:17.477416Z",
-      "executor_identity": "hisaar-recovery-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com"
+      "receipt_id": "rcpt-f0c03b6c9122",
+      "business_idempotency_key": "pay:INV-2026-0819:invoice-1f8fa7d20b0e49b2",
+      "created_at": "2026-08-25T17:27:55.630601Z",
+      "executor_identity": "hisaar-app@hisaarai-agentic-2026.iam.gserviceaccount.com",
+      "reasoning_runtime_identity": "hisaar-recovery-runtime@hisaarai-agentic-2026.iam.gserviceaccount.com"
     },
     "public_read_only_replay": {
       "http_status": 200,
       "state": "VERIFIED",
-      "receipt_id": "rcpt-5937483c4bcb",
+      "receipt_id": "rcpt-f0c03b6c9122",
       "verdict": "MATCH",
       "receipt_created_at_unchanged": true
     },
@@ -89,9 +90,9 @@
         "thinking": "HIGH"
       }
     ],
-    "warrant_digest": "c78bfee2c86922fd3bc9d8ace1db214fefdc794e19732c62ea2f8991f3a982d2",
+    "warrant_digest": "64efa9245df8544befc2e68db94c73ee1fa37c3d13e74b664f62ab03a6b49f97",
     "continuity_revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day14/revisions/708605333949382656",
-    "trace_id": "585aa83faeb9b90643ef62e5d513c914",
+    "trace_id": "519507c8852f8e3f3e2b5ffb1e235ce1",
     "cloud_trace_readback_status": 200,
     "spans": [
       "hisaarai.model_armor",

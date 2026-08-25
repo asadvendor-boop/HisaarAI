@@ -1,119 +1,137 @@
-# HisaarAI — edited demo under four minutes
+# HisaarAI — continuous live demo under four minutes
 
-The organizers explicitly encourage short clips, jump cuts, trimmed waits,
-on-screen labels and one strong example. Do not record a continuous live model
-run. Every clip must still show the real hosted app and persisted Google Cloud
-evidence.
+Record one continuous genuine screen capture. Do not cut, splice, reorder or
+hide any workflow stage. Add accurate AI voiceover, English subtitles and
+explanatory overlays after recording. If uniform speed-up is necessary, apply it
+to the entire capture and show this notice throughout:
+
+`CONTINUOUS LIVE EXECUTION — UNIFORMLY SPED UP — NO CUTS OR SPLICING`
+
+Normal speed is preferred because the observed automated workflow already fits
+inside four minutes.
 
 ## Before recording
 
-1. Use a 16:9 browser window at 1440×900 or 1920×1080, browser zoom 80–90%,
-   notifications silenced, and the hosted app already signed in.
-2. Prepare these real states in separate tabs:
-   - [fresh verified recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-aba694bdd8ee48e0)
-   - [Model Armor block](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796)
-   - live Agent Registry, Firestore, Model Armor and Cloud Trace links
-   - repository architecture diagram
-3. Record short clips. Cut loading, polling, account selection and dead air. Do
-   not type live. Keep the final edit below 3:40 to preserve upload margin.
-4. Add concise on-screen labels and accurate English narration. Show the app
-   working within the first ten seconds.
+1. Use one 16:9 browser window at 1440x900 or 1920x1080, browser zoom 80–90%,
+   notifications silenced and no live typing.
+2. Sign in as the allowlisted commander before capture starts.
+3. Prepare adjacent tabs in this order, but keep the recording continuous while
+   switching tabs:
+   - the primary verified recovery proof;
+   - the signed-in root command room for a fresh launch;
+   - the persisted Model Armor block proof;
+   - the 1600x900 architecture PNG;
+   - the hosted app's public Google provenance footer.
+4. Pre-warm the hosted app and confirm a fresh semantic-tamper run can reach
+   approval-ready. Do not pre-approve the incident used in the live workflow.
+5. Record the screen first. Add the prepared AI voiceover, subtitles and labels
+   afterward without removing or rearranging workflow frames.
 
-## 0:00–0:18 — Outcome first
+## 0:00–0:15 — Outcome first
 
-Open directly on the fresh `VERIFIED` recovery. Show the `BEFORE / CONTROL /
-AFTER` strip, trusted receipt and `MATCH`.
+Start directly on the persisted `VERIFIED` proof. Keep the complete
+`BEFORE / HISAAR CONTROL / AFTER` strip visible, then point to the trusted
+receipt and public replay `MATCH`.
 
 > “A protected AP agent proposed sending a synthetic PKR 4.275 million invoice
 > to an attacker-controlled destination. HisaarAI quarantined it before any
-> receipt, obtained one human decision, and finished once at the trusted
+> receipt, obtained one accountable decision, and finished once at the trusted
 > destination. The agent was compromised. The payment was not.”
 
-On-screen: `OBSERVED SANDBOX RUN / n=1`.
+On-screen: `OBSERVED HOSTED SANDBOX RUN / n=1`.
 
-## 0:18–0:38 — Before and deterministic control
+## 0:15–0:45 — Launch the live poisoned workflow
 
-Point to `PK-ATTACKER-9911`, Model Armor `CLEAR`, vendor-master v7
-`PK-NSTAR-TRUSTED-8842`, and `QUARANTINED BEFORE UNSAFE RECEIPT`.
+Switch to the already-signed-in root tab and click `RUN FLAGSHIP INCIDENT` once.
+Show the real status polling and the PKR 4.275M attacker fingerprint as it
+arrives. Do not cut the loading or asynchronous wait.
 
-> “This harder fixture contains no obvious injection. Model Armor correctly
-> clears it. Gemini proposes the invoice value, but deterministic Hisaar Gate
-> catches the trusted-source mismatch because the LLM never owns execution.”
+> “This clean-looking invoice contains no obvious injection, so Model Armor
+> correctly clears it. Gemini proposes the invoice bank value, but deterministic
+> Hisaar Gate reloads the trusted vendor master, catches the mismatch and
+> quarantines the workflow before a sandbox receipt exists.”
 
-On-screen: `31.9s TO QUARANTINE / ZERO UNSAFE RECEIPTS`.
+On-screen: `MODEL ARMOR CLEAR ≠ BUSINESS-SOURCE TRUST`.
 
-## 0:38–1:05 — Fleet and trusted reconstruction
+## 0:45–1:25 — Explain specialization while recovery runs
 
-Show the three specialist cards and read only their first sentence: Raasid
-observes persisted evidence, Kashif bounds the blast radius to one unexecuted
-proposal, and Muslih reconstructs the smallest correction from the vendor
-master.
+Keep the live workflow visible. Point to Raasid, Kashif and Muslih as their
+persisted bounded findings appear. Show the quarantine timing and approval-ready
+transition without pausing the recording.
 
-> “Separate roles get typed, bounded context. Quarantined invoice text never
-> enters the clean standby. The recovery fleet reached approval-ready in 54.0
-> seconds.”
+> “HisaarAI autonomously moves an untrusted invoice from arrival to an
+> approval-ready recovery warrant. Raasid observes persisted evidence, Kashif
+> bounds the affected action and Muslih drafts the smallest correction. Recovery
+> consumes a Firestore checkpoint mirror bound to the genuine Memory Bank
+> revision; quarantined invoice text never enters clean context.”
 
-## 1:05–1:30 — Memory and human boundary
+On-screen: `BOUNDED AGENT REASONING / DETERMINISTIC AUTHORITY`.
 
-Open the continuity chip: Day‑0, recovered Day‑7, recovered Day‑14 and pending
-Day‑21. Point to the Day‑14 revision on the exact warrant, its digest, trusted
-destination and ten-minute expiry. Use the short clip showing your real click on
-`APPROVE EXACT WARRANT`.
+## 1:25–1:55 — One exact human decision
 
-> “The scheduled Day‑7 and Day‑14 events were recovered after a Vertex request
-> validation change; their real creation times remain visible. This warrant
-> binds the latest Day‑14 revision. Only the allowlisted Google commander can
-> approve its exact server-rederived digest.”
+When the fresh warrant becomes available, show its trusted destination, digest,
+expiry and Memory revision binding. Click `APPROVE EXACT WARRANT` once.
 
-## 1:30–1:55 — Finish exactly once
+> “An accounts-payable operator—not a SOC engineer—makes one exact,
+> policy-required decision. The server re-derives the warrant digest and checks
+> the allowlisted Google identity. No model can approve, release execution or set
+> VERIFIED.”
 
-Cut to the completed state. Show the one receipt, recovery-runtime identity,
-trusted fingerprint, Shaahid narrative and Gate `VERIFIED`. Click the public
-`VERIFY ONE-RECEIPT REPLAY` button and show `MATCH / rcpt-5937483c4bcb`.
+## 1:55–2:20 — Finish exactly once
 
-> “After approval, execution and deterministic verification took 10.8 seconds.
-> Shaahid explains the result but cannot mark it verified. Replaying returns the
-> same receipt; no second mutation is created.”
+Wait continuously for the same incident to reach `VERIFIED`. Show the trusted
+fingerprint, one receipt, the app persistence actor and separate Recovery
+Runtime identity. Click `VERIFY ONE-RECEIPT REPLAY` and show `MATCH`.
 
-On-screen: `HUMAN REVIEW SHOWN SEPARATELY / TOTAL INCLUDES HUMAN TIME`.
+> “Clean AP validates the approved request. Hisaar Gate persists one idempotent
+> sandbox receipt under the application identity and compares every trusted
+> field deterministically. Shaahid explains the result but cannot change it.
+> Replay returns the same receipt, not a second mutation.”
 
-## 1:55–2:12 — First-line defense
+## 2:20–2:45 — Fail closed before Gemini
 
-Jump to the persisted Model Armor control proof. Show `MATCH`, Protected AP
-`WITHHELD`, zero Gemini invocations and no receipt.
+Switch to the persisted Model Armor proof. Show `MATCH`, `NO PROPOSAL — BLOCKED
+PRE-GEMINI`, zero Gemini invocations and no receipt.
 
-> “For an obvious prompt injection, the exact extracted text is blocked before
-> Gemini. If screening is unavailable or inconclusive, the Gate also fails
+> “For an obvious prompt injection, Model Armor blocks the exact model input
+> before Gemini. If screening is unavailable or inconclusive, HisaarAI also fails
 > closed.”
 
-## 2:12–2:50 — Real Google Cloud proof
+On-screen: `0 GEMINI CALLS / 0 MUTATIONS`.
 
-Show the `.run.app` address, exactly two Agent Registry entries, the two Runtime
-resources with separate user-managed identities, Firestore authority, Model
-Armor, the correlated six-span Trace, and the Day‑14 Memory revision.
+## 2:45–3:15 — Architecture, provenance and why now
 
-> “These are live Google resources, not UI labels: Gemini 3.6 Flash and 3.5
-> Flash‑Lite through Google ADK, two Agent Runtimes, Agent Registry, Memory Bank,
-> Model Armor, Pub/Sub, Cloud Run, Firestore and Cloud Trace. Registry discovers
-> agents; deterministic Gate code and the human retain authority.”
+Switch to the 1600x900 architecture PNG. Trace one route from authenticated
+Pub/Sub intake through Model Armor, ADK and both Gemini models, deterministic
+Hisaar Gate, Firestore, Memory Bank and Cloud Trace. Then return to the public
+provenance footer and briefly open the continuity chip.
 
-## 2:50–3:15 — Architecture and buyer value
+> “These are live Google Cloud resources: Google ADK with Gemini 3.6 Flash and
+> 3.5 Flash-Lite on two Agent Runtimes, plus Agent Registry, Memory Bank, Model
+> Armor, Pub/Sub, Firestore and Cloud Trace. Google Cloud is bringing governed
+> agents into financial workflows. HisaarAI answers the next question: how do
+> you safely recover one when its context is poisoned?”
 
-Show the architecture diagram. Trace one line from invoice ingestion to
-screening, proposal, Gate quarantine, clean reconstruction, human approval,
-sandbox receipt and verification.
-
-> “Accounts-payable teams need more than an alert. HisaarAI contains a poisoned
-> agent and safely finishes interrupted work without copying contaminated
-> context, self-approving, or paying twice.”
+On-screen: `ALIGNED WITH GOOGLE CLOUD'S GOVERNED FINANCIAL-AGENT DIRECTION —
+NOT A PREVIEW-PRODUCT INTEGRATION`.
 
 ## 3:15–3:30 — Honest close
 
-Return to the final `BEFORE / CONTROL / AFTER` strip.
+Return to the final before/control/after strip.
 
-> “This is one observed run on synthetic PDFs, a Firestore vendor master and a
-> sandbox ledger—not a customer deployment or real-money claim. HisaarAI makes
-> the enterprise recovery boundary visible, governed and replayable.”
+> “This is one observed run on synthetic enterprise-shaped PDFs, a Firestore
+> vendor master and a sandbox ledger—not a customer deployment or real-money
+> claim. HisaarAI contains the compromised agent, preserves the business outcome
+> and proves exactly what happened.”
+
+## Do not narrate
+
+- every agent biography;
+- the Day-7/Day-14 recovery postmortem;
+- every Google Cloud service individually;
+- CI, SHA or testing mechanics;
+- Day 21 beyond its visible `PENDING` label;
+- generalized fraud-prevention, customer-deployment or ROI claims.
 
 ## Public upload metadata
 
@@ -123,17 +141,19 @@ Return to the final `BEFORE / CONTROL / AFTER` strip.
 
 > HisaarAI contains a compromised enterprise agent, excludes contaminated
 > context, obtains one accountable human decision, and safely completes the
-> interrupted work. This edited live-product demo shows real Google Model Armor,
-> Gemini 3.6 Flash and 3.5 Flash-Lite agents through Google ADK, Agent Runtime,
-> Memory Bank, Pub/Sub, Firestore and Cloud Trace.
+> interrupted sandbox workflow exactly once. This continuous live-product demo
+> shows real Google Model Armor, Gemini 3.6 Flash and 3.5 Flash-Lite through
+> Google ADK, Agent Runtime, Memory Bank, Pub/Sub, Firestore and Cloud Trace.
 >
 > Track: Fortified Enterprise Fleet — All Things Agentic Hackathon 2026
 >
-> Live app: https://hisaarai-2wkruw66na-uc.a.run.app/
+> Live verified recovery:
+> https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2
 >
 > Source: https://github.com/asadvendor-boop/HisaarAI
 >
 > #AllThingsAgenticHackathon #Gemini #GoogleCloud
 
-Set visibility to **Public** and use a clean 16:9 frame showing the final
-`VERIFIED` state as the thumbnail.
+Set visibility to **Public**, not unlisted. Use a clean 16:9 thumbnail showing
+the final `BEFORE / HISAAR CONTROL / AFTER` state. Watch the uploaded copy once
+at 1080p before linking it in Devpost.

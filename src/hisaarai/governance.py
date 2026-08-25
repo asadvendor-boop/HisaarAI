@@ -193,7 +193,10 @@ class GovernedRecovery:
             ):
                 receipt = self.erp.execute(
                     request,
-                    executor_identity=self.settings.recovery_runtime_service_account,
+                    executor_identity=self.settings.app_service_account,
+                    reasoning_runtime_identity=(
+                        self.settings.recovery_runtime_service_account
+                    ),
                 )
             completed = self.store.get_incident(incident.incident_id)
         deterministic_verdict = (

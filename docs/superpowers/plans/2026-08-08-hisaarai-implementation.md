@@ -1,5 +1,9 @@
 # HisaarAI — Lean Rubric-First Build Plan
 
+> **Historical planning artifact.** The final runtime and submission truth are
+> defined by `README.md`, `docs/DEVPOST.md` and the August 25 final-rubric
+> polish design. Do not use conflicting earlier demo or continuity wording.
+
 **Date:** 2026-08-09
 **Status:** Approved for implementation
 **Design:** `docs/superpowers/specs/2026-08-08-hisaarai-design.md`

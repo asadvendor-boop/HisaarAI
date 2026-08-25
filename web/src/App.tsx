@@ -56,6 +56,8 @@ type Incident = {
 type Receipt = {
   receipt_id: string;
   bank_fingerprint: string;
+  executor_identity: string;
+  reasoning_runtime_identity: string | null;
   created_at: string;
 };
 
@@ -79,7 +81,7 @@ const agents = [
   ["Raasid", "Observer", "Gemini 3.5 Flash-Lite", "DEFAULT"],
   ["Kashif", "Investigator", "Gemini 3.6 Flash", "HIGH"],
   ["Muslih", "Recovery planner", "Gemini 3.6 Flash", "HIGH"],
-  ["Clean AP", "Standby executor", "Gemini 3.6 Flash", "MEDIUM"],
+  ["Clean AP", "Standby validator", "Gemini 3.6 Flash", "MEDIUM"],
   ["Shaahid", "Witness", "Gemini 3.5 Flash-Lite", "DEFAULT"],
 ] as const;
 
@@ -95,7 +97,7 @@ const steps: IncidentState[] = [
 ];
 
 const publicProofs = [
-  ["VERIFIED RECOVERY", "inc-invoice-aba694bdd8ee48e0"],
+  ["VERIFIED RECOVERY", "inc-invoice-1f8fa7d20b0e49b2"],
   ["BLOCK BEFORE GEMINI", "inc-invoice-5d86da12456b4796"],
   ["CLEAN CONTROL", "inc-invoice-473fbd809fca4195"],
 ] as const;
@@ -186,6 +188,11 @@ export function missingTimelineStepLabel(
   return "PENDING";
 }
 
+export function modelArmorLabel(decision: string | null, blocked: boolean) {
+  if (blocked && decision === "MATCH") return "INJECTION MATCH / BLOCKED";
+  return decision ?? "AWAITING INPUT";
+}
+
 function firstSentence(summary: string) {
   const match = summary.match(/^.*?[.!?](?:\s|$)/);
   const lead = match?.[0] ?? summary;
@@ -207,7 +214,7 @@ function App() {
   const [replayEvidence, setReplayEvidence] = useState<{ receiptId: string; verdict: string } | null>(null);
   const [notice, setNotice] = useState(
     sharedIncidentId
-      ? "Read-only hosted evidence loaded. Commander sign-in is required only for new actions."
+      ? "Loading read-only hosted evidence. Commander sign-in is required only for new actions."
       : "Sign in as Incident Commander to begin.",
   );
   const signInRef = useRef<HTMLDivElement>(null);
@@ -288,6 +295,8 @@ function App() {
         } else {
           setNotice(`Hisaar Gate failed closed: ${nextData.incident.reason?.replaceAll("_", " ") ?? "BLOCK REASON UNAVAILABLE"}.`);
         }
+      } else if (sharedIncidentId) {
+        setNotice("Read-only hosted evidence loaded. Commander sign-in is required only for new actions.");
       }
     } catch (error) {
       if (requestSequence !== refreshSequenceRef.current) return;
@@ -389,7 +398,11 @@ function App() {
 
   const incident = data?.incident ?? null;
   const amount = useMemo(() => {
-    if (!incident?.proposal) return "NOT LOADED";
+    if (!incident?.proposal) {
+      if (incident?.reason === "MODEL_ARMOR_MATCH") return "BLOCKED PRE-GEMINI";
+      if (incident?.reason === "SCREENING_UNAVAILABLE") return "SCREENING FAILED CLOSED";
+      return sharedIncidentId && !data ? "LOADING PROOF…" : "READY";
+    }
     return new Intl.NumberFormat("en-PK", {
       style: "currency",
       currency: incident.proposal.currency,
@@ -445,26 +458,34 @@ function App() {
       </header>
 
       <main id="main">
-        <section className="hero bastion">
+        <section className={`hero bastion ${sharedIncidentId ? "proof-hero" : ""}`}>
           <div className="hero-copy">
             <p className="buyer">FOR ACCOUNTS PAYABLE OPERATIONS</p>
             <p className="eyebrow">GOVERNED MULTI-AGENT RECOVERY / 01</p>
             <h1>The agent was compromised.<br /><em>The payment was not.</em></h1>
             <p className="lede">HisaarAI quarantines a poisoned workflow, reconstructs clean context, obtains one human decision, and safely finishes the work.</p>
             <div className="hero-actions">
-              <button className="primary" onClick={() => launch()} disabled={!token || !!busy}>
-                <span>{busy === "semantic-tamper" ? "PUBLISHING…" : "RUN FLAGSHIP INCIDENT"}</span>
-                <b>↗</b>
-              </button>
-              <button className="secondary" onClick={() => launch("injection-control")} disabled={!token || !!busy}>
-                TEST MODEL ARMOR
-              </button>
-              <button className="secondary" onClick={() => launch("clean-control")} disabled={!token || !!busy}>
-                {busy === "clean-control" ? "PUBLISHING…" : "RUN CLEAN CONTROL"}
-              </button>
+              {token ? (
+                <>
+                  <button className="primary" onClick={() => launch()} disabled={!!busy}>
+                    <span>{busy === "semantic-tamper" ? "PUBLISHING…" : "RUN FLAGSHIP INCIDENT"}</span>
+                    <b>↗</b>
+                  </button>
+                  <button className="secondary" onClick={() => launch("injection-control")} disabled={!!busy}>
+                    TEST MODEL ARMOR
+                  </button>
+                  <button className="secondary" onClick={() => launch("clean-control")} disabled={!!busy}>
+                    {busy === "clean-control" ? "PUBLISHING…" : "RUN CLEAN CONTROL"}
+                  </button>
+                </>
+              ) : (
+                <a className="primary proof-cta" href={`/?incident=${publicProofs[0][1]}`}>
+                  <span>VIEW VERIFIED RECOVERY</span><b>↗</b>
+                </a>
+              )}
             </div>
             <p className="notice" aria-live="polite"><span>COMMAND</span> {notice}</p>
-            {!token && !sharedIncidentId && (
+            {!token && (
               <nav className="public-proof-links" aria-label="Public read-only proof">
                 <span>NO SIGN-IN REQUIRED</span>
                 {publicProofs.map(([label, proofId]) => (
@@ -484,8 +505,20 @@ function App() {
         <section className="outcome-strip" aria-label="Incident before, control and after outcome">
           <article>
             <span>BEFORE</span>
-            <strong>{incident?.proposal ? `${incident.proposal.bank_fingerprint} / ${amount}` : "NO PROPOSAL LOADED"}</strong>
-            <p>{incident?.proposal ? "Persisted proposed destination and amount." : "Awaiting persisted incident evidence."}</p>
+            <strong>{incident?.proposal
+              ? `${incident.proposal.bank_fingerprint} / ${amount}`
+              : modelArmorBlock
+                ? "NO PROPOSAL — BLOCKED PRE-GEMINI"
+                : screeningUnavailable
+                  ? "NO PROPOSAL — SCREENING FAILED CLOSED"
+                  : sharedIncidentId && !data
+                    ? "LOADING PROOF…"
+                    : "NO PROPOSAL"}</strong>
+            <p>{incident?.proposal
+              ? "Persisted proposed destination and amount."
+              : modelArmorBlock
+                ? "Model Armor blocked the exact model input before inference."
+                : "Awaiting persisted incident evidence."}</p>
           </article>
           <article className="control-cell">
             <span>HISAAR CONTROL</span>
@@ -564,7 +597,7 @@ function App() {
             <div className="armor-line">
               <span>MODEL ARMOR</span>
               <div><i className={incident?.screening_decision === "CLEAR" ? "clear" : ""} /></div>
-              <strong>{incident?.screening_decision ?? "AWAITING INPUT"}</strong>
+              <strong>{modelArmorLabel(incident?.screening_decision ?? null, modelArmorBlock)}</strong>
             </div>
           </article>
 
@@ -632,6 +665,8 @@ function App() {
             <dl>
               <div><dt>Receipt</dt><dd>{data?.receipt?.receipt_id ?? "No mutation"}</dd></div>
               <div><dt>Executed destination</dt><dd>{data?.receipt?.bank_fingerprint ?? "Locked"}</dd></div>
+              <div><dt>Persistence actor</dt><dd>{data?.receipt?.executor_identity ?? "Locked"}</dd></div>
+              <div><dt>Recovery runtime</dt><dd>{data?.receipt?.reasoning_runtime_identity ?? "Legacy receipt"}</dd></div>
               <div><dt>Shaahid</dt><dd>{incident?.witness_summary ?? "Awaiting deterministic comparison."}</dd></div>
             </dl>
             {incident?.state === "VERIFIED" && data?.receipt && (
@@ -648,7 +683,10 @@ function App() {
         </section>
 
         <footer className="provenance">
-          <span>REAL GOOGLE PROVENANCE</span>
+          <span>GOOGLE CLOUD PROVENANCE / CONSOLE REQUIRES PROJECT ACCESS</span>
+          {incident && <a href={`/api/incidents/${incident.incident_id}`} target="_blank" rel="noreferrer">PUBLIC INCIDENT JSON ↗</a>}
+          {incident?.state === "VERIFIED" && <a href={`/api/incidents/${incident.incident_id}/replay`} target="_blank" rel="noreferrer">PUBLIC REPLAY ↗</a>}
+          <a href="https://github.com/asadvendor-boop/HisaarAI/tree/main/docs/evidence" target="_blank" rel="noreferrer">PUBLIC EVIDENCE ↗</a>
           <a href="https://console.cloud.google.com/agent-platform/agent-registry?project=hisaarai-agentic-2026" target="_blank">AGENT REGISTRY ↗</a>
           <a href="https://console.cloud.google.com/vertex-ai/agents/agent-engines?project=hisaarai-agentic-2026" target="_blank">2 AGENT RUNTIMES ↗</a>
           <a href="https://console.cloud.google.com/firestore/databases/hisaarai/data/panel?project=hisaarai-agentic-2026" target="_blank">FIRESTORE AUTHORITY ↗</a>

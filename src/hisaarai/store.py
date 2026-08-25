@@ -30,6 +30,7 @@ def _receipt_binding(receipt: SandboxReceipt) -> tuple[object, ...]:
         receipt.currency,
         receipt.bank_fingerprint,
         receipt.executor_identity,
+        receipt.reasoning_runtime_identity,
     )
 
 

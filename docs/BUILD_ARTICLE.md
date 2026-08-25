@@ -16,11 +16,12 @@ proposal disagrees with the trusted vendor master.
 
 The recovery fleet then separates responsibility across named agents: Raasid
 observes persisted evidence, Kashif bounds the blast radius, Muslih drafts the
-smallest recovery action, a clean AP standby executes only an approved warrant,
-and Shaahid narrates the deterministic verification result. Gemini never grants
+smallest recovery action, Clean AP validates the exact approved request, and
+Shaahid narrates the deterministic verification result. Gemini never grants
 authority. Hisaar Gate owns the state machine, reloads trusted sources, creates
-the expiring warrant, and requires an allowlisted Google identity to approve its
-exact digest.
+the expiring warrant, requires an allowlisted Google identity to approve its
+exact digest, and persists the idempotent sandbox receipt under the application
+identity.
 
 The implementation uses Gemini 3.6 Flash and Gemini 3.5 Flash-Lite through Google
 ADK, two callable Agent Runtime resources with separate runtime identities,
@@ -29,10 +30,28 @@ Logging, and Cloud Trace. The official Registry readback discovers exactly the
 two HisaarAI Runtime agents and their separate deployed identities; it is catalog
 proof rather than an execution boundary. Agents receive typed bounded inputs;
 deterministic Gate code and the commander retain authority. The latest observed
-warrant binds a genuine Day-14 Memory revision in a Day-0 → Day-7 → Day-14
-predecessor chain. The Day-7 and Day-14 jobs fired on schedule but initially
-failed a Vertex API validation change; their real August 25 recovery timestamps
-remain visible rather than being backdated. Day-21 remains `PENDING`.
+warrant binds the exact genuine Day-14 Memory revision resource name in a Day-0
+→ Day-7 → Day-14 predecessor chain. Runtime recovery consumes its Firestore
+checkpoint mirror; it does not reread the Memory API in the recovery path. The
+Day-7 and Day-14 jobs fired on schedule but initially failed a Vertex API
+validation change; their real August 25 recovery timestamps remain visible
+rather than being backdated. Day-21 remains `PENDING`.
+
+On August 25, Google Cloud [introduced Gemini Enterprise for Financial
+Services](https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services)
+around specialized financial skills, secure data connections, acting agents and
+centralized governance. HisaarAI explores the complementary recovery problem:
+when a financial agent's context is poisoned, how can the institution contain
+it, reconstruct trusted context and safely finish the work exactly once?
+HisaarAI demonstrates the same governed design principles in a bounded AP
+recovery scenario; it does not claim integration with the preview product.
+
+| Google Cloud design principle | HisaarAI evidence |
+| --- | --- |
+| Purpose-built financial skills | Bounded AP recovery playbook and specialist instructions |
+| Secure connections | Scoped vendor-master and sandbox-ledger tools |
+| Agents that act | Quarantine, reconstruction, warrant preparation and verified completion |
+| Governed control plane | Hisaar Gate, commander approval, Model Armor, identities, traces and immutable receipt |
 
 The command room compresses the architecture into one judge-readable screen:
 the altered and trusted bank fingerprints, live agent roles, the Gate-owned

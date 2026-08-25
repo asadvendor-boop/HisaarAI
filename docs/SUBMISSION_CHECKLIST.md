@@ -36,17 +36,21 @@ This is a lean human checklist, not a release verifier.
   [`evidence/agent-registry.json`](evidence/agent-registry.json).
 - [x] README, architecture, limitations, setup, provenance, fixtures, and live
   evidence are present.
-- [ ] Record and edit the English demo using [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md):
-  show the working product in the first ten seconds, use short clips and jump
-  cuts, remove all loading/waiting, add accurate narration and on-screen labels,
-  and keep the final cut below four minutes.
+- [ ] Upload the 1600x900 [`architecture.png`](media/architecture.png) to the
+  Devpost architecture field and confirm Gemini, ADK, Vertex AI, Hisaar Gate and
+  the Memory checkpoint-mirror relationship remain readable.
+- [ ] Record one continuous genuine English workflow using
+  [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md): show the working product in the first ten
+  seconds, preserve every workflow frame in order, add accurate AI narration,
+  subtitles and explanatory overlays, and keep the result below four minutes.
+  Do not cut, splice, reorder or hide any workflow stage.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
 - [x] Put the fresh Day-14-bound `VERIFIED` incident
-  `inc-invoice-aba694bdd8ee48e0` into the read-only hosted link in the README and
+  `inc-invoice-1f8fa7d20b0e49b2` into the read-only hosted link in the README and
   [`DEVPOST.md`](DEVPOST.md). On 2026-08-25 the public incident and replay APIs
-  returned HTTP 200 with one receipt `rcpt-5937483c4bcb` and `MATCH`.
+  returned HTTP 200 with one receipt `rcpt-f0c03b6c9122` and `MATCH`.
 - [x] Record the truthful continuity recovery: Day-7 and Day-14 have real August
   25 creation times and a verified predecessor chain; Day-21 remains pending.
 - [x] State Google ADK `google-adk==2.6.3`, project start August 8, 2026, and the
@@ -59,16 +63,19 @@ This is a lean human checklist, not a release verifier.
 - [ ] Keep the hosted app and both read-only proof links live through the full
   judging period.
 
-## Optional only after the core submission is complete
+## Scoring bonuses after the core entry is safe in draft
 
 - [ ] Confirm the current rules still offer article/social bonuses and their
   exact eligibility conditions; do not treat acceptance as confirmed.
-- [ ] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly if eligible, not
-  unlisted.
+- [ ] Publish [`BUILD_ARTICLE.md`](BUILD_ARTICLE.md) publicly on an accepted
+  platform before the final deadline, not unlisted.
 - [ ] Verify the article keeps the explicit hackathon-entry purpose statement.
 - [ ] Add its public URL to [`DEVPOST.md`](DEVPOST.md).
-- [ ] Publish the optional social post from an eligible entrant account and add
-  the public URL only if the current rules require it.
+- [ ] Publish the social post from an eligible entrant account with
+  `#AllThingsAgenticHackathon` and add its public URL to Devpost before the final
+  deadline.
+- [ ] Treat Gemma as a separate optional decision. Do not add Veo or Lyria; do
+  not let any model-bonus attempt delay the core video or submission.
 
 ## Four things to show on camera
 

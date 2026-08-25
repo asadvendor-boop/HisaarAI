@@ -18,6 +18,7 @@ class SandboxERP:
         request: CleanExecutionRequest,
         *,
         executor_identity: str,
+        reasoning_runtime_identity: str | None = None,
     ) -> SandboxReceipt:
         incident = self.store.get_incident(request.incident_id)
         if incident.state != IncidentState.APPROVED:
@@ -54,6 +55,7 @@ class SandboxERP:
             currency=request.currency,
             bank_fingerprint=request.bank_fingerprint,
             executor_identity=executor_identity,
+            reasoning_runtime_identity=reasoning_runtime_identity,
             created_at=dt.datetime.now(dt.UTC),
         )
         _completed, stored_receipt = self.store.complete_once(
@@ -62,4 +64,3 @@ class SandboxERP:
             receipt=receipt,
         )
         return stored_receipt
-

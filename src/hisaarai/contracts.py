@@ -122,6 +122,7 @@ class SandboxReceipt(StrictModel):
     currency: str
     bank_fingerprint: str
     executor_identity: str
+    reasoning_runtime_identity: str | None = None
     created_at: dt.datetime
 
 

@@ -190,6 +190,11 @@ def test_one_human_decision_completes_once_and_replay_is_stable() -> None:
     verified, receipt = recovery.execute_and_verify(incident.incident_id)
     assert verified.state == IncidentState.VERIFIED
     assert receipt is not None
+    assert receipt.executor_identity == settings().app_service_account
+    assert (
+        receipt.reasoning_runtime_identity
+        == settings().recovery_runtime_service_account
+    )
     replayed, same_receipt = recovery.execute_and_verify(incident.incident_id)
     assert replayed.state == IncidentState.VERIFIED
     assert same_receipt == receipt
