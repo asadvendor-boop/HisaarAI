@@ -11,15 +11,24 @@ and completes the sandbox payment exactly once.
 **Hackathon:** All Things Agentic 2026  
 **Track:** Fortified Enterprise Fleet  
 **Hosted app:** <https://hisaarai-2wkruw66na-uc.a.run.app/>  
-**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-fbd18054a45e4c77) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796) · [clean control](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195)
+**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-aba694bdd8ee48e0) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796) · [clean control](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195)
+
+**Project start:** August 8, 2026
+
+**Google agent framework:** Google Agent Development Kit (`google-adk==2.6.3`)
+
 **Built from scratch:** all implementation in this repository was created for
-this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused.
+this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused. Open
+source Python, JavaScript and Google Cloud SDK dependencies are declared in the
+committed lockfiles; no customer data or pre-existing product code was included.
 
 **Observed hosted transformation (`n=1`, synthetic sandbox):** attacker routing
-was quarantined in 41.1 seconds with zero unsafe receipts; after one human
-decision, the trusted receipt was `VERIFIED` at 88.0 seconds and its public
-read-only replay returned the same receipt with `MATCH`. These are run-specific
-measurements, not a customer or production-money claim.
+was quarantined in 31.9 seconds with zero unsafe receipts; the automated path
+reached approval-ready in 54.0 seconds. After the human decision, execution and
+verification took 10.8 seconds, producing one trusted receipt whose public
+read-only replay returned `MATCH`. The 267.7-second end-to-end time includes
+203.0 seconds of human review. These are run-specific measurements, not a
+customer or production-money claim.
 
 ![HisaarAI governed recovery command room](docs/media/command-room.png)
 
@@ -87,13 +96,20 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 | Checkpoint | Date (Asia/Karachi) | Status |
 |---|---:|---|
 | Day 0 | 2026-08-09 | Recorded |
-| Day 7 | 2026-08-16 | Scheduled / `PENDING` |
-| Day 14 | 2026-08-23 | Scheduled / `PENDING` |
+| Day 7 | 2026-08-16 | Recorded during truthful recovery on 2026-08-25 |
+| Day 14 | 2026-08-23 | Recorded during truthful recovery on 2026-08-25 |
 | Day 21 | 2026-08-30 | Scheduled / `PENDING` |
 
-Future entries are never backfilled or shown as complete early. Recovery reads
-the latest real revision and persists its exact resource name in the warrant.
-Day-0 evidence is in [`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).
+The Day-7 and Day-14 Scheduler jobs fired on their original dates, but Vertex AI
+rejected a now-invalid Memory request containing mutually exclusive revision
+fields. The one-line request fix was deployed on August 25; Day-7 was replayed
+and the queued Day-14 delivery then completed. Firestore and Memory Bank preserve
+their real August 25 creation times—nothing is backdated. Recovery reads the
+latest real revision and the fresh flagship warrant binds the exact Day-14
+resource name. The verified chain and recovery note are in
+[`docs/evidence/continuity-chain.json`](docs/evidence/continuity-chain.json);
+Day-0 evidence remains in
+[`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).
 The authenticated run revision is recorded alongside the latest injection,
 semantic-path and clean-control readbacks in
 [`docs/evidence/hosted-judge-path.json`](docs/evidence/hosted-judge-path.json).
@@ -160,9 +176,14 @@ subject.
 - The Firestore sandbox ledger stores the application-level receipt; it does not
   connect to a bank or production ERP.
 
+The organizer [publicly confirmed](https://allthingsagentichackathon.devpost.com/forum_topics/44736-important-question-regarding-fortified-enterprise-fleet)
+that a live Google Cloud deployment with synthetic or de-identified data and the
+required controls satisfies the Fortified Enterprise Fleet production-data
+language.
+
 ## Judge access and public proof
 
-The hosted command room and the two read-only proof links above are public and
+The hosted command room and the three read-only proof links above are public and
 need no account. They load genuine persisted incidents from the deployed
 Firestore authority:
 

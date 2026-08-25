@@ -89,7 +89,6 @@ def create_checkpoint(
         config={
             "memory_id": f"hisaarai-continuity-day{day}",
             "wait_for_completion": True,
-            "disable_memory_revisions": False,
             "revision_ttl": "31536000s",
         },
     )

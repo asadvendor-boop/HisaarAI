@@ -95,7 +95,7 @@ const steps: IncidentState[] = [
 ];
 
 const publicProofs = [
-  ["VERIFIED RECOVERY", "inc-invoice-fbd18054a45e4c77"],
+  ["VERIFIED RECOVERY", "inc-invoice-aba694bdd8ee48e0"],
   ["BLOCK BEFORE GEMINI", "inc-invoice-5d86da12456b4796"],
   ["CLEAN CONTROL", "inc-invoice-473fbd809fca4195"],
 ] as const;
@@ -156,6 +156,21 @@ function elapsedLabel(start?: string, end?: string) {
   if (elapsed < 1000) return `${elapsed} MS`;
   if (elapsed < 10000) return `${(elapsed / 1000).toFixed(2)} SEC`;
   return `${(elapsed / 1000).toFixed(1)} SEC`;
+}
+
+export function phaseTimingLabels(history: Incident["state_history"]) {
+  const at = (state: IncidentState) => history.find((item) => item.state === state)?.at;
+  const detected = at("DETECTED");
+  const awaitingApproval = at("AWAITING_APPROVAL");
+  const approved = at("APPROVED");
+  const verified = at("VERIFIED");
+  return {
+    quarantine: elapsedLabel(detected, at("QUARANTINED")),
+    automatedPlanning: elapsedLabel(detected, awaitingApproval),
+    humanReview: elapsedLabel(awaitingApproval, approved),
+    approvedExecution: elapsedLabel(approved, verified),
+    total: elapsedLabel(detected, verified),
+  };
 }
 
 export function missingTimelineStepLabel(
@@ -393,9 +408,7 @@ function App() {
   );
   const detectedAt = incident?.state_history.find((item) => item.state === "DETECTED")?.at;
   const quarantinedAt = incident?.state_history.find((item) => item.state === "QUARANTINED")?.at;
-  const verifiedAt = incident?.state_history.find((item) => item.state === "VERIFIED")?.at;
-  const quarantineTime = elapsedLabel(detectedAt, quarantinedAt);
-  const totalTime = elapsedLabel(detectedAt, verifiedAt);
+  const phaseTiming = phaseTimingLabels(incident?.state_history ?? []);
   const modelArmorBlock = incident?.state === "BLOCKED"
     && incident.reason === "MODEL_ARMOR_MATCH"
     && incident.screening_decision === "MATCH"
@@ -487,12 +500,12 @@ function App() {
                     : "CONTROL NOT REACHED"}</strong>
             <p>{modelArmorBlock || screeningUnavailable
               ? `${incident.gemini_invocations} GEMINI CALLS / ${data?.receipt ? 1 : 0} MUTATIONS`
-              : quarantineTime
-                ? `TIME TO QUARANTINE ${quarantineTime}`
+              : phaseTiming.quarantine
+                ? `QUARANTINE ${phaseTiming.quarantine}${phaseTiming.automatedPlanning ? ` / PLAN READY ${phaseTiming.automatedPlanning}` : ""}`
                 : cleanTrustedPath
                   ? "MODEL ARMOR CLEAR / NO QUARANTINE REQUIRED"
                   : "No observed control timing yet."}</p>
-            {(modelArmorBlock || screeningUnavailable || quarantineTime || cleanTrustedPath) && <small>OBSERVED RUN / n=1</small>}
+            {(modelArmorBlock || screeningUnavailable || phaseTiming.quarantine || cleanTrustedPath) && <small>OBSERVED RUN / n=1</small>}
           </article>
           <article className={trustedExecution ? "after-cell verified" : "after-cell"}>
             <span>AFTER</span>
@@ -502,11 +515,13 @@ function App() {
                 ? "WORKFLOW SAFELY STOPPED"
                 : "OUTCOME NOT REACHED"}</strong>
             <p>{trustedExecution
-              ? `MATCH${totalTime ? ` / TOTAL ${totalTime}` : ""}`
+              ? `MATCH${phaseTiming.approvedExecution ? ` / EXECUTION ${phaseTiming.approvedExecution}` : ""}`
               : incident?.state === "BLOCKED" && !data?.receipt
                 ? "NO RECEIPT / NO MUTATION"
                 : "Awaiting persisted receipt and verification."}</p>
-            {(trustedExecution || modelArmorBlock || screeningUnavailable) && <small>OBSERVED RUN / n=1</small>}
+            {trustedExecution
+              ? <small>HUMAN REVIEW {phaseTiming.humanReview ?? "—"} / TOTAL {phaseTiming.total ?? "—"} / OBSERVED RUN n=1</small>
+              : (modelArmorBlock || screeningUnavailable) && <small>OBSERVED RUN / n=1</small>}
           </article>
         </section>
 

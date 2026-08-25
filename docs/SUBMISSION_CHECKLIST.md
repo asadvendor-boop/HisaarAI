@@ -36,15 +36,21 @@ This is a lean human checklist, not a release verifier.
   [`evidence/agent-registry.json`](evidence/agent-registry.json).
 - [x] README, architecture, limitations, setup, provenance, fixtures, and live
   evidence are present.
-- [ ] Record one continuous normal-speed English demo no longer than four
-  minutes using [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md).
+- [ ] Record and edit the English demo using [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md):
+  show the working product in the first ten seconds, use short clips and jump
+  cuts, remove all loading/waiting, add accurate narration and on-screen labels,
+  and keep the final cut below four minutes.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
-- [x] Put the final `VERIFIED` incident ID into the read-only hosted link in the
-  README and [`DEVPOST.md`](DEVPOST.md). On 2026-08-09 the coordinator
-  externally verified that unauthenticated `GET /` plus both proof API readbacks
-  returned HTTP 200; this status is live evidence, not inferred from code.
+- [x] Put the fresh Day-14-bound `VERIFIED` incident
+  `inc-invoice-aba694bdd8ee48e0` into the read-only hosted link in the README and
+  [`DEVPOST.md`](DEVPOST.md). On 2026-08-25 the public incident and replay APIs
+  returned HTTP 200 with one receipt `rcpt-5937483c4bcb` and `MATCH`.
+- [x] Record the truthful continuity recovery: Day-7 and Day-14 have real August
+  25 creation times and a verified predecessor chain; Day-21 remains pending.
+- [x] State Google ADK `google-adk==2.6.3`, project start August 8, 2026, and the
+  pre-existing/third-party disclosure in the submission copy.
 - [ ] Submit before the official deadline and reopen the submission page to
   confirm every required field and link was saved.
 - [ ] Reopen every submitted public URL from a signed-out browser and confirm

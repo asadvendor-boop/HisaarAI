@@ -28,10 +28,11 @@ Agent Registry, Memory Bank, Model Armor, Pub/Sub, Cloud Run, Firestore, Cloud
 Logging, and Cloud Trace. The official Registry readback discovers exactly the
 two HisaarAI Runtime agents and their separate deployed identities; it is catalog
 proof rather than an execution boundary. Agents receive typed bounded inputs;
-deterministic Gate code and the commander retain authority. A genuine Day-0
-Memory revision is already part of the warrant. Day-7, Day-14 and Day-21 are
-scheduled but remain `PENDING`; only a revision captured on its actual date may
-extend the history.
+deterministic Gate code and the commander retain authority. The latest observed
+warrant binds a genuine Day-14 Memory revision in a Day-0 → Day-7 → Day-14
+predecessor chain. The Day-7 and Day-14 jobs fired on schedule but initially
+failed a Vertex API validation change; their real August 25 recovery timestamps
+remain visible rather than being backdated. Day-21 remains `PENDING`.
 
 The command room compresses the architecture into one judge-readable screen:
 the altered and trusted bank fingerprints, live agent roles, the Gate-owned

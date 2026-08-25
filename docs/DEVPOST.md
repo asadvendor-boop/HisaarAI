@@ -27,11 +27,12 @@ verified.
 
 In one observed hosted run (`n=1`), a protected AP agent proposed an attacker
 destination for a PKR 4.275M synthetic invoice. HisaarAI quarantined it before
-any receipt in 41.1 seconds, obtained one accountable approval, and produced one
-verified sandbox receipt to the trusted destination at 88.0 seconds. A public
-read-only replay returned that same receipt with `MATCH`. This is the observed
-demo transformation, not a generalized performance, customer-deployment or
-production-money claim.
+any receipt in 31.9 seconds and reached approval-ready in 54.0 seconds. After one
+accountable human decision, automated execution and verification took 10.8
+seconds and produced one trusted sandbox receipt. A public read-only replay
+returned that same receipt with `MATCH`. The 267.7-second end-to-end time includes
+203.0 seconds of human review. This is an observed sandbox transformation, not a
+generalized performance, customer-deployment or production-money claim.
 
 ## How we built it
 
@@ -45,17 +46,21 @@ provides authenticated asynchronous delivery, Model Armor screens the PDF text
 and exact model input, Firestore holds the transactional authority and
 idempotent sandbox receipt, and Cloud Trace correlates the journey.
 
-Memory Bank stores a genuine Day-0 revision under the final Recovery Runtime,
-with Day-7/14/21 checkpoints scheduled against the same endpoint. The recovery
-fleet materially reads the latest immutable revision to select trusted-vendor
-reconstruction; missing future dates are shown as pending, never fabricated.
+Memory Bank stores a genuine Day-0 → Day-7 → Day-14 predecessor chain under the
+final Recovery Runtime. The scheduled Day-7 and Day-14 deliveries initially hit
+a Vertex API validation change; after a one-line request fix on August 25, the
+original jobs were recovered without backdating their real creation times. The
+fresh flagship warrant materially binds the resulting Day-14 revision. Day-21
+remains pending until its scheduled date.
 
 ## Other data sources
 
 The demonstration uses synthetic PDF fixtures as incoming evidence, a Firestore
 vendor master as the trusted bank-detail source, and a Firestore sandbox ledger
 as the receipt authority. No customer invoice, production ERP or real bank is
-connected.
+connected. The organizer publicly confirmed that this live Google Cloud pattern
+with synthetic or de-identified data and the required controls satisfies the
+Fortified Enterprise Fleet production-data language.
 
 ## What makes it different
 
@@ -85,7 +90,7 @@ and deterministic Gate code plus the commander decide whether work may proceed.
 - Five specialized recovery roles on the final-named Recovery Runtime
 - One human decision followed by one idempotent sandbox receipt
 - Deterministic verification that cannot be overruled by the witness agent
-- Genuine Day-0 Memory Bank evidence, with Day-7/14/21 capture scheduled on their real dates
+- Verified Day-0 → Day-7 → Day-14 Memory Bank chain with real creation times and Day-21 pending
 - Official Agent Registry discovery of exactly the two HisaarAI Runtime agents
 - One responsive command room with live Google provenance
 
@@ -98,13 +103,22 @@ Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
-- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-fbd18054a45e4c77>
+- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-aba694bdd8ee48e0>
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>
 - Public read-only clean control: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - Agent Registry evidence: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/evidence/agent-registry.json>
 - Demo video: `PENDING`
 - Optional public article candidate: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md> (bonus eligibility/acceptance not confirmed)
+
+## Required eligibility answers
+
+- Google SDK/framework: Google Agent Development Kit (`google-adk==2.6.3`)
+- Project start date: August 8, 2026
+- Pre-existing/third-party disclosure: HisaarAI was created during the hackathon
+  submission period. It uses open source Python, JavaScript and Google Cloud SDK
+  dependencies declared in its lockfiles. No pre-existing product code or
+  customer data was incorporated.
 
 ## Testing instructions
 
