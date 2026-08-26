@@ -8,6 +8,9 @@ asks a harder question: can an agent fleet contain a compromised execution,
 reconstruct the task from trusted context, obtain one human decision, and finish
 the work safely?
 
+Protocols are making agents easier to connect. HisaarAI addresses the next
+production question: what are those connected agents actually allowed to cause?
+
 HisaarAI demonstrates that journey with a sandbox accounts-payable incident. A
 committed invoice passes through two real Model Armor checks. A prompt-injection
 fixture stops before Gemini. A subtler banking-detail tamper clears content
