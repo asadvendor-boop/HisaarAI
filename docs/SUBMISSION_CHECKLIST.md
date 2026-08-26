@@ -41,9 +41,10 @@ This is a lean human checklist, not a release verifier.
   the Memory checkpoint-mirror relationship remain readable.
 - [ ] Record one continuous genuine English workflow using
   [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md): show the working product in the first ten
-  seconds, preserve every workflow frame in order, add accurate AI narration,
-  subtitles and explanatory overlays, and keep the result below four minutes.
-  Do not cut, splice, reorder or hide any workflow stage.
+  seconds, first pass the three-run rehearsal gate, preserve every workflow
+  frame in order, add accurate AI narration, subtitles and explanatory
+  overlays, and keep the result below four minutes. Do not cut, splice, reorder
+  or hide any workflow stage.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
@@ -90,7 +91,8 @@ This is a lean human checklist, not a release verifier.
    biographies.
 4. Required platform proof: show Model Armor's `0 GEMINI CALLS / 0 MUTATIONS`,
    the actual two-entry Agent Registry console, live Agent Runtime activity and
-   the genuine Memory revision/continuity panel.
+   the genuine Day-14 Memory revision bound to the approval. Do not expand the
+   visually incomplete `3/4 GENUINE` continuity scoreboard.
 5. Calibrated close: synthetic enterprise-shaped data, real Google Cloud,
    sandboxed mutation and one observed run. Do not claim real-money movement,
    customer deployment, fraud prevention or measured ROI.

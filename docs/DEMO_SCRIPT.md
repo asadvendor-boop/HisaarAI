@@ -42,10 +42,19 @@ the GitHub Registry JSON in the video.
 - Sign in as the allowlisted Accounts Payable commander before capture starts.
 - Preload the Model Armor proof and the actual Agent Registry console.
 - Confirm the Registry console visibly lists the two HisaarAI agents.
-- Pre-warm the hosted app and both Agent Runtime endpoints with one separate
-  rehearsal incident. Never reuse that rehearsal incident in the recording.
+- Set the Agent Registry console to 125–150% zoom, using the lowest level that
+  keeps **HisaarAI Protected AP** and **HisaarAI Recovery Fleet** together and
+  readable in the 1080p recording.
+- Pre-warm the hosted app and both Agent Runtime endpoints, then complete three
+  fresh timed rehearsal incidents. For every rehearsal, record launch to
+  `AWAITING APPROVAL` and approval to `VERIFIED`; require `VERIFIED`, exactly
+  one receipt, replay `MATCH`, and no more than 90 seconds of combined automated
+  processing. Never reuse a rehearsal incident in the recording.
+- If any rehearsal fails, creates an unexpected receipt or misses the 90-second
+  automated budget, investigate before recording. Do not solve latency by
+  editing or speeding up the workflow.
 - Start on the signed-in root page with `RUN FLAGSHIP INCIDENT` visible.
-- Practise the cursor movement, scrolling and tab order during the rehearsal.
+- Practise the cursor movement, scrolling and tab order during the rehearsals.
 - If the fresh workflow fails or experiences abnormal latency, discard the
   complete take and record again. Never splice in another incident's result.
 
@@ -64,8 +73,8 @@ headline and `RUN FLAGSHIP INCIDENT` visible. Click the button once by 0:10.
 
 **Narration**
 
-> “An AP operations lead has one job: release this synthetic PKR 4.275 million
-> invoice once, to the correct bank. But her AI agent proposes an attacker's
+> “An AP operations lead has one job: release this PKR 4.275 million invoice
+> once, to the correct bank. But her AI agent proposes an attacker's
 > destination. Watch HisaarAI recover the legitimate work.”
 
 **On-screen label**
@@ -135,7 +144,8 @@ the digest or expiry. Click `APPROVE EXACT WARRANT` once.
 
 Stay on the same incident through `APPROVED`, `COMPLETED` and `VERIFIED`. Hold
 on the trusted executed destination and `ONE RECEIPT`. Click
-`VERIFY ONE-RECEIPT REPLAY` and leave `MATCH` visible for at least four seconds.
+`VERIFY ONE-RECEIPT REPLAY` and leave `MATCH` visible for at least five full
+seconds. Do not move the cursor during this hold.
 
 **Narration**
 
@@ -174,10 +184,12 @@ Switch once to the preloaded Model Armor proof. Hold on
 **Screen**
 
 Return to the fresh verified workflow. Show the Runtime identity, provenance
-links and expanded `CONTINUITY 3/4 GENUINE` panel. Switch briefly to the actual
-Agent Registry console and show the two registered HisaarAI agents. Return to
-the command room. Place the architecture PNG over the now-completed workflow for
-approximately 10–12 seconds; label it `ARCHITECTURE`.
+links and the exact Memory revision already bound to the approval. Do not expand
+the `CONTINUITY 3/4 GENUINE` panel. Switch briefly to the pre-zoomed Agent
+Registry console and show the two registered HisaarAI agents together. Return to
+the command room. Place the architecture PNG inside the webpage viewport over
+the now-completed workflow for approximately 10–12 seconds; keep the `.run.app`
+URL visible and label the overlay `ARCHITECTURE`.
 
 **Narration**
 
@@ -196,9 +208,10 @@ approximately 10–12 seconds; label it `ARCHITECTURE`.
 
 **Screen**
 
-Keep the architecture overlay visible. Point from purple agent reasoning to
-amber Hisaar Gate and then to Firestore. Remove the overlay and return to the
-fresh receipt and `MATCH`.
+Keep the architecture overlay large enough to read. Point from purple agent
+reasoning to amber Hisaar Gate and then to Firestore. Fade the overlay out and
+return to the fresh receipt and `MATCH`. Never place the overlay over an active
+workflow transition.
 
 **Narration**
 
@@ -230,6 +243,8 @@ destination, quarantine, trusted destination, one receipt and `MATCH` visible.
   approve only after it has been readable for three seconds.
 - If planning takes longer, use the delegation narration while waiting. Do not
   introduce agent biographies, hashes, tests or additional services.
+- Click `RUN FLAGSHIP INCIDENT`, approval and replay exactly once each. Never
+  double-click an action while waiting for asynchronous state changes.
 - If verification finishes early, hold on the receipt and replay `MATCH`.
 - If the normal-speed take approaches 3:40 before Google platform proof begins,
   discard it and record a fresh pre-warmed take.
@@ -270,12 +285,17 @@ Do not say:
 - [ ] Delegation is described by function, without naming six personas aloud.
 - [ ] The finance approver sees trusted business fields and one Memory revision.
 - [ ] The same incident reaches `VERIFIED`, one receipt and replay `MATCH`.
-- [ ] The receipt and `MATCH` remain visible for at least four seconds.
+- [ ] Three fresh rehearsals each reached `VERIFIED`, one receipt and replay
+  `MATCH` within the 90-second automated-processing budget.
+- [ ] The receipt and `MATCH` remain visible for at least five full seconds.
 - [ ] Model Armor visibly shows zero Gemini calls and zero mutations.
-- [ ] The actual Agent Registry console shows both deployed HisaarAI agents.
+- [ ] The pre-zoomed Agent Registry console shows both deployed HisaarAI agents
+  together and legibly at the final video resolution.
 - [ ] Runtime activity, Memory continuity and Google Cloud provenance are
   visible in the working product.
-- [ ] Architecture appears only after the live workflow is complete.
+- [ ] The `3/4 GENUINE` continuity scoreboard is not expanded in the video.
+- [ ] Architecture appears only after the live workflow is complete, remains
+  readable without covering the `.run.app` URL, and fades back to `MATCH`.
 - [ ] The launch-to-`VERIFIED` workflow is continuous, normal-speed and uncut.
 - [ ] Synthetic data, sandbox scope and observed-run limitation appear once at
   the close.
