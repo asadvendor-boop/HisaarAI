@@ -79,15 +79,18 @@ This is a lean human checklist, not a release verifier.
 
 ## Five things to show on camera
 
-1. Problem and solution: attacker destination and PKR 4.275M at risk, followed
-   by quarantine, trusted-context recovery, one human decision and safe
-   completion.
-2. Injection: Model Armor `INJECTION MATCH / BLOCKED`, Gemini calls `0`, no
-   receipt and no mutation.
-3. Orchestration and governance: six functional ADK roles across two Agent
-   Runtime resources, three specialist outputs, one exact warrant and signed-in
-   approval.
-4. Platform proof: Agent Registry, Agent Runtime, Memory Bank and Model Armor,
-   with one sentence explaining the purpose of each.
-5. Outcome and audit: trusted fingerprint, one receipt, deterministic `MATCH`,
-   Gate `VERIFIED`, separate identities and real Google Cloud provenance.
+1. Human buyer and friction: an AP operations lead must release one PKR 4.275M
+   supplier invoice to the correct bank exactly once; click
+   `RUN FLAGSHIP INCIDENT` within ten seconds.
+2. One uninterrupted outcome: attacker destination, no-receipt quarantine,
+   trusted reconstruction, one finance approval, trusted sandbox destination,
+   one receipt and replay `MATCH` on the same fresh incident.
+3. Functional orchestration: describe the planning fleet only as observing,
+   bounding and rebuilding. Let the UI display agent names; do not narrate six
+   biographies.
+4. Required platform proof: show Model Armor's `0 GEMINI CALLS / 0 MUTATIONS`,
+   the actual two-entry Agent Registry console, live Agent Runtime activity and
+   the genuine Memory revision/continuity panel.
+5. Calibrated close: synthetic enterprise-shaped data, real Google Cloud,
+   sandboxed mutation and one observed run. Do not claim real-money movement,
+   customer deployment, fraud prevention or measured ROI.
