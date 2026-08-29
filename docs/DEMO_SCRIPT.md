@@ -1,6 +1,7 @@
 # HisaarAI — final human-centered live demo script
 
-Target **3:00–3:20** and never exceed four minutes. The video follows one fresh
+Target **3:15–3:30** and never exceed four minutes. The video previews one
+previously observed result for context, then follows one fresh
 Accounts Payable recovery from launch through `VERIFIED`. Record the workflow as
 one continuous, normal-speed screen capture with no cuts, speed ramps, splices
 or reordered frames. Add accurate AI narration, English subtitles and the short
@@ -19,12 +20,15 @@ Runtime, Memory Bank, Agent Registry and Hisaar Gate are the proof beneath it.
 
 ## Three visual surfaces only
 
-1. **Primary workspace:** the signed-in hosted command room at
+1. **Primary workspace:** preload the signed-in hosted command room at
    <https://hisaarai-2wkruw66na-uc.a.run.app/>. Launch and complete one fresh
    flagship incident here.
-2. **Model Armor proof:**
+2. **Evidence tab:** start on the previously verified semantic recovery at
+   <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2>.
+   Use its `BEFORE / HISAAR CONTROL / AFTER` strip only for the opening observed
+   outcome preview. After the fresh workflow is complete, navigate this same tab
+   to the Model Armor proof:
    <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>.
-   Use it only after the fresh workflow is complete.
 3. **Google Cloud Agent Registry:** preload the project console and position it
    so **HisaarAI Protected AP** and **HisaarAI Recovery Fleet** are visible
    together.
@@ -40,7 +44,9 @@ the GitHub Registry JSON in the video.
 - Keep the `.run.app` URL visible. Hide bookmarks, personal tabs, notifications
   and unrelated Google Cloud projects.
 - Sign in as the allowlisted Accounts Payable commander before capture starts.
-- Preload the Model Armor proof and the actual Agent Registry console.
+- Preload the verified outcome preview, signed-in command room and actual Agent
+  Registry console. Do not preload a completed result for the fresh recording
+  incident.
 - Confirm the Registry console visibly lists the two HisaarAI agents.
 - Set the Agent Registry console to 125–150% zoom, using the lowest level that
   keeps **HisaarAI Protected AP** and **HisaarAI Recovery Fleet** together and
@@ -53,7 +59,9 @@ the GitHub Registry JSON in the video.
 - If any rehearsal fails, creates an unexpected receipt or misses the 90-second
   automated budget, investigate before recording. Do not solve latency by
   editing or speeding up the workflow.
-- Start on the signed-in root page with `RUN FLAGSHIP INCIDENT` visible.
+- Start on the verified outcome preview with the entire
+  `BEFORE / HISAAR CONTROL / AFTER` strip readable. Keep the signed-in root page
+  ready in the next tab with `RUN FLAGSHIP INCIDENT` visible.
 - Practise the cursor movement, scrolling and tab order during the rehearsals.
 - If the fresh workflow fails or experiences abnormal latency, discard the
   complete take and record again. Never splice in another incident's result.
@@ -64,24 +72,44 @@ Timings are approximate because the workflow is genuinely asynchronous. Follow
 the actual state transitions. The narration is intentionally shorter than each
 segment so important results can remain readable on screen.
 
-### 0:00–0:14 — Introduce the human buyer and launch
+### 0:00–0:12 — Preview the concrete AP consequence
 
 **Screen**
 
-Start on the signed-in command room. Keep `FOR ACCOUNTS PAYABLE OPERATIONS`, the
-headline and `RUN FLAGSHIP INCIDENT` visible. Click the button once by 0:10.
+Start on the read-only verified semantic recovery. Keep the attacker
+fingerprint, quarantine-before-receipt control, trusted fingerprint, one
+human review, one receipt and replay `MATCH` readable together. This is a prior
+observed sandbox result, not the fresh incident about to run.
 
 **Narration**
 
-> “An AP operations lead has one job: release this PKR 4.275 million invoice
-> once, to the correct bank. But her AI agent proposes an attacker's
-> destination. Watch HisaarAI recover the legitimate work.”
+> “An AP operator faces a PKR 4.275 million redirect. This observed sandbox run
+> quarantined the attacker destination, rebuilt trusted data, obtained one
+> approval, and replayed one verified receipt: `MATCH`.”
+
+**On-screen label**
+
+`OBSERVED SANDBOX RUN n=1 / ATTACKER → QUARANTINE → TRUSTED → ONE RECEIPT → MATCH`
+
+### 0:12–0:26 — Launch the fresh live proof
+
+**Screen**
+
+Switch once to the signed-in command room. Keep
+`FOR ACCOUNTS PAYABLE OPERATIONS`, the headline and `RUN FLAGSHIP INCIDENT`
+visible. Click the button once by 0:16. From this click through `VERIFIED`, do
+not leave the fresh incident, cut the capture or substitute another run.
+
+**Narration**
+
+> “Now watch HisaarAI's mechanism fire live on a fresh invoice. The operator's
+> goal is simple: the correct destination, exactly once.”
 
 **On-screen label**
 
 `ONE INVOICE / CORRECT BANK / EXACTLY ONCE`
 
-### 0:14–0:40 — Make the danger and containment visible
+### 0:26–0:52 — Make the danger and intervention visible
 
 **Screen**
 
@@ -93,14 +121,15 @@ invoice fingerprint, trusted vendor-master fingerprint, Model Armor `CLEAR`,
 
 > “This clean-looking tamper contains no obvious prompt injection, so Model
 > Armor correctly clears it and the invoice reaches Gemini. Hisaar Gate checks
-> the proposal against the trusted vendor record. The bank details do not
-> match, so the workflow is quarantined before any sandbox receipt exists.”
+> the model's proposed destination against the trusted vendor record. They do
+> not match, so Gate—not the model—quarantines the workflow before any sandbox
+> receipt exists.”
 
 **On-screen label**
 
-`ATTACKER DESTINATION → QUARANTINED / NO RECEIPT`
+`MODEL PROPOSES / HISAAR GATE INTERVENES / NO RECEIPT`
 
-### 0:40–1:05 — Show useful delegation without persona soup
+### 0:52–1:17 — Show useful delegation without persona soup
 
 **Screen**
 
@@ -119,7 +148,7 @@ Recovery planner—but do not read the names or full outputs aloud.
 
 `OBSERVE → BOUND → REBUILD`
 
-### 1:05–1:27 — One ordinary finance decision
+### 1:17–1:39 — One ordinary finance decision
 
 **Screen**
 
@@ -138,7 +167,7 @@ the digest or expiry. Click `APPROVE EXACT WARRANT` once.
 
 `TRUSTED DATA / ONE FINANCE DECISION`
 
-### 1:27–1:58 — Deliver the undeniable outcome
+### 1:39–2:10 — Deliver the undeniable outcome
 
 **Screen**
 
@@ -161,11 +190,11 @@ seconds. Do not move the cursor during this hold.
 
 `TRUSTED DESTINATION / ONE RECEIPT / REPLAY MATCH`
 
-### 1:58–2:12 — Show the binary Model Armor win
+### 2:10–2:24 — Show the binary Model Armor win
 
 **Screen**
 
-Switch once to the preloaded Model Armor proof. Hold on
+Return to the evidence tab, navigate it to the Model Armor proof and hold on
 `INJECTION MATCH / BLOCKED`, `0 GEMINI CALLS / 0 MUTATIONS` and
 `NO RECEIPT / NO MUTATION`.
 
@@ -179,7 +208,7 @@ Switch once to the preloaded Model Armor proof. Hold on
 
 `BLOCKED BEFORE GEMINI / 0 CALLS / 0 MUTATIONS`
 
-### 2:12–2:42 — Prove the required Google platform capabilities
+### 2:24–2:54 — Prove the required Google platform capabilities
 
 **Screen**
 
@@ -204,7 +233,7 @@ URL visible and label the overlay `ARCHITECTURE`.
 
 `REGISTRY / RUNTIME / MEMORY / MODEL ARMOR`
 
-### 2:42–2:58 — Explain the architecture in one sentence
+### 2:54–3:10 — Explain the architecture in one sentence
 
 **Screen**
 
@@ -219,7 +248,7 @@ workflow transition.
 > validate, the finance operator approves, and Hisaar Gate alone controls the
 > sandbox ledger and final verification.”
 
-### 2:58–3:12 — Close with value and calibrated honesty
+### 3:10–3:24 — Close with value and calibrated honesty
 
 **Screen**
 
@@ -278,13 +307,19 @@ Do not say:
 ## Final recording checklist
 
 - [ ] The AP operations lead and her job are introduced before the technology.
-- [ ] `RUN FLAGSHIP INCIDENT` is clicked within the first 10 seconds.
+- [ ] The first 12 seconds show the complete prior observed sandbox outcome,
+  labelled `n=1`, including attacker destination, quarantine, trusted
+  reconstruction, one approval, one receipt and replay `MATCH`.
+- [ ] `RUN FLAGSHIP INCIDENT` is clicked by 0:16.
 - [ ] One fresh incident remains the only end-to-end narrative.
 - [ ] The attacker destination, PKR 4.275M risk and no-receipt quarantine are
   readable.
 - [ ] Delegation is described by function, without naming six personas aloud.
 - [ ] The finance approver sees trusted business fields and one Memory revision.
 - [ ] The same incident reaches `VERIFIED`, one receipt and replay `MATCH`.
+- [ ] The fresh run visibly fires Hisaar Gate's unique mechanism: the model
+  proposes, Gate compares against trusted state, and Gate withholds then later
+  permits the single sandbox effect.
 - [ ] Three fresh rehearsals each reached `VERIFIED`, one receipt and replay
   `MATCH` within the 90-second automated-processing budget.
 - [ ] The receipt and `MATCH` remain visible for at least five full seconds.

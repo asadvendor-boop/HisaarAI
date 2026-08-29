@@ -36,15 +36,20 @@ This is a lean human checklist, not a release verifier.
   [`evidence/agent-registry.json`](evidence/agent-registry.json).
 - [x] README, architecture, limitations, setup, provenance, fixtures, and live
   evidence are present.
+- [ ] Review [`CLAIM_MAP.md`](CLAIM_MAP.md) line by line and confirm every public
+  claim is no broader than its linked proof. Keep the unsafe baseline labelled
+  as a non-executed counterfactual and every outcome labelled synthetic sandbox
+  or observed `n=1` where applicable.
 - [ ] Upload the 1600x900 [`architecture.png`](media/architecture.png) to the
   Devpost architecture field and confirm Gemini, ADK, Vertex AI, Hisaar Gate and
   the Memory checkpoint-mirror relationship remain readable.
 - [ ] Record one continuous genuine English workflow using
-  [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md): show the working product in the first ten
-  seconds, first pass the three-run rehearsal gate, preserve every workflow
-  frame in order, add accurate AI narration, subtitles and explanatory
-  overlays, and keep the result below four minutes. Do not cut, splice, reorder
-  or hide any workflow stage.
+  [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md): open with the clearly labelled prior
+  observed outcome, launch a separate fresh incident by 0:16, first pass the
+  three-run rehearsal gate, preserve every fresh launch-to-`VERIFIED` frame in
+  order, add accurate AI narration, subtitles and explanatory overlays, and
+  keep the result below four minutes. Do not cut, splice, reorder or hide any
+  workflow stage.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
@@ -56,11 +61,23 @@ This is a lean human checklist, not a release verifier.
   25 creation times and a verified predecessor chain; Day-21 remains pending.
 - [x] State Google ADK `google-adk==2.6.3`, project start August 8, 2026, and the
   pre-existing/third-party disclosure in the submission copy.
-- [ ] Submit before the official deadline and reopen the submission page to
+- [ ] After the final video URL and submission copy are committed, record the
+  full output of `git rev-parse HEAD`; confirm GitHub `main` resolves to that
+  exact commit and use its immutable commit URL for the final readback. This is
+  a one-time provenance check, not a deploy hash lock or CI gate.
+- [ ] Before submitting, use a clean signed-out browser to open the hosted app,
+  verified recovery, Model Armor proof, repository, immutable commit and final
+  video. Confirm the video is public, below four minutes, readable at 1080p and
+  shows the unique Gate intervention during the fresh continuous run.
+- [ ] Submit before the official deadline, reopen the submission page and
   confirm every required field and link was saved.
-- [ ] Reopen every submitted public URL from a signed-out browser and confirm
-  the app, repository and video are publicly readable; on the verified proof,
-  run the public read-only replay and confirm the same receipt returns `MATCH`.
+- [ ] From the same clean browser, confirm the public Devpost gallery/project
+  page displays HisaarAI with the correct title, track, thumbnail and playable
+  video. On the verified proof, run the public read-only replay and confirm the
+  same receipt returns `MATCH`.
+- [ ] Have an independent reviewer repeat the clean-browser URL, video, exact
+  commit, claim-map and gallery readback before the deadline. Treat any mismatch
+  as a submission blocker; do not add product scope while fixing packaging.
 - [ ] Keep the hosted app and both read-only proof links live through the full
   judging period.
 
@@ -80,9 +97,10 @@ This is a lean human checklist, not a release verifier.
 
 ## Five things to show on camera
 
-1. Human buyer and friction: an AP operations lead must release one PKR 4.275M
-   supplier invoice to the correct bank exactly once; click
-   `RUN FLAGSHIP INCIDENT` within ten seconds.
+1. Human buyer and consequence: in the first 12 seconds, show the labelled prior
+   observed sandbox arc—attacker destination, quarantine before receipt, trusted
+   reconstruction, one approval, one receipt and replay `MATCH`—then launch the
+   separate fresh incident by 0:16.
 2. One uninterrupted outcome: attacker destination, no-receipt quarantine,
    trusted reconstruction, one finance approval, trusted sandbox destination,
    one receipt and replay `MATCH` on the same fresh incident.

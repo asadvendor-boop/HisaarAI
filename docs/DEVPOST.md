@@ -120,6 +120,7 @@ Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>
 - Public read-only clean control: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>
+- Judge claim map: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/CLAIM_MAP.md>
 - Agent Registry evidence: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/evidence/agent-registry.json>
 - Demo video: `PENDING`
 - Optional public article candidate: <https://github.com/asadvendor-boop/HisaarAI/blob/main/docs/BUILD_ARTICLE.md> (bonus eligibility/acceptance not confirmed)

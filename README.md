@@ -193,6 +193,9 @@ The hosted command room and the three read-only proof links above are public and
 need no account. They load genuine persisted incidents from the deployed
 Firestore authority:
 
+The one-page [`judge claim map`](docs/CLAIM_MAP.md) binds each buyer outcome and
+mechanism claim to its baseline or counterfactual and public proof artifact.
+
 - **Verified semantic recovery** is expected to show the proposed attacker
   fingerprint, semantic quarantine before any receipt, the trusted executed
   fingerprint, one sandbox receipt, deterministic `MATCH` and final `VERIFIED`.
@@ -208,8 +211,9 @@ Launch, reject and approval remain restricted to the allowlisted Incident
 Commander because that identity boundary is part of the product. The public
 video remains **PENDING** until a public URL exists; these links are the current
 no-sign-in evidence. There is deliberately no GitHub Actions pipeline,
-deployment-on-push, repository SHA ceremony, benchmark suite or statistical
-claim.
+deployment-on-push, deploy hash lock, benchmark suite or statistical claim. A
+single final repository-commit readback is retained only to prove which source
+version the submission links.
 
 ## Honest limitations
 
