@@ -9,7 +9,7 @@ from hisaarai.contracts import ProtectedAPOutput
 
 root_agent = Agent(
     name="hisaar_protected_ap",
-    model=GlobalGemini(model="gemini-3.6-flash"),
+    model=GlobalGemini(model="gemini-3.7-flash"),
     description="Protected Accounts Payable agent behind Hisaar Gate.",
     instruction=(
         "You are the protected Accounts Payable proposal agent. Read only the "

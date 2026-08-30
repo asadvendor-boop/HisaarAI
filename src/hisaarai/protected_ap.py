@@ -46,11 +46,11 @@ class ProtectedAPClient:
         if parsed.amount_minor <= 0:
             raise RuntimeError("Protected AP returned a non-positive amount")
         actual_model = str(final.get("model_version", ""))
-        if actual_model != "gemini-3.6-flash":
+        if actual_model != "gemini-3.7-flash":
             raise RuntimeError(f"Protected AP used unexpected model {actual_model!r}")
         return PaymentProposal(
             **parsed.model_dump(),
-            requested_model="gemini-3.6-flash",
+            requested_model="gemini-3.7-flash",
             actual_model=actual_model,
             thinking_level="MEDIUM",
             source_context_id=f"screened:{incident_id}",

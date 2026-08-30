@@ -13,12 +13,12 @@ Make bounded changes at the recovery payload, approval route, UI presentation
 and documentation layers; do not add services or release machinery.
 
 **Tech Stack:** Python 3.13, FastAPI, Pydantic, Firestore, Pub/Sub, Google ADK,
-Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, React, TypeScript and Vite.
+Gemini 3.7 Flash, Gemini 3.5 Flash-Lite, React, TypeScript and Vite.
 
 ## Global Constraints
 
 - CreditLock, MuhafizSRE and CrossPatch remain out of scope.
-- Only `gemini-3.6-flash` and `gemini-3.5-flash-lite` are allowed.
+- Only `gemini-3.7-flash` and `gemini-3.5-flash-lite` are allowed.
 - Hisaar Gate alone owns state, approval release and deterministic verification.
 - Public claims must be no broader than the loaded persisted evidence.
 - Financial effects remain confined to the Firestore sandbox ledger.

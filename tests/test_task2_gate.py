@@ -34,8 +34,8 @@ def proposal(bank: str = "PK-ATTACKER-9911") -> PaymentProposal:
         amount_minor=427_500_000,
         currency="PKR",
         bank_fingerprint=bank,
-        requested_model="gemini-3.6-flash",
-        actual_model="gemini-3.6-flash",
+        requested_model="gemini-3.7-flash",
+        actual_model="gemini-3.7-flash",
         thinking_level="MEDIUM",
         source_context_id="ctx-contaminated-invoice-1",
     )

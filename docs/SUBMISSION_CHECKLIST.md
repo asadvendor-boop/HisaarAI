@@ -26,7 +26,7 @@ This is a lean human checklist, not a release verifier.
 - [x] Hosted app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
 - [x] Public repository: <https://github.com/asadvendor-boop/HisaarAI>
 - [x] Fortified Enterprise Fleet track is named consistently.
-- [x] Only `gemini-3.6-flash` and `gemini-3.5-flash-lite` are used.
+- [x] Only `gemini-3.7-flash` and `gemini-3.5-flash-lite` are used.
 - [x] Google ADK, Agent Runtime, Google Cloud services, and new hackathon work
   are visible in the repo and demo.
 - [x] Official Agent Registry readback lists exactly **HisaarAI Protected AP**
@@ -53,12 +53,13 @@ This is a lean human checklist, not a release verifier.
 - [ ] Upload the video as **publicly visible** on YouTube or Vimeo, not unlisted,
   and watch the uploaded copy once.
 - [ ] Put the final video URL in [`DEVPOST.md`](DEVPOST.md) and the Devpost form.
-- [x] Put the fresh Day-14-bound `VERIFIED` incident
-  `inc-invoice-1f8fa7d20b0e49b2` into the read-only hosted link in the README and
+- [x] Put the fresh Day-21-bound `VERIFIED` incident
+  `inc-invoice-a171b0ff1b9644e0` into the read-only hosted link in the README and
   [`DEVPOST.md`](DEVPOST.md). On 2026-08-25 the public incident and replay APIs
-  returned HTTP 200 with one receipt `rcpt-f0c03b6c9122` and `MATCH`.
+  returned HTTP 200 with one receipt `rcpt-4e956f47bb9d` and `MATCH`.
 - [x] Record the truthful continuity recovery: Day-7 and Day-14 have real August
-  25 creation times and a verified predecessor chain; Day-21 remains pending.
+  25 creation times, and the scheduled Day-21 delivery succeeded on August 30
+  with the Day-14 revision as its verified predecessor.
 - [x] State Google ADK `google-adk==2.6.3`, project start August 8, 2026, and the
   pre-existing/third-party disclosure in the submission copy.
 - [ ] After the final video URL and submission copy are committed, record the
@@ -109,8 +110,9 @@ This is a lean human checklist, not a release verifier.
    biographies.
 4. Required platform proof: show Model Armor's `0 GEMINI CALLS / 0 MUTATIONS`,
    the actual two-entry Agent Registry console, live Agent Runtime activity and
-   the genuine Day-14 Memory revision bound to the approval. Do not expand the
-   visually incomplete `3/4 GENUINE` continuity scoreboard.
+   the genuine Day-21 Memory revision bound to the approval. Leave the visible
+   `4/4 GENUINE` continuity badge as concise supporting evidence rather than
+   turning the video into a continuity postmortem.
 5. Calibrated close: synthetic enterprise-shaped data, real Google Cloud,
    sandboxed mutation and one observed run. Do not claim real-money movement,
    customer deployment, fraud prevention or measured ROI.

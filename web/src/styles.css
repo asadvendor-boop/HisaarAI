@@ -78,7 +78,16 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .dial-ring::before, .dial-ring::after { content: ""; position: absolute; inset: 11%; border: 1px dashed rgba(168,255,106,.24); border-radius: 50%; animation: orbit 24s linear infinite; }
 .dial-ring::after { inset: -5%; border-style: solid; border-color: transparent var(--signal); animation-duration: 18s; animation-direction: reverse; }
 .dial-ring span, .dial-ring small { font: .62rem/1 var(--mono); letter-spacing: .15em; color: var(--muted); }
-.dial-ring strong { margin: .7rem 0; font: 700 clamp(2rem,4vw,3.6rem)/1 var(--display); }
+.dial-ring strong {
+  inline-size: 84%;
+  min-inline-size: 0;
+  margin: .7rem 0;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-wrap: balance;
+  letter-spacing: -.05em;
+  font: 700 clamp(1.6rem, 3vw, 2.2rem)/.94 var(--display);
+}
 .state-beacon { margin-top: 2.2rem; color: var(--amber); font: 600 .72rem/1 var(--mono); letter-spacing: .15em; }
 .state-beacon i, .agent-status i { display: inline-block; width: 7px; height: 7px; margin-right: .5rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 9px currentColor; }
 .state-VERIFIED { color: var(--signal); }

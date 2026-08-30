@@ -11,7 +11,7 @@ and completes the sandbox payment exactly once.
 **Hackathon:** All Things Agentic 2026  
 **Track:** Fortified Enterprise Fleet  
 **Hosted app:** <https://hisaarai-2wkruw66na-uc.a.run.app/>  
-**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796) · [clean control](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195)
+**Read-only live proof:** [verified semantic recovery](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-a171b0ff1b9644e0) · [block before Gemini](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796) · [clean control](https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195)
 
 **Project start:** August 8, 2026
 
@@ -23,11 +23,11 @@ source Python, JavaScript and Google Cloud SDK dependencies are declared in the
 committed lockfiles; no customer data or pre-existing product code was included.
 
 **Observed hosted transformation (`n=1`, synthetic sandbox):** attacker routing
-was quarantined in 3.72 seconds with zero unsafe receipts; the automated path
-reached approval-ready in 29.8 seconds. After the human decision, execution and
-verification took 11.5 seconds, producing one trusted receipt whose public
-read-only replay returned `MATCH`. The 71.7-second end-to-end time includes
-30.4 seconds of human review. These are run-specific measurements, not a
+was quarantined in 11.62 seconds with zero unsafe receipts; the automated path
+reached approval-ready in 34.60 seconds. After the human decision, execution and
+verification took 7.01 seconds, producing one trusted receipt whose public
+read-only replay returned `MATCH`. The 55.41-second end-to-end time includes
+13.80 seconds of human review. These are run-specific measurements, not a
 customer or production-money claim.
 
 ![HisaarAI governed recovery command room](docs/media/command-room.png)
@@ -73,11 +73,11 @@ agents; it adds discovery proof, not execution or approval authority.
 
 | Role | Model | Thinking | Authority |
 |---|---|---:|---|
-| Protected AP | `gemini-3.6-flash` | Medium | Proposal only |
+| Protected AP | `gemini-3.7-flash` | Medium | Proposal only |
 | Raasid — Observer | `gemini-3.5-flash-lite` | Default | Observation only |
-| Kashif — Investigator | `gemini-3.6-flash` | High | Investigation only |
-| Muslih — Planner | `gemini-3.6-flash` | High | Draft only |
-| Clean AP standby | `gemini-3.6-flash` | Medium | Approved request only |
+| Kashif — Investigator | `gemini-3.7-flash` | High | Investigation only |
+| Muslih — Planner | `gemini-3.7-flash` | High | Draft only |
+| Clean AP standby | `gemini-3.7-flash` | Medium | Approved request only |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default | Narrative only |
 
 The application uses Google ADK, two callable Agent Runtime resources, Agent
@@ -103,16 +103,17 @@ The final-named Recovery Runtime holds a real Memory Bank chain:
 | Day 0 | 2026-08-09 | Recorded |
 | Day 7 | 2026-08-16 | Recorded during truthful recovery on 2026-08-25 |
 | Day 14 | 2026-08-23 | Recorded during truthful recovery on 2026-08-25 |
-| Day 21 | 2026-08-30 | Scheduled / `PENDING` |
+| Day 21 | 2026-08-30 | Recorded by its scheduled Pub/Sub delivery |
 
 The Day-7 and Day-14 Scheduler jobs fired on their original dates, but Vertex AI
 rejected a now-invalid Memory request containing mutually exclusive revision
 fields. The one-line request fix was deployed on August 25; Day-7 was replayed
 and the queued Day-14 delivery then completed. Firestore and Memory Bank preserve
-their real August 25 creation times—nothing is backdated. Recovery consumes the
-Firestore checkpoint mirror and the fresh flagship warrant binds the exact
-genuine Day-14 Memory revision resource name. The verified chain and recovery
-note are in
+their real August 25 creation times—nothing is backdated. The Day-21 Scheduler
+delivery then succeeded on August 30 and its revision names Day-14 as its direct
+predecessor. Recovery consumes the Firestore checkpoint mirror and the fresh
+flagship warrant binds the exact genuine Day-21 Memory revision resource name.
+The verified chain and recovery note are in
 [`docs/evidence/continuity-chain.json`](docs/evidence/continuity-chain.json);
 Day-0 evidence remains in
 [`docs/evidence/day-0-continuity.json`](docs/evidence/day-0-continuity.json).

@@ -106,7 +106,7 @@
     <rect x="575" y="375" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
     <text x="641" y="394" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
     <text x="585" y="437" class="label">Protected AP Runtime</text>
-    <text x="585" y="468" class="copy">Google ADK • Gemini 3.6 Flash / Vertex AI</text>
+    <text x="585" y="468" class="copy">Google ADK • Gemini 3.7 Flash / Vertex AI</text>
     <text x="585" y="494" class="copy">Screened typed input • separate identity</text>
     <text x="585" y="520" class="small" fill="#c3b2ff">Proposal only • no ledger access</text>
   </g>
@@ -116,7 +116,7 @@
     <rect x="985" y="355" width="132" height="27" rx="13" fill="#8f71ee" opacity="0.22"/>
     <text x="1051" y="374" class="kicker" text-anchor="middle" fill="#c3b2ff">REASONING</text>
     <text x="995" y="417" class="label">Recovery Fleet Runtime</text>
-    <text x="995" y="444" class="copy">Google ADK • Gemini 3.6 + 3.5 Flash-Lite / Vertex AI</text>
+    <text x="995" y="444" class="copy">Google ADK • Gemini 3.7 Flash + 3.5 Flash-Lite / Vertex AI</text>
 
     <rect x="995" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>
     <rect x="1101" y="470" width="95" height="70" rx="10" fill="#292143" stroke="#8066d7"/>

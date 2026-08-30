@@ -20,7 +20,7 @@ one receipt, and deterministic replay `MATCH`.
   rearrangement and concealed failures are not.
 - Gemini Enterprise for Financial Services is narrative alignment only. HisaarAI
   must not claim to use, integrate with, or run on that preview solution.
-- The submitted core continues to use Gemini 3.6 Flash and Gemini 3.5
+- The submitted core continues to use Gemini 3.7 Flash and Gemini 3.5
   Flash-Lite through Google ADK. No MCP, A2A, Agent Gateway, Financial Research
   Agent, production ERP, bank connector, customer data or real-money mutation is
   added.
@@ -76,7 +76,7 @@ links remain visibly available without authentication.
 ## 4. Architecture and current Google Cloud alignment
 
 The detailed architecture remains intact but explicitly labels Google ADK,
-Gemini 3.6 Flash, Gemini 3.5 Flash-Lite and Vertex AI inside the two Runtime
+Gemini 3.7 Flash, Gemini 3.5 Flash-Lite and Vertex AI inside the two Runtime
 boxes. Its Memory Bank label states that recovery uses a Firestore checkpoint
 mirror bound to a genuine Memory revision. Clean AP is labelled as validation,
 not the Firestore writer. A 1600x900 PNG export is created for Devpost.

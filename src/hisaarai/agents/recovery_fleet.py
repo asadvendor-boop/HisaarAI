@@ -52,7 +52,7 @@ raasid = Agent(
 
 kashif = Agent(
     name="kashif_investigator",
-    model=GlobalGemini(model="gemini-3.6-flash"),
+    model=GlobalGemini(model="gemini-3.7-flash"),
     description="Investigator of the bounded payment blast radius.",
     instruction=(
         "Investigate only the current input and Raasid output below. Determine the "
@@ -70,7 +70,7 @@ kashif = Agent(
 
 muslih = Agent(
     name="muslih_planner",
-    model=GlobalGemini(model="gemini-3.6-flash"),
+    model=GlobalGemini(model="gemini-3.7-flash"),
     description="Draft-only recovery planner with no approval authority.",
     instruction=(
         "Draft the smallest recovery action from the trusted vendor master. The "
@@ -94,7 +94,7 @@ planning_pipeline = SequentialAgent(
 
 clean_standby = Agent(
     name="clean_ap_standby",
-    model=GlobalGemini(model="gemini-3.6-flash"),
+    model=GlobalGemini(model="gemini-3.7-flash"),
     description="Clean-session executor of one approved trusted-source warrant.",
     instruction=(
         "Validate the clean execution request supplied by Hisaar Gate. It contains "

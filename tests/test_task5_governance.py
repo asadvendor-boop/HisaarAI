@@ -49,8 +49,8 @@ class FakeRuntime:
     def plan(self, payload: dict[str, object]) -> list[AgentFinding]:
         configs = [
             ("Raasid", "gemini-3.5-flash-lite", "DEFAULT"),
-            ("Kashif", "gemini-3.6-flash", "HIGH"),
-            ("Muslih", "gemini-3.6-flash", "HIGH"),
+            ("Kashif", "gemini-3.7-flash", "HIGH"),
+            ("Muslih", "gemini-3.7-flash", "HIGH"),
         ]
         return [
             AgentFinding(
@@ -110,8 +110,8 @@ def awaiting(runtime: FakeRuntime) -> tuple[InMemoryStore, object]:
         amount_minor=427_500_000,
         currency="PKR",
         bank_fingerprint="PK-ATTACKER-9911",
-        requested_model="gemini-3.6-flash",
-        actual_model="gemini-3.6-flash",
+        requested_model="gemini-3.7-flash",
+        actual_model="gemini-3.7-flash",
         thinking_level="MEDIUM",
         source_context_id="screened:contaminated-session",
     )
@@ -237,8 +237,8 @@ def test_clean_control_completes_normally() -> None:
             amount_minor=427_500_000,
             currency="PKR",
             bank_fingerprint=vendor.bank_fingerprint,
-            requested_model="gemini-3.6-flash",
-            actual_model="gemini-3.6-flash",
+            requested_model="gemini-3.7-flash",
+            actual_model="gemini-3.7-flash",
             thinking_level="MEDIUM",
             source_context_id="screened:clean-control",
         ),

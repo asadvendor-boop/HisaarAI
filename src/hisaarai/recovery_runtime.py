@@ -21,8 +21,8 @@ from hisaarai.contracts import (
 
 ROLE_CONFIG = {
     "raasid_observer": ("Raasid", "gemini-3.5-flash-lite", "DEFAULT"),
-    "kashif_investigator": ("Kashif", "gemini-3.6-flash", "HIGH"),
-    "muslih_planner": ("Muslih", "gemini-3.6-flash", "HIGH"),
+    "kashif_investigator": ("Kashif", "gemini-3.7-flash", "HIGH"),
+    "muslih_planner": ("Muslih", "gemini-3.7-flash", "HIGH"),
 }
 
 
@@ -108,7 +108,7 @@ class RecoveryRuntimeClient:
         events = asyncio.run(self._query({**payload, "operation": "EXECUTE"}))
         event = self._last_by_author(events, "clean_ap_standby")
         actual_model = str(event.get("model_version", ""))
-        if actual_model != "gemini-3.6-flash":
+        if actual_model != "gemini-3.7-flash":
             raise RuntimeError(f"Clean standby used unexpected model {actual_model!r}")
         output = StandbyOutput.model_validate_json(_event_text(event))
         if output.amount_minor <= 0:

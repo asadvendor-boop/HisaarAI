@@ -9,11 +9,11 @@ labels below afterward without removing or obscuring any live state transition.
 
 ## The story judges must remember
 
-> An Accounts Payable operations lead needs to release one supplier invoice to
-> the correct bank exactly once. A compromised agent proposes an attacker's
-> destination. HisaarAI stops the redirect, reconstructs the work from trusted
-> data, obtains one normal finance decision and completes one verified sandbox
-> receipt.
+> A finance approver's routine job is to release one supplier invoice to the
+> correct bank. In a synthetic sandbox run, a compromised agent proposes the
+> wrong destination for PKR 4.275M. HisaarAI quarantines it, rebuilds the work
+> from trusted data, obtains one finance decision and completes one verified
+> sandbox receipt.
 
 The human buyer and her business task remain the story. Model Armor, Agent
 Runtime, Memory Bank, Agent Registry and Hisaar Gate are the proof beneath it.
@@ -24,7 +24,7 @@ Runtime, Memory Bank, Agent Registry and Hisaar Gate are the proof beneath it.
    <https://hisaarai-2wkruw66na-uc.a.run.app/>. Launch and complete one fresh
    flagship incident here.
 2. **Evidence tab:** start on the previously verified semantic recovery at
-   <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2>.
+   <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-a171b0ff1b9644e0>.
    Use its `BEFORE / HISAAR CONTROL / AFTER` strip only for the opening observed
    outcome preview. After the fresh workflow is complete, navigate this same tab
    to the Model Armor proof:
@@ -83,9 +83,9 @@ observed sandbox result, not the fresh incident about to run.
 
 **Narration**
 
-> “An AP operator faces a PKR 4.275 million redirect. This observed sandbox run
-> quarantined the attacker destination, rebuilt trusted data, obtained one
-> approval, and replayed one verified receipt: `MATCH`.”
+> “A finance approver's routine job is to release one supplier invoice to the
+> correct bank. In this synthetic sandbox run, the agent proposed the wrong
+> destination for PKR 4.275M. HisaarAI quarantined it before a receipt.”
 
 **On-screen label**
 
@@ -102,8 +102,8 @@ not leave the fresh incident, cut the capture or substitute another run.
 
 **Narration**
 
-> “Now watch HisaarAI's mechanism fire live on a fresh invoice. The operator's
-> goal is simple: the correct destination, exactly once.”
+> “Now watch the same protection fire live on a fresh invoice: agents propose,
+> Hisaar Gate decides, and the finance approver approves.”
 
 **On-screen label**
 
@@ -160,7 +160,7 @@ the digest or expiry. Click `APPROVE EXACT WARRANT` once.
 
 > “The finance approver sees the corrected vendor, destination and amount—not a
 > security investigation. Memory Bank preserves the trusted continuity history,
-> and this recovery is pinned to the genuine Day-14 revision shown here. She
+> and this recovery is pinned to the genuine Day-21 revision shown here. She
 > makes one exact approval.”
 
 **On-screen label**
@@ -213,8 +213,8 @@ Return to the evidence tab, navigate it to the Model Armor proof and hold on
 **Screen**
 
 Return to the fresh verified workflow. Show the Runtime identity, provenance
-links and the exact Memory revision already bound to the approval. Do not expand
-the `CONTINUITY 3/4 GENUINE` panel. Switch briefly to the pre-zoomed Agent
+links and the exact Memory revision already bound to the approval. Leave the
+visible `CONTINUITY 4/4 GENUINE` badge as supporting evidence. Switch briefly to the pre-zoomed Agent
 Registry console and show the two registered HisaarAI agents together. Return to
 the command room. Place the architecture PNG inside the webpage viewport over
 the now-completed workflow for approximately 10–12 seconds; keep the `.run.app`
@@ -328,7 +328,8 @@ Do not say:
   together and legibly at the final video resolution.
 - [ ] Runtime activity, Memory continuity and Google Cloud provenance are
   visible in the working product.
-- [ ] The `3/4 GENUINE` continuity scoreboard is not expanded in the video.
+- [ ] The visible `4/4 GENUINE` continuity badge remains concise supporting
+  evidence; it is not expanded into a continuity postmortem.
 - [ ] Architecture appears only after the live workflow is complete, remains
   readable without covering the `.run.app` URL, and fades back to `MATCH`.
 - [ ] The launch-to-`VERIFIED` workflow is continuous, normal-speed and uncut.
@@ -348,12 +349,12 @@ Do not say:
 > reconstructs trusted context, obtains one finance decision and completes one
 > verified sandbox receipt.
 >
-> This continuous hosted demo uses Gemini 3.6 Flash, Gemini 3.5 Flash-Lite,
+> This continuous hosted demo uses Gemini 3.7 Flash, Gemini 3.5 Flash-Lite,
 > Google ADK, Agent Registry, Agent Runtime, Memory Bank, Model Armor, Cloud Run,
 > Pub/Sub, Firestore and Cloud Trace for the Fortified Enterprise Fleet track.
 >
 > Live verified recovery:
-> https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2
+> https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-a171b0ff1b9644e0
 >
 > Source:
 > https://github.com/asadvendor-boop/HisaarAI

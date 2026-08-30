@@ -76,12 +76,12 @@ declare global {
   }
 }
 
-const agents = [
-  ["Protected AP", "Invoice proposal", "Gemini 3.6 Flash", "MEDIUM"],
+export const agents = [
+  ["Protected AP", "Invoice proposal", "Gemini 3.7 Flash", "MEDIUM"],
   ["Raasid", "Observer", "Gemini 3.5 Flash-Lite", "DEFAULT"],
-  ["Kashif", "Investigator", "Gemini 3.6 Flash", "HIGH"],
-  ["Muslih", "Recovery planner", "Gemini 3.6 Flash", "HIGH"],
-  ["Clean AP", "Standby validator", "Gemini 3.6 Flash", "MEDIUM"],
+  ["Kashif", "Investigator", "Gemini 3.7 Flash", "HIGH"],
+  ["Muslih", "Recovery planner", "Gemini 3.7 Flash", "HIGH"],
+  ["Clean AP", "Standby validator", "Gemini 3.7 Flash", "MEDIUM"],
   ["Shaahid", "Witness", "Gemini 3.5 Flash-Lite", "DEFAULT"],
 ] as const;
 
@@ -96,8 +96,8 @@ const steps: IncidentState[] = [
   "VERIFIED",
 ];
 
-const publicProofs = [
-  ["VERIFIED RECOVERY", "inc-invoice-1f8fa7d20b0e49b2"],
+export const publicProofs = [
+  ["VERIFIED RECOVERY", "inc-invoice-a171b0ff1b9644e0"],
   ["BLOCK BEFORE GEMINI", "inc-invoice-5d86da12456b4796"],
   ["CLEAN CONTROL", "inc-invoice-473fbd809fca4195"],
 ] as const;

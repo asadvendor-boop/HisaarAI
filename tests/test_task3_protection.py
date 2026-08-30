@@ -117,8 +117,8 @@ class FakeAP:
             amount_minor=427_500_000,
             currency="PKR",
             bank_fingerprint=self.bank_fingerprint,
-            requested_model="gemini-3.6-flash",
-            actual_model="gemini-3.6-flash",
+            requested_model="gemini-3.7-flash",
+            actual_model="gemini-3.7-flash",
             thinking_level="MEDIUM",
             source_context_id=f"screened:{incident_id}",
         )
@@ -179,7 +179,7 @@ def test_semantic_tamper_reaches_quarantine_after_real_agent_stage() -> None:
     assert incident.reason == "BANK_FINGERPRINT_MISMATCH"
     assert incident.gemini_invocations == 1
     assert incident.proposal is not None
-    assert incident.proposal.actual_model == "gemini-3.6-flash"
+    assert incident.proposal.actual_model == "gemini-3.7-flash"
     assert incident.business_idempotency_key == (
         "pay:INV-2026-0819:event-semantic"
     )

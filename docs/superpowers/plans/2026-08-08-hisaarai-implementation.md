@@ -16,7 +16,7 @@ This plan replaces every earlier HisaarAI implementation plan.
 
 - Build one memorable journey: compromised AP agent → blocked payment → clean
   recovery fleet → one human decision → correct sandbox payment exactly once.
-- Use only `gemini-3.6-flash` and `gemini-3.5-flash-lite`.
+- Use only `gemini-3.7-flash` and `gemini-3.5-flash-lite`.
 - Use Google Sign-In ID tokens for the commander. Do not build IAP.
 - Use exactly three user-managed service accounts: `hisaar-app`,
   `hisaar-ap-runtime`, and `hisaar-recovery-runtime`. Never deploy on the default
@@ -175,9 +175,9 @@ semantic quarantine and clean behavior on the hosted stack.
 Update the existing Recovery Runtime with five distinct ADK roles:
 
 - Raasid — `gemini-3.5-flash-lite`, default/minimal thinking.
-- Kashif — `gemini-3.6-flash`, high thinking.
-- Muslih — `gemini-3.6-flash`, high thinking.
-- Clean AP Standby — `gemini-3.6-flash`, medium thinking.
+- Kashif — `gemini-3.7-flash`, high thinking.
+- Muslih — `gemini-3.7-flash`, high thinking.
+- Clean AP Standby — `gemini-3.7-flash`, medium thinking.
 - Shaahid — `gemini-3.5-flash-lite`, default/minimal thinking.
 
 Keep outputs typed and short. Raasid reads persisted events and the latest exact

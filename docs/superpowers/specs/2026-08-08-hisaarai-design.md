@@ -67,7 +67,7 @@ labelled sandbox and makes no claim of moving real money.
 
 The architecture is deliberately small but real:
 
-- **Gemini 3.6 Flash and Gemini 3.5 Flash Lite:** reasoning and structured agent
+- **Gemini 3.7 Flash and Gemini 3.5 Flash Lite:** reasoning and structured agent
   work, with the model and thinking level visible per agent.
 - **Google ADK:** distinct agent roles receiving typed bounded inputs.
 - **Two callable Agent Runtime resources:** one protected AP Runtime and one
@@ -210,16 +210,16 @@ documented control-plane work.
 
 Only these two model identifiers are allowed at runtime:
 
-- `gemini-3.6-flash`
+- `gemini-3.7-flash`
 - `gemini-3.5-flash-lite`
 
 | Agent | Model | Thinking | Judge-visible job |
 |---|---|---:|---|
-| Protected AP Agent | `gemini-3.6-flash` | Medium | Reads screened invoice context and proposes the payment |
+| Protected AP Agent | `gemini-3.7-flash` | Medium | Reads screened invoice context and proposes the payment |
 | Raasid — Observer | `gemini-3.5-flash-lite` | Default/minimal | Turns persisted events into a concise incident observation |
-| Kashif — Investigator | `gemini-3.6-flash` | High | Explains the bounded blast radius and cites trusted evidence |
-| Muslih — Recovery Planner | `gemini-3.6-flash` | High | Drafts the smallest safe recovery warrant |
-| Clean AP Standby | `gemini-3.6-flash` | Medium | Executes only the approved trusted-source payment |
+| Kashif — Investigator | `gemini-3.7-flash` | High | Explains the bounded blast radius and cites trusted evidence |
+| Muslih — Recovery Planner | `gemini-3.7-flash` | High | Drafts the smallest safe recovery warrant |
+| Clean AP Standby | `gemini-3.7-flash` | Medium | Executes only the approved trusted-source payment |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default/minimal | Narrates deterministic verification and replay results |
 
 The UI displays each agent's name, model, role and current state. Runtime logs

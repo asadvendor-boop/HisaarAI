@@ -14,32 +14,31 @@ Fortified Enterprise Fleet
 
 ## What it does
 
-HisaarAI is a visual command room for Accounts Payable Operations leaders. It
-contains a compromised enterprise agent,
-excludes its contaminated context, and safely completes the business process
-through a clean specialist fleet and one accountable human decision. In the live
-Accounts Payable journey, real Model Armor blocks an obvious injection before
-Gemini, while deterministic Hisaar Gate catches a harder semantic bank-detail
-tamper that a content filter correctly clears. Raasid, Kashif and Muslih
-reconstruct a trusted-source warrant; Clean AP validates the exact approved
-request; Hisaar Gate, running under the application persistence identity,
-commits the idempotent sandbox receipt and performs deterministic verification.
-Shaahid narrates that comparison; only Gate can mark the incident verified.
+HisaarAI is for the finance approver whose routine job is to release one supplier
+invoice to the correct bank. In one observed synthetic-sandbox run (`n=1`), a
+compromised AP agent proposed an attacker destination for a PKR 4.275M invoice.
+HisaarAI quarantined that proposal before any receipt, rebuilt the work from
+trusted vendor data, obtained one finance approval, and produced one verified
+sandbox receipt whose public read-only replay returned `MATCH`.
 
-In one observed hosted run (`n=1`), a protected AP agent proposed an attacker
-destination for a PKR 4.275M synthetic invoice. HisaarAI quarantined it before
-any receipt in 3.72 seconds and reached approval-ready in 29.8 seconds. After one
-accountable human decision, automated execution and verification took 11.5
-seconds and produced one trusted sandbox receipt. A public read-only replay
-returned that same receipt with `MATCH`. The 71.7-second end-to-end time includes
-30.4 seconds of human review. This is an observed sandbox transformation, not a
-generalized performance, customer-deployment or production-money claim.
+Model Armor blocks an obvious injection before Gemini; deterministic Hisaar Gate
+catches the harder clean-looking bank-detail tamper that content screening
+correctly clears. The recovery roles observe, bound and rebuild from trusted
+sources. Agents propose; Hisaar Gate decides; the finance approver approves.
+Hisaar Gate is an application-level deterministic authority layer in Cloud Run
+and Firestore, not a claim of using Google's managed Agent Gateway product.
+
+The observed sandbox run quarantined in 11.62 seconds and reached approval-ready
+in 34.60 seconds. After the one human decision, automated execution and
+verification took 7.01 seconds. The 55.41-second end-to-end time includes 13.80
+seconds of human review. These are run-specific observations, not a generalized
+performance, customer-deployment or production-money claim.
 
 ## How we built it
 
 HisaarAI uses Google ADK on two callable Agent Runtime resources. The protected
-AP agent uses Gemini 3.6 Flash; the recovery Runtime contains five distinct ADK
-roles routed across Gemini 3.6 Flash and Gemini 3.5 Flash-Lite with explicit
+AP agent uses Gemini 3.7 Flash; the recovery Runtime contains five distinct ADK
+roles routed across Gemini 3.7 Flash and Gemini 3.5 Flash-Lite with explicit
 thinking levels. An official Agent Registry readback discovers exactly those two
 HisaarAI Runtime agents and their separate identities; Registry is catalog proof,
 not approval authority. Cloud Run hosts one FastAPI/React command room, Pub/Sub
@@ -47,13 +46,14 @@ provides authenticated asynchronous delivery, Model Armor screens the PDF text
 and exact model input, Firestore holds the transactional authority and
 idempotent sandbox receipt, and Cloud Trace correlates the journey.
 
-Memory Bank stores a genuine Day-0 → Day-7 → Day-14 predecessor chain under the
-final Recovery Runtime. The scheduled Day-7 and Day-14 deliveries initially hit
-a Vertex API validation change; after a one-line request fix on August 25, the
-original jobs were recovered without backdating their real creation times. The
-recovery path consumes a Firestore checkpoint mirror bound to the exact genuine
-Memory Bank revision resource name; the fresh flagship warrant preserves the
-resulting Day-14 binding. Day-21 remains pending until its scheduled date.
+Memory Bank now holds a genuine Day-0 → Day-7 → Day-14 → Day-21 predecessor
+chain under the final Recovery Runtime. The scheduled Day-7 and Day-14 deliveries
+initially hit a Vertex API validation change; after a one-line request fix on
+August 25, the original jobs were recovered without backdating their real
+creation times. The scheduled Day-21 delivery succeeded on August 30 and links
+to the Day-14 revision. The recovery path consumes a Firestore checkpoint mirror
+bound to the exact genuine Memory Bank revision resource name; the flagship
+warrant retains its demonstrated Day-21 binding.
 
 ## Other data sources
 
@@ -103,20 +103,20 @@ and deterministic Gate code plus the commander decide whether work may proceed.
 - Five specialized recovery roles on the final-named Recovery Runtime
 - One human decision followed by one idempotent sandbox receipt
 - Deterministic verification that cannot be overruled by the witness agent
-- Verified Day-0 → Day-7 → Day-14 Memory Bank chain with real creation times and Day-21 pending
+- Verified Day-0 → Day-7 → Day-14 → Day-21 Memory Bank predecessor chain with real creation times
 - Official Agent Registry discovery of exactly the two HisaarAI Runtime agents
 - One responsive command room with live Google provenance
 
 ## Built with
 
-Gemini 3.6 Flash, Gemini 3.5 Flash-Lite, Google ADK, two Agent Runtime resources,
+Gemini 3.7 Flash, Gemini 3.5 Flash-Lite, Google ADK, two Agent Runtime resources,
 Agent Registry, Memory Bank, Model Armor, Vertex AI, Cloud Run, Pub/Sub, Cloud
 Scheduler, Firestore, Cloud Logging, Cloud Trace, FastAPI, React and Vite.
 
 ## Links to fill at submission
 
 - Live app: <https://hisaarai-2wkruw66na-uc.a.run.app/>
-- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-1f8fa7d20b0e49b2>
+- Public read-only verified recovery: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-a171b0ff1b9644e0>
 - Public read-only Model Armor block: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-5d86da12456b4796>
 - Public read-only clean control: <https://hisaarai-2wkruw66na-uc.a.run.app/?incident=inc-invoice-473fbd809fca4195>
 - Public repository: <https://github.com/asadvendor-boop/HisaarAI>

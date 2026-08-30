@@ -26,19 +26,20 @@ the expiring warrant, requires an allowlisted Google identity to approve its
 exact digest, and persists the idempotent sandbox receipt under the application
 identity.
 
-The implementation uses Gemini 3.6 Flash and Gemini 3.5 Flash-Lite through Google
+The implementation uses Gemini 3.7 Flash and Gemini 3.5 Flash-Lite through Google
 ADK, two callable Agent Runtime resources with separate runtime identities,
 Agent Registry, Memory Bank, Model Armor, Pub/Sub, Cloud Run, Firestore, Cloud
 Logging, and Cloud Trace. The official Registry readback discovers exactly the
 two HisaarAI Runtime agents and their separate deployed identities; it is catalog
 proof rather than an execution boundary. Agents receive typed bounded inputs;
 deterministic Gate code and the commander retain authority. The latest observed
-warrant binds the exact genuine Day-14 Memory revision resource name in a Day-0
-→ Day-7 → Day-14 predecessor chain. Runtime recovery consumes its Firestore
+warrant binds the exact genuine Day-21 Memory revision resource name in a Day-0
+→ Day-7 → Day-14 → Day-21 predecessor chain. Runtime recovery consumes its Firestore
 checkpoint mirror; it does not reread the Memory API in the recovery path. The
 Day-7 and Day-14 jobs fired on schedule but initially failed a Vertex API
 validation change; their real August 25 recovery timestamps remain visible
-rather than being backdated. Day-21 remains `PENDING`.
+rather than being backdated. The scheduled Day-21 delivery succeeded on August
+30 and points to the Day-14 revision as its predecessor.
 
 On August 25, Google Cloud [introduced Gemini Enterprise for Financial
 Services](https://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services)

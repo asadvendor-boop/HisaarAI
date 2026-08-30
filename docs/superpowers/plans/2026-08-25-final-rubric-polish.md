@@ -20,7 +20,7 @@ React, TypeScript, Vite, SVG, Cloud Run and Playwright/browser verification.
 
 ## Global constraints
 
-- Keep only Gemini 3.6 Flash and Gemini 3.5 Flash-Lite in the approved core.
+- Keep only Gemini 3.7 Flash and Gemini 3.5 Flash-Lite in the approved core.
 - Hisaar Gate remains the only component allowed to persist finality.
 - Do not add MCP, A2A, Agent Gateway, Financial Research Agent, an ERP connector,
   customer data, real-money mutation or anonymous commander authority.
@@ -180,8 +180,8 @@ no code or cloud API is added in this task.
 
   Make these text-only SVG changes without adding new boxes:
 
-  - Protected AP Runtime: `Google ADK • Gemini 3.6 Flash / Vertex AI`.
-  - Recovery Fleet Runtime: `Google ADK • Gemini 3.6 + 3.5 Flash-Lite / Vertex AI`.
+  - Protected AP Runtime: `Google ADK • Gemini 3.7 Flash / Vertex AI`.
+  - Recovery Fleet Runtime: `Google ADK • Gemini 3.7 Flash + 3.5 Flash-Lite / Vertex AI`.
   - Clean AP role: change `Execute` to `Validate`.
   - Memory Bank: change the body to `Firestore checkpoint mirror • bound to a genuine revision`.
   - Hisaar Gate: add `App persistence identity writes the sandbox receipt`.
