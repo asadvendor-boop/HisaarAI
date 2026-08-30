@@ -1,5 +1,9 @@
 # HisaarAI — Judge-First Product Design
 
+> **Historical planning artifact.** The final runtime and submission truth are
+> defined by `README.md`, `docs/DEVPOST.md` and the August 25 final-rubric
+> polish design. Do not use conflicting earlier demo or continuity wording.
+
 **Date:** 2026-08-09
 **Track:** Fortified Enterprise Fleet
 **Status:** Approved lean build specification
@@ -63,13 +67,15 @@ labelled sandbox and makes no claim of moving real money.
 
 The architecture is deliberately small but real:
 
-- **Gemini 3.6 Flash and Gemini 3.5 Flash Lite:** reasoning and structured agent
+- **Gemini 3.7 Flash and Gemini 3.5 Flash Lite:** reasoning and structured agent
   work, with the model and thinking level visible per agent.
-- **Google ADK:** multi-agent delegation and tool boundaries.
-- **Two Agent Runtime deployments:** one protected AP runtime and one recovery
-  fleet runtime.
-- **Agent Registry:** judge-visible catalog entries for the deployed fleet.
-- **Memory Bank:** genuine Day-0/7/14/21 continuity checkpoints.
+- **Google ADK:** distinct agent roles receiving typed bounded inputs.
+- **Two callable Agent Runtime resources:** one protected AP Runtime and one
+  recovery fleet Runtime, using separate runtime identities.
+- **Agent Registry:** official discovery readback catalogs exactly those two
+  HisaarAI Runtime agents; it is evidence, not an execution or authority layer.
+- **Memory Bank:** one genuine Day-0 checkpoint exists now; Day 7, Day 14 and
+  Day 21 are scheduled and remain `PENDING` until their actual dates.
 - **Model Armor:** direct prompt/document screening before Gemini receives the
   committed security fixture.
 - **Pub/Sub:** asynchronous invoice arrival.
@@ -79,10 +85,11 @@ The architecture is deliberately small but real:
 - **Agent Observability / Cloud Trace and Logging:** one correlated trace across
   the visible recovery.
 
-The architecture demonstrates separation through agent roles and tool
-permissions, not through a large number of microservices, databases or service
-accounts. Hisaar Gate is deterministic application code and remains the only
-authority allowed to approve state transitions or release a sandbox mutation.
+The architecture demonstrates separation through agent roles, typed bounded
+inputs, separate runtime identities and deterministic authority, not through a
+large number of microservices or databases. Hisaar Gate is deterministic
+application code and remains the only authority allowed to approve state
+transitions or release a sandbox mutation.
 
 Failure tolerance is visible: invalid agent output, timeout or missing evidence
 causes a safe `BLOCKED` outcome; compromised context is never copied into the
@@ -101,9 +108,11 @@ Gemini zero times and create no receipt.
 The public proof package contains:
 
 - One polished command-room UI driven by persisted backend state.
-- One continuous, unedited, English demo no longer than four minutes.
-- Visible Google Cloud proof: `.run.app` URL, Runtime/Registry identity and a
-  correlated trace or log view.
+- One continuous, unedited, English demo no longer than four minutes, once it is
+  recorded and published; until then its status remains `PENDING`.
+- Visible Google Cloud proof: `.run.app` URL, the two-entry Agent Registry
+  discovery view, both Runtime resource identities, Memory Bank and a correlated
+  trace or log view.
 - A public repository with a clean architecture diagram, concise README and
   reproducible local/deployment instructions.
 - One genuine flagship journey plus a short Model Armor control beat.
@@ -156,8 +165,9 @@ a sandbox payment. It cannot write the sandbox ledger directly.
 ### 4.2 Recovery Fleet Runtime
 
 Contains Raasid, Kashif, Muslih, the clean AP standby and Shaahid. The agents have
-separate ADK roles and tool allowlists. They may inspect bounded incident evidence
-and propose recovery actions but cannot self-approve Hisaar Gate.
+separate ADK roles, typed outputs and bounded inputs. They may inspect bounded
+incident evidence and propose recovery actions but cannot self-approve Hisaar
+Gate.
 
 ### 4.3 One Cloud Run application
 
@@ -185,7 +195,7 @@ Collections are intentionally minimal:
 - `continuity_checkpoints`
 
 The incident document holds the current state and version. The receipt document
-uses the stable business idempotency key so duplicate execution cannot create a
+uses the stable launch-scoped business idempotency key so Pub/Sub redelivery or duplicate execution cannot create a
 second payment.
 
 ### 4.5 Three user-managed service accounts
@@ -200,16 +210,16 @@ documented control-plane work.
 
 Only these two model identifiers are allowed at runtime:
 
-- `gemini-3.6-flash`
+- `gemini-3.7-flash`
 - `gemini-3.5-flash-lite`
 
 | Agent | Model | Thinking | Judge-visible job |
 |---|---|---:|---|
-| Protected AP Agent | `gemini-3.6-flash` | Medium | Reads screened invoice context and proposes the payment |
+| Protected AP Agent | `gemini-3.7-flash` | Medium | Reads screened invoice context and proposes the payment |
 | Raasid — Observer | `gemini-3.5-flash-lite` | Default/minimal | Turns persisted events into a concise incident observation |
-| Kashif — Investigator | `gemini-3.6-flash` | High | Explains the bounded blast radius and cites trusted evidence |
-| Muslih — Recovery Planner | `gemini-3.6-flash` | High | Drafts the smallest safe recovery warrant |
-| Clean AP Standby | `gemini-3.6-flash` | Medium | Executes only the approved trusted-source payment |
+| Kashif — Investigator | `gemini-3.7-flash` | High | Explains the bounded blast radius and cites trusted evidence |
+| Muslih — Recovery Planner | `gemini-3.7-flash` | High | Drafts the smallest safe recovery warrant |
+| Clean AP Standby | `gemini-3.7-flash` | Medium | Executes only the approved trusted-source payment |
 | Shaahid — Witness | `gemini-3.5-flash-lite` | Default/minimal | Narrates deterministic verification and replay results |
 
 The UI displays each agent's name, model, role and current state. Runtime logs
@@ -277,22 +287,24 @@ state/version no longer matches. Human rejection persists the commander subject,
 rationale and server timestamp, transitions to `BLOCKED/HUMAN_REJECTED` and
 creates no execution opportunity. An expired current warrant transitions to
 `BLOCKED/WARRANT_EXPIRED`; retry starts a new recovery attempt from quarantine,
-retains the invoice business idempotency key and creates a fresh warrant. Wrong
+retains the launch-scoped business idempotency key and creates a fresh warrant. Wrong
 identity is denied without changing incident state.
 
 Authentication is route-specific even though one Cloud Run service hosts the
 application. Every Google token is checked for signature, issuer, expiry, exact
 route audience and expected subject or service-account email.
 `/api/commander/*` accepts only the configured Google web-client audience and
-allowlisted human subject. `/internal/pubsub/events` accepts only the configured
-Pub/Sub push audience and `hisaar-app` identity. Its strict discriminated
-envelope admits only `invoice.received`, `continuity.checkpoint` and
-`recovery.execute`, each with an event-specific idempotency key.
-`/internal/tools/ap/*` accepts only `hisaar-ap-runtime`; recovery tool routes
-accept only `hisaar-recovery-runtime`. Issuer validity alone never grants
-authority. The browser launch request publishes and returns; the UI polls
-persisted state rather than waiting synchronously for Pub/Sub to call the same
-service.
+allowlisted human subject; commander mutations also require same-origin JSON.
+`/internal/pubsub/events` accepts only the configured Pub/Sub push audience and
+`hisaar-app` identity. Its strict discriminated envelope admits only
+`invoice.received`, `continuity.checkpoint` and `recovery.execute`, each with an
+event-specific idempotency key. The Cloud Run application invokes the two Vertex
+Agent Runtime resources using its configured Google client credentials; runtime
+resource names and separate deployed runtime identities are recorded as
+provenance. There are no per-runtime HTTP tool routes. Issuer validity alone
+never grants authority. The browser launch request publishes and returns; the UI
+polls persisted state rather than waiting synchronously for Pub/Sub to call the
+same service.
 
 ## 8. Command-room experience
 
@@ -320,7 +332,8 @@ It prioritizes comprehension over evidence density.
 - `Trusted payment: completed once`
 - Receipt identifier and replay `MATCH`
 - Shaahid verification summary
-- Google Cloud provenance chips linking the Runtime/Registry/trace evidence
+- Google Cloud provenance linking the two-entry Agent Registry discovery,
+  both Runtime resources, Memory Bank and correlated Trace evidence
 
 No fake map, simulated log stream, invented latency or decorative security score
 is permitted.
@@ -329,16 +342,19 @@ is permitted.
 
 Fortified Enterprise Fleet explicitly asks how agents maintain context across
 weeks of asynchronous operation. Day 0 was bootstrapped directly through the
-Memory Bank API by the local deployer under the final Recovery Runtime. Cloud
-Scheduler, configured in `Asia/Karachi`, publishes date-keyed events through the
-authenticated Pub/Sub boundary to create genuine checkpoints on Day 7, Day 14
-and Day 21. Each checkpoint stores a short operational fact, its prior checkpoint
-reference and the actual server timestamp in Memory Bank and Firestore. Creation
-is idempotent by calendar date.
+Memory Bank API by the local deployer under the final Recovery Runtime and is the
+only checkpoint that exists now. Cloud Scheduler is configured in
+`Asia/Karachi` to publish date-keyed events through the authenticated Pub/Sub
+boundary on Day 7, Day 14 and Day 21, but those checkpoints remain `PENDING`
+until their actual dates. If created on schedule, each future checkpoint stores
+a short operational fact, its prior checkpoint reference and the actual server
+timestamp in Memory Bank and Firestore. Creation is date-gated and idempotent by
+calendar date.
 
-The final demo shows the real sequence and one material use: the recovery fleet
-retrieves the latest trusted operational policy from that history. Missing future
-checkpoints are labelled pending; they are never backfilled or simulated.
+The demo shows only the real checkpoints available at recording time—currently
+Day 0—and one material use: the recovery fleet retrieves the latest trusted
+operational policy revision. Missing future checkpoints are labelled pending;
+they are never backfilled or simulated.
 
 ## 10. Minimum reliability work
 
@@ -377,8 +393,9 @@ guaranteed latency or exhaustive least privilege.
   warrant as the human commander.
 - **2:35–3:05 — Safe completion:** the clean standby completes once; repeat returns
   the same receipt; Shaahid reports `MATCH`; Gate shows `VERIFIED`.
-- **3:05–3:35 — Platform proof:** show Agent Registry/Runtime, the correlated
-  Google Cloud trace and genuine Memory Bank week checkpoints.
+- **3:05–3:35 — Platform proof:** show the live two-entry Agent Registry
+  discovery, both Agent Runtime resources, the correlated Google Cloud trace and
+  genuine Memory Bank checkpoints available at recording time.
 - **3:35–4:00 — Close:** restate the business outcome and architecture in one
   sentence: Hisaar does not merely detect a compromised agent; it safely finishes
   the work.
@@ -424,7 +441,8 @@ HisaarAI is ready when:
 - the flagship ends with one correct sandbox receipt and replay `MATCH`;
 - all six agents have readable, distinct roles and truthful model provenance;
 - the command room makes the business value understandable within 30 seconds;
-- the video shows an unedited live action and visible Google Cloud proof;
+- the video, once publicly recorded, shows an unedited live action and visible
+  Google Cloud proof;
 - the real continuity checkpoints available by submission time are shown without
   fabrication;
 - the repository contains the required diagram and setup instructions; and

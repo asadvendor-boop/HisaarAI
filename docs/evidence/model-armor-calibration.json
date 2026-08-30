@@ -1,0 +1,24 @@
+{
+  "fixtures": {
+    "clean-control.pdf": {
+      "decision": "CLEAR",
+      "extracted_text_length": 453,
+      "pdf_decision": "CLEAR",
+      "text_decision": "CLEAR"
+    },
+    "injection-control.pdf": {
+      "decision": "MATCH",
+      "extracted_text_length": 660,
+      "pdf_decision": "CLEAR",
+      "text_decision": "MATCH"
+    },
+    "semantic-tamper.pdf": {
+      "decision": "CLEAR",
+      "extracted_text_length": 448,
+      "pdf_decision": "CLEAR",
+      "text_decision": "CLEAR"
+    }
+  },
+  "template_endpoint": "modelarmor.us-central1.rep.googleapis.com",
+  "template_name": "projects/hisaarai-agentic-2026/locations/us-central1/templates/hisaarai-ingress"
+}

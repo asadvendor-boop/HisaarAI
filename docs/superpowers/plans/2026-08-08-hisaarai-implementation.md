@@ -1,5 +1,9 @@
 # HisaarAI — Lean Rubric-First Build Plan
 
+> **Historical planning artifact.** The final runtime and submission truth are
+> defined by `README.md`, `docs/DEVPOST.md` and the August 25 final-rubric
+> polish design. Do not use conflicting earlier demo or continuity wording.
+
 **Date:** 2026-08-09
 **Status:** Approved for implementation
 **Design:** `docs/superpowers/specs/2026-08-08-hisaarai-design.md`
@@ -12,7 +16,7 @@ This plan replaces every earlier HisaarAI implementation plan.
 
 - Build one memorable journey: compromised AP agent → blocked payment → clean
   recovery fleet → one human decision → correct sandbox payment exactly once.
-- Use only `gemini-3.6-flash` and `gemini-3.5-flash-lite`.
+- Use only `gemini-3.7-flash` and `gemini-3.5-flash-lite`.
 - Use Google Sign-In ID tokens for the commander. Do not build IAP.
 - Use exactly three user-managed service accounts: `hisaar-app`,
   `hisaar-ap-runtime`, and `hisaar-recovery-runtime`. Never deploy on the default
@@ -83,7 +87,8 @@ Create only the resources needed by the visible journey:
   `hisaar-app` token identity. Grant the Pub/Sub service agent Token Creator on
   that identity and the subscription creator `actAs`; use the same boundary for
   continuity events.
-- Register or confirm both Runtime entries in Agent Registry.
+- Deploy and read back both callable Runtime resource names and their separate
+  runtime identities.
 - Mirror the Day-0 checkpoint into Firestore, preserving its real server time
   and MemoryRevision name. Schedule the remaining checkpoint dates against the
   final app endpoint.
@@ -96,8 +101,10 @@ audience and expected subject or service-account-email checks:
 - `/api/commander/*`: Google web-client audience plus allowlisted human `sub`.
 - `/internal/pubsub/events`: Pub/Sub push audience plus `hisaar-app` identity and
   one of the three allowed event types.
-- `/internal/tools/ap/*`: only `hisaar-ap-runtime`.
-- `/internal/tools/recovery/*`: only `hisaar-recovery-runtime`.
+- Protected AP Runtime invocation: typed bounded input under
+  `hisaar-ap-runtime`.
+- Recovery Fleet Runtime invocation: typed bounded input under
+  `hisaar-recovery-runtime`.
 
 **Done when:** the `.run.app` health page works, both Runtime resource names are
 real, Day 0 is visible from Memory Bank and Firestore, and future checkpoints are
@@ -168,9 +175,9 @@ semantic quarantine and clean behavior on the hosted stack.
 Update the existing Recovery Runtime with five distinct ADK roles:
 
 - Raasid — `gemini-3.5-flash-lite`, default/minimal thinking.
-- Kashif — `gemini-3.6-flash`, high thinking.
-- Muslih — `gemini-3.6-flash`, high thinking.
-- Clean AP Standby — `gemini-3.6-flash`, medium thinking.
+- Kashif — `gemini-3.7-flash`, high thinking.
+- Muslih — `gemini-3.7-flash`, high thinking.
+- Clean AP Standby — `gemini-3.7-flash`, medium thinking.
 - Shaahid — `gemini-3.5-flash-lite`, default/minimal thinking.
 
 Keep outputs typed and short. Raasid reads persisted events and the latest exact
@@ -209,7 +216,7 @@ without changing incident state, and atomically changes a valid current warrant
 `AWAITING_APPROVAL → APPROVED`. Human rejection records the commander, rationale
 and server time and terminates as `BLOCKED/HUMAN_REJECTED` without execution. An
 expired current warrant becomes `BLOCKED/WARRANT_EXPIRED`; a retry begins a new
-attempt from quarantine, keeps the invoice business idempotency key and creates a
+attempt from quarantine, keeps the launch-scoped business idempotency key and creates a
 fresh warrant.
 
 After approval, publish the clean execution request and return immediately; the
@@ -239,7 +246,8 @@ Above the fold must communicate within 30 seconds:
 The main view shows invoice versus vendor fingerprint, the live recovery
 timeline and the authoritative warrant/approval panel. The outcome shows unsafe
 payment blocked, trusted payment completed once, receipt, replay `MATCH`,
-Shaahid’s summary and real Google Runtime/Registry/trace provenance links.
+Shaahid’s summary and real proof links for both Runtime resources, Memory Bank
+and the correlated Trace.
 
 Do not add extra pages, fake log streams, invented scores, generic analytics or
 configuration screens. Meet responsive layout, keyboard focus and readable

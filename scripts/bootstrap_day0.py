@@ -168,7 +168,6 @@ def main() -> None:
             config={
                 "memory_id": "hisaarai-continuity-day0",
                 "wait_for_completion": True,
-                "disable_memory_revisions": False,
                 "revision_ttl": "31536000s",
             },
         )

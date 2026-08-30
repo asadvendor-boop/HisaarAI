@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-08-30T16:50:54Z",
+  "project": "hisaarai-agentic-2026",
+  "runtime": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336",
+  "public_readback": "https://hisaarai-2wkruw66na-uc.a.run.app/api/continuity",
+  "recovery_note": "The Day-7 and Day-14 Scheduler jobs ran on their original calendar dates, but Vertex AI rejected the Memory request because revision_ttl and disable_memory_revisions were both serialized. Revision hisaarai-00018-jxt removed the conflicting false flag. Day-7 was manually replayed on August 25 and the already-queued Day-14 delivery then completed. Firestore and Memory Bank preserve the real August 25 creation times; no timestamp was backdated.",
+  "scheduler_history": {
+    "day_7": {
+      "job": "hisaar-continuity-day7",
+      "original_last_run": "2026-08-16T09:00:00+05:00",
+      "scheduler_status": "SUCCESS"
+    },
+    "day_14": {
+      "job": "hisaar-continuity-day14",
+      "original_last_run": "2026-08-23T09:00:01+05:00",
+      "scheduler_status": "SUCCESS"
+    },
+    "day_21": {
+      "job": "hisaar-continuity-day21",
+      "original_last_run": "2026-08-30T09:00:01+05:00",
+      "scheduler_status": "SUCCESS"
+    }
+  },
+  "root_cause": {
+    "service_response": 500,
+    "vertex_status": "400 INVALID_ARGUMENT",
+    "message": "revision_expiration is already set; cannot set disableMemoryRevisions",
+    "fix": "Omit disable_memory_revisions when revision_ttl is present",
+    "deployed_revision": "hisaarai-00018-jxt",
+    "image_digest": "sha256:0538db56c691f72b2cf90ba0d20df620a4afd4d76ce6b45f42b1f82d01a7d595"
+  },
+  "checkpoints": [
+    {
+      "day": 0,
+      "calendar_date": "2026-08-09",
+      "created_at": "2026-08-08T20:49:34.178000Z",
+      "revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/6243621652144324608/revisions/2389586264371232768",
+      "previous_revision": null
+    },
+    {
+      "day": 7,
+      "calendar_date": "2026-08-16",
+      "created_at": "2026-08-25T07:53:42.757000Z",
+      "revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day7/revisions/1455639922139463680",
+      "previous_revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/6243621652144324608/revisions/2389586264371232768"
+    },
+    {
+      "day": 14,
+      "calendar_date": "2026-08-23",
+      "created_at": "2026-08-25T07:53:44.988000Z",
+      "revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day14/revisions/708605333949382656",
+      "previous_revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day7/revisions/1455639922139463680"
+    },
+    {
+      "day": 21,
+      "calendar_date": "2026-08-30",
+      "created_at": "2026-08-30T04:02:09.444000Z",
+      "revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day21/revisions/4772760262828621824",
+      "previous_revision": "projects/957109932069/locations/us-central1/reasoningEngines/6980660236528910336/memories/hisaarai-continuity-day14/revisions/708605333949382656",
+      "creation_actor": "hisaar-app@hisaarai-agentic-2026.iam.gserviceaccount.com"
+    }
+  ],
+  "chain_verdict": "VERIFIED",
+  "day_21": {
+    "status": "RECORDED",
+    "event_id": "continuity-2026-08-30",
+    "idempotency_key": "checkpoint:2026-08-30"
+  }
+}
