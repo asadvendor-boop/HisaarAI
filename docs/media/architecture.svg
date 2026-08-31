@@ -80,7 +80,7 @@
     <text x="775" y="164" class="kicker" text-anchor="middle" fill="#ffc77f">AUTHORITY</text>
     <text x="730" y="208" class="label">Cloud Run / Hisaar Gate</text>
     <text x="730" y="239" class="copy">State machine • warrant • approval</text>
-    <text x="730" y="265" class="copy">App identity persists receipt • deterministic finality</text>
+    <text x="730" y="265" class="copy">App identity writes one receipt</text>
     <text x="730" y="286" class="small" fill="#ffc77f">NO LANGUAGE MODEL</text>
   </g>
 
@@ -133,14 +133,15 @@
     <text x="1361" y="521" class="small" text-anchor="middle">Validate</text>
     <text x="1464" y="498" class="role" text-anchor="middle">SHAAHID</text>
     <text x="1464" y="521" class="small" text-anchor="middle">Narrate</text>
-    <text x="995" y="566" class="small" fill="#c3b2ff">Separate identity • bounded evidence • no role can approve or set VERIFIED</text>
+    <text x="995" y="566" class="small" fill="#c3b2ff">Separate identity • bounded evidence • never authorizes</text>
   </g>
 
   <g filter="url(#shadow)">
     <rect x="555" y="665" width="355" height="130" rx="14" class="data"/>
     <text x="585" y="704" class="kicker" fill="#79ddd1">TRUSTED CONTEXT</text>
     <text x="585" y="744" class="label">Memory Bank</text>
-    <text x="585" y="774" class="small">Genuine revision • bound through Firestore checkpoint mirror</text>
+    <text x="585" y="768" class="small">Genuine revision</text>
+    <text x="585" y="788" class="small">Bound through Firestore checkpoint mirror</text>
   </g>
 
   <g filter="url(#shadow)">
