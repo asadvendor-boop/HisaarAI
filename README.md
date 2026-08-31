@@ -18,9 +18,9 @@ and completes the sandbox payment exactly once.
 **Google agent framework:** Google Agent Development Kit (`google-adk==2.6.3`)
 
 **Built from scratch:** all implementation in this repository was created for
-this hackathon; no CreditLock, MuhafizSRE or CrossPatch code was reused. Open
-source Python, JavaScript and Google Cloud SDK dependencies are declared in the
-committed lockfiles; no customer data or pre-existing product code was included.
+this hackathon. Open source Python, JavaScript and Google Cloud SDK dependencies
+are declared in the committed lockfiles; no customer data or pre-existing product
+code was included.
 
 **Observed hosted transformation (`n=1`, synthetic sandbox):** attacker routing
 was quarantined in 11.62 seconds with zero unsafe receipts; the automated path

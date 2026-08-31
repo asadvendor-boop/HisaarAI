@@ -17,7 +17,7 @@ Gemini 3.7 Flash, Gemini 3.5 Flash-Lite, React, TypeScript and Vite.
 
 ## Global Constraints
 
-- CreditLock, MuhafizSRE and CrossPatch remain out of scope.
+- This submission is self-contained.
 - Only `gemini-3.7-flash` and `gemini-3.5-flash-lite` are allowed.
 - Hisaar Gate alone owns state, approval release and deterministic verification.
 - Public claims must be no broader than the loaded persisted evidence.
